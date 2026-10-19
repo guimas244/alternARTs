@@ -101,16 +101,18 @@ HOMENAGEM_REF = (" The reference figure of each creature marked HOMAGE WITH REFE
                  "the attached board (same 2x2 grid as this sheet): keep its signature traits; do not copy it as a picture.")
 HOMENAGEM_REF_AVULSA = (" The reference figure of this creature is shown in the attached quadrant image: keep its signature "
                         "traits; do not copy it as a picture.")
-# releitura (fidelidade "releitura", células N/L): só as âncoras ficam; os dois tipos reinventam o resto
-RELEITURA = ("REIMAGINED CELLS: creatures marked REIMAGINED are ORIGINAL game creatures inspired by a classic horror figure. "
-             "Keep ONLY the ANCHORS listed in the line — just enough that someone who knows the figure understands the "
-             "inspiration — and reinvent EVERYTHING else through the creature's two types: anatomy, material, palette, details "
-             "and pose. It must not look like the original character or a person in costume, and it must not become an "
-             "unrelated creature either. Never an actor's face, a logo, text or a name.")
+# releitura (fidelidade "releitura", células N/L): criatura do Techterra; só 1–2 âncoras de forma, traduzidas pelos tipos
+RELEITURA = ("REIMAGINED CELLS: creatures marked REIMAGINED are ORIGINAL Techterra creatures. At first glance each one must "
+             "read as a creature of this game — the sheet's style, a two-color palette born from its two types, its element "
+             "visible in its own body and material, its own single glowing system, game-style eyes and face, power marks of "
+             "its tier. Only on a second look may a classic horror figure show through, and ONLY through the 1–2 ANCHORS of "
+             "shape listed in its line, which are themselves translated into the creature's materials and colors. Never the "
+             "original colors, costume, props or a person in costume; never an actor's face, a logo, text or a name. The "
+             "inspiration is a seed, not the result.")
 RELEITURA_REF = (" For each creature marked REIMAGINED WITH REFERENCE, use the reference figure in the matching quadrant of "
-                 "the attached board ONLY to read the anchors; do not copy anything else.")
-RELEITURA_REF_AVULSA = (" Use the reference figure in the attached quadrant ONLY to read the anchors; do not copy anything "
-                        "else.")
+                 "the attached board ONLY to read the shape of the anchors; do not copy anything else.")
+RELEITURA_REF_AVULSA = (" Use the reference figure in the attached quadrant ONLY to read the shape of the anchors; do not copy "
+                        "anything else.")
 
 # blocos: (cabeça quando a cartela é toda desse bloco, cabeça quando a cartela mistura blocos, corpo)
 BLOCO = {
@@ -186,11 +188,11 @@ PESO_PRANCHA = {
                   "nothing); keep its signature traits and redraw it in the style of this sheet"),
     "RELEITURA": ("Image {k} is the board of reference figures, in the same 2x2 grid as this sheet: the quadrant of each "
                   "creature marked REIMAGINED WITH REFERENCE shows the classic figure that inspired it (empty quadrants show "
-                  "nothing); use it ONLY to read the anchors listed in that creature's line"),
+                  "nothing); use it ONLY to read the shape of the anchors listed in that creature's line"),
     "REFERENCIAS": ("Image {k} is the board of reference figures, in the same 2x2 grid as this sheet: the quadrant of each "
                     "creature marked HOMAGE WITH REFERENCE or REIMAGINED WITH REFERENCE shows its classic figure (empty "
-                    "quadrants show nothing); for HOMAGE keep its signature traits, for REIMAGINED read ONLY the anchors "
-                    "listed in its line"),
+                    "quadrants show nothing); for HOMAGE keep its signature traits, for REIMAGINED read ONLY the shape of "
+                    "the anchors listed in its line"),
 }
 PESO_QUADRANTE = {
     "X": ("Image {k} is this creature's quadrant of the parents board: the LARGE creature on the left is the BASE (keep it "
@@ -205,7 +207,7 @@ PESO_QUADRANTE["L"] = PESO_QUADRANTE["N"]
 PESO_QUADRANTE["HOMENAGEM"] = ("Image {k} shows the classic figure this HOMAGE creature pays homage to: keep its signature "
                                "traits (the ICONIC TRAITS in its line) and redraw it in the style of this sheet")
 PESO_QUADRANTE["RELEITURA"] = ("Image {k} shows the classic figure that inspired this REIMAGINED creature: use it ONLY to "
-                               "read the anchors listed in its line; do not copy anything else")
+                               "read the shape of the anchors listed in its line; do not copy anything else")
 
 # ---------------------------------------------------------------- textos do PROMPT_<LOTE>.md (pt-BR, para conferir)
 DESCRICAO_PT = {
@@ -247,14 +249,15 @@ DESCRICAO_HOMENAGEM_PT = ("HOMENAGEM: as criaturas marcadas HOMAGE são criatura
                           "no quadrante dela na prancha. Redesenho no traço do jogo; sem nome, rosto de ator, logo ou texto.")
 CONFERE_HOMENAGEM_PT = ("  HOMENAGEM: quem conhece a figura clássica reconhece à primeira vista (traços icônicos da linha); não "
                         "é cópia da referência; sem rosto de ator, logo, letra ou nome.")
-DESCRICAO_RELEITURA_PT = ("RELEITURA: as criaturas marcadas REIMAGINED são criaturas novas do jogo inspiradas numa figura "
-                          "clássica do terror: só as ÂNCORAS da linha (2–3 traços, em geral o rosto/máscara e uma silhueta ou "
-                          "objeto) ficam reconhecíveis; corpo, material, paleta, detalhes e pose são reinventados pelos dois "
-                          "tipos. Não é o personagem original nem pessoa fantasiada, e também não vira criatura sem relação. "
-                          "Sem nome, rosto de ator, logo ou texto.")
-CONFERE_RELEITURA_PT = ("  RELEITURA: quem conhece a figura entende a inspiração pelas âncoras, mas a criatura NÃO é igual ao "
-                        "personagem nem pessoa fantasiada; o resto veio dos dois tipos; sem rosto de ator, logo, letra ou "
-                        "nome.")
+DESCRICAO_RELEITURA_PT = ("RELEITURA: as criaturas marcadas REIMAGINED são criaturas do Techterra (~25% referência / ~75% "
+                          "Techterra): à primeira vista, um monstro do jogo — paleta de 2 cores dos tipos, elemento no próprio "
+                          "corpo, um sistema de brilho, olhos no padrão do jogo, marcas do tier; só numa segunda olhada a "
+                          "figura clássica aparece, pelas 1–2 ÂNCORAS de forma da linha, já traduzidas pelos tipos. Sem as "
+                          "cores, o figurino ou os objetos originais, sem pessoa fantasiada; sem nome, rosto de ator, logo ou "
+                          "texto.")
+CONFERE_RELEITURA_PT = ("  RELEITURA: à primeira vista é um monstro do Techterra; só numa segunda olhada se vê a inspiração "
+                        "(pela forma das âncoras). NÃO é o personagem nem pessoa fantasiada, sem as cores/figurino "
+                        "originais; sem rosto de ator, logo, letra ou nome.")
 
 
 def ler_cabecalho():

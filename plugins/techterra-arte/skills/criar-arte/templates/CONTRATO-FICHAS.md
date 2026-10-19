@@ -72,22 +72,32 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
 
 ### N/L — releitura (célula com `fidelidade: "releitura"`; padrão para personagens nomeados)
 
-- `ancoras`: lista de **2 a 3** traços — só os que fazem entender a referência: em geral o rosto/máscara/cabeça e UMA
-  silhueta ou objeto-assinatura. Ex. (assassino da máscara de grito, Fantasma/Elétrico): "rosto de grito alongado, de
-  olhos caídos e boca aberta, feito de estática", "silhueta de manto com capuz pontudo".
-- `reinvencao`: 1–2 frases (≥ 20 caracteres) dizendo como os **DOIS tipos** reinventam todo o resto — corpo/anatomia,
-  material, paleta, detalhes e pose (em lote **de humanoides**, mantenha cabeça, tronco, 2 braços e 2 pernas, de pé — os
-  tipos mudam material e paleta, não tiram membros). Ex.: "o fantasma deixa o corpo de névoa translúcida; o elétrico faz o
-  manto de estática chiando, com fios de alta tensão no lugar das costuras, paleta azul-petróleo e ciano, pose torta de
+- **Teste do olhar:** à primeira vista é uma criatura do Techterra; só numa segunda olhada a inspiração aparece
+  (~25% referência / ~75% Techterra). A referência é semente, não resultado.
+- `ancoras`: lista de **1 a 2** traços **de FORMA** — contorno do rosto/máscara, silhueta, gesto/postura ou
+  objeto-assinatura — **já traduzidos pelos tipos**: a forma fica, o material e a cor vêm dos tipos. Sem cor e sem
+  peça de figurino (o validador avisa). Ex. (assassino da máscara de grito, Fantasma/Elétrico): "contorno de rosto de
+  grito alongado, de olhos caídos e boca oval aberta, feito de estática chiando", "silhueta de capuz pontudo feita de
+  névoa que se desfia em fios".
+- `reinvencao`: 1–2 frases (≥ 20 caracteres) com a **camada Techterra**, citando os **DOIS tipos** pelo nome (o
+  validador exige): paleta de **2 cores da mistura dos tipos** (regras/estilo.md "Cores"), o **elemento visível no
+  próprio corpo e material** (não só na arma), **UM sistema de brilho** próprio e a pose. Em lote **de humanoides**,
+  mantenha cabeça, tronco, 2 braços e 2 pernas, de pé — os tipos mudam material e paleta, não tiram membros. Ex.: "o
+  fantasma faz o corpo de névoa índigo carregada, com pernas que se desfazem em fumaça só nos pés; o elétrico corre
+  nele em veias de corrente ciano e faz brotar isoladores de vidro dos ombros; só a corrente brilha; pose torta de
   quem desliza".
-- **Proibido:** copiar o figurino inteiro; a paleta original inteira (só a cor que for parte de uma âncora); réplica de
-  arma/objeto além do que for âncora; "pessoa fantasiada". O resultado não pode parecer o personagem original — nem
-  virar criatura sem relação com ele.
+- `classe`: o **papel da criatura no mundo do jogo** (ex.: "caçador de estática", "bufão de espinhos", "coveiro de
+  geada") — conceito próprio, nunca "o assassino do filme". `rosto` no padrão do jogo (regras/estilo.md "Rosto e
+  olhos") e `marcas_poder` do tier completam a camada Techterra.
+- **Proibido:** as cores originais; o figurino original, nem uma peça dele (macacão, avental, terno, máscara de
+  hóquei…); a arma/objeto "como no filme" (objeto-assinatura só como forma refeita no material dos tipos); "pessoa
+  fantasiada". O resultado não pode parecer o personagem original — nem virar criatura sem relação com ele.
 - `anatomia`, `paleta`, `rosto` e `marcas_poder` seguem a reinvenção (não o figurino original). `tracos_iconicos` é só
   da homenagem.
-- O `compor_fichas.py` põe no `visual`, logo depois da `anatomia`: "âncoras da referência (só estas ficam
-  reconhecíveis): …" e "reinvenção pelos tipos: …". `ver_celulas.py` mostra a figura (descrição interna); se a célula
-  tiver `usar_imagem`, a figura está no quadrante da prancha — olhe só para tirar as âncoras.
+- O `compor_fichas.py` põe no `visual`, logo depois da `anatomia`: "âncoras de forma (traduzidas pelos tipos; só elas
+  lembram a referência): …" e "criatura do Techterra — reinvenção pelos tipos: …". `ver_celulas.py` mostra a figura
+  (descrição interna); se a célula tiver `usar_imagem`, a figura está no quadrante da prancha — olhe só para ler a
+  forma das âncoras.
 - **Nunca** o nome do personagem, da obra ou do ator em campo nenhum: o validador recusa.
 
 ### N/L — homenagem reconhecível (célula com `fidelidade: "homenagem"`; só quando pedirem "igual/fiel/idêntico")

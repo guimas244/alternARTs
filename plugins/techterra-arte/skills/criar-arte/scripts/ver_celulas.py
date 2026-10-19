@@ -89,14 +89,15 @@ def main():
                 print(f"   referência no quadrante da prancha: {rc['recorte']} (olhe antes de escrever)")
         if b in ("N", "L") and e.get("fidelidade") == "releitura":
             rc = e.get("referencia_conteudo") or {}
-            print("   RELEITURA: escreva 'ancoras' (2–3 traços que fazem entender a referência: em geral o rosto/máscara/"
-                  "cabeça e UMA silhueta ou objeto-assinatura) e 'reinvencao' (1–2 frases: como os DOIS tipos reinventam "
-                  "corpo, material, paleta, detalhes e pose). Proibido: figurino inteiro, paleta original inteira, réplica "
-                  "de arma/objeto além da âncora, pessoa fantasiada; nunca o nome da figura, da obra ou do ator")
+            print("   RELEITURA (~25% referência / ~75% Techterra): escreva 'ancoras' (1–2 traços de FORMA — contorno do "
+                  "rosto/máscara, silhueta, gesto ou objeto — já traduzidos no material e na cor dos tipos), 'reinvencao' "
+                  "(cita os DOIS tipos: paleta de 2 cores dos tipos, elemento no próprio corpo, um brilho, pose) e uma "
+                  "'classe' própria no mundo do jogo. Proibido: cores originais, figurino original ou peça dele, "
+                  "arma/objeto como no filme, pessoa fantasiada; nunca o nome da figura, da obra ou do ator")
             if rc.get("descricao"):
                 print(f"   FIGURA (interno, não copie o nome): {corta(rc['descricao'], 320)}")
             if rc.get("recorte") and e.get("usar_imagem") is True:
-                print(f"   referência no quadrante da prancha: {rc['recorte']} (use só para ler as âncoras)")
+                print(f"   referência no quadrante da prancha: {rc['recorte']} (use só para ler a forma das âncoras)")
         if b == "N":
             ev = e.get("evolucao") or {}
             ant, seg, ext = por_n.get(ev.get("anterior")), por_n.get(ev.get("seguinte")), ev.get("externo")

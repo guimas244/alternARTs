@@ -40,33 +40,51 @@ Antes do plano, decida o quanto a criatura se parece com a referência. São tr�
 | | `arquetipo` | `releitura` (**padrão com nomes**) | `homenagem` |
 |---|---|---|---|
 | Quando | tema aberto, **sem nomes**: "circo assombrado", "filmes de terror", "Halloween" | o usuário lista personagens/figuras **NOMEADOS** (com ou sem "humanoides"), ou diz "parecido", "reconhecível", "como referência" | **só** quando o usuário diz "igual", "fiel", "idêntico", "exatamente como" o personagem |
-| O que sai | o arquétipo vira **criatura nova** que só lembra o tema | **criatura original inspirada na figura**: 2–3 **âncoras** deixam entender a referência; os **dois tipos reinventam todo o resto** (corpo, material, paleta, detalhes, pose) | **homenagem reconhecível** à primeira vista pelos **traços icônicos** (máscara, figurino, arma, cores, silhueta, postura), no traço do jogo |
-| Figurino/máscara da obra | não | só o que for âncora (em geral o rosto/máscara e UMA silhueta ou objeto); nunca o figurino inteiro, a paleta original inteira nem "pessoa fantasiada" | sim, como traço icônico redesenhado |
+| O que sai | o arquétipo vira **criatura nova** que só lembra o tema | **criatura do Techterra com uma semente da figura** (~25% referência / ~75% Techterra): à primeira vista é um monstro do jogo; só numa segunda olhada **1–2 âncoras de FORMA**, traduzidas pelos tipos, deixam ver a inspiração; os **dois tipos fazem todo o resto** (corpo, material, paleta, detalhes, pose, papel no mundo) | **homenagem reconhecível** à primeira vista pelos **traços icônicos** (máscara, figurino, arma, cores, silhueta, postura), no traço do jogo |
+| Figurino/máscara da obra | não | só a **forma** do que for âncora (contorno do rosto/máscara, silhueta, gesto/postura ou objeto-assinatura), refeita no material e na cor dos tipos; nunca as cores originais, o figurino original (nem uma peça de roupa ou arma "como no filme") nem "pessoa fantasiada" | sim, como traço icônico redesenhado |
 | Imagem do personagem | não | **não, por padrão**; só se as âncoras não bastarem: `referencia_conteudo.arte` + `"usar_imagem": true` na célula (o prompt manda ler só as âncoras dela) | opcional, `referencia_conteudo.arte` |
 | Sempre proibido | nome do personagem/obra/ator no prompt, no nome e na ficha; rosto de ator; logo, marca ou texto | o mesmo | o mesmo |
-| Na ficha | `arquetipo` | `arquetipo` + `ancoras` (2–3) + `reinvencao` (1–2 frases), que vão para o `visual` | `arquetipo` + `tracos_iconicos` (3–6), que vão para o `visual` |
+| Na ficha | `arquetipo` | `arquetipo` + `classe` própria + `ancoras` (1–2, de forma) + `reinvencao` (cita os dois tipos), que vão para o `visual` | `arquetipo` + `tracos_iconicos` (3–6), que vão para o `visual` |
 | No prompt | — | bloco `REIMAGINED CELLS` + marca `REIMAGINED` na linha | bloco `HOMAGE CELLS` + marca `HOMAGE` na linha |
+
+**Releitura: a referência é semente, não resultado.** *Por quê: as primeiras releituras ainda saíram "muito
+referência"; o dono quer "sempre mais Techterra — manter a referência, porém ela não seja o resultado final".*
+
+- **Teste do olhar:** à primeira vista, a criatura lê como um monstro do Techterra (traço da cartela, paleta dos tipos,
+  elemento no corpo); só numa **segunda olhada** a inspiração aparece. Proporção de referência: **~25% referência /
+  ~75% Techterra**. Se alguém olhar e disser o nome do personagem antes de ver o monstro, passou do ponto.
+- **Âncoras: 1 a 2, só de FORMA** — o contorno do rosto/máscara, a silhueta, um gesto/postura ou um objeto-assinatura
+  — e **sempre traduzidas pelos tipos**: a forma fica, o material e a cor vêm dos tipos (o rosto de grito alongado vira
+  de obsidiana trincada ou de estática; a silhueta de manto vira de raízes, gelo ou fumaça). Nunca as cores originais
+  nem o figurino original — nem a peça de roupa ou a arma "como no filme".
+- **Camada Techterra obrigatória** em toda ficha de releitura (pode morar dentro da `reinvencao`, mas tem que estar
+  lá): paleta de **2 cores da mistura dos tipos** (regras/estilo.md "Cores"); o **elemento visível no PRÓPRIO corpo e
+  material** (não só na arma); **UM sistema de brilho** próprio; **olhos/rosto no padrão do jogo** (regras/estilo.md
+  "Rosto e olhos"); **marcas de poder do tier**; e uma **classe/papel no mundo do jogo** (`classe`: "caçador de
+  estática", "bufão de espinhos", "coveiro de geada") — a criatura tem conceito próprio, não "é o assassino do filme".
 
 **O mesmo personagem nos três níveis** — "assassino da máscara de grito", célula Fantasma/Elétrico:
 
 - `arquetipo`: criatura nova que só lembra o medo de ser perseguido de noite (ex.: um espectro de corredor que some
   quando a luz acende) — sem máscara de grito, sem manto; quem conhece o filme não liga uma coisa à outra.
-- `releitura`: espectro do tipo fantasma/elétrico com **o rosto de grito alongado feito de estática** e **a silhueta de
-  manto com capuz** (as duas âncoras); o resto é reinventado — corpo de névoa translúcida, fios de alta tensão no lugar
-  das costuras, paleta azul-petróleo e ciano, pose torta de quem desliza. Quem conhece a figura entende a inspiração;
-  ninguém diria que é o personagem.
+- `releitura`: um **caçador de estática** — espectro de névoa carregada que vive nos fios e caça quem fica acordado.
+  À primeira vista: um monstro Fantasma/Elétrico do jogo, corpo de névoa índigo cortada por veias de corrente ciano,
+  isoladores de vidro brotando dos ombros como espinhos, olhos de dois arcos elétricos caídos, brilho só na corrente.
+  Numa segunda olhada, as **duas âncoras de forma**, já traduzidas: **o contorno de rosto de grito alongado, feito de
+  estática chiando** (não a máscara branca) e **a silhueta de capuz pontudo, feita de névoa que se desfia em fios**
+  (não o manto preto). Nada de faca, nada de preto e branco.
+- `homenagem`: a figura reconhecível no traço do jogo — máscara branca de grito, manto preto de capuz esfarrapado,
+  faca erguida, a postura de quem espreita.
 
 **Lote "de humanoides" em releitura:** a reinvenção muda **material, paleta, superfície, detalhes e pose**, mas mantém o
 corpo humanoide — cabeça, tronco, dois braços e **duas pernas**, de pé (regras/humanoides.md). Nada de "sem pernas",
 "cauda no lugar das pernas" ou corpo de bicho: o tipo fantasma deixa o corpo translúcido ou de névoa, não tira as
 pernas. Fora de lote de humanoides, a anatomia pode mudar à vontade.
-- `homenagem`: a figura reconhecível no traço do jogo — máscara branca de grito, manto preto de capuz esfarrapado,
-  faca erguida, a postura de quem espreita.
 
 Na dúvida, use `releitura` e diga em uma linha no próprio plano que dá para subir para homenagem ou descer para
 arquétipo. *Por quê: em arquétipo, uma lista de personagens nomeados saiu "incompreensível" (nada lembrava a
-referência); em homenagem com a imagem do personagem anexada, saiu "idêntico". O dono quer "como referência: dá pra
-entender, mas não incompreensível nem idêntico".*
+referência); em homenagem com a imagem do personagem anexada, saiu "idêntico"; a primeira releitura (2–3 âncoras)
+ainda saiu "muito referência". O dono quer "sempre mais Techterra": a referência fica, mas não é o resultado final.*
 
 ### 2.0 Pedido curto com uma lista ("Quero lotes criando: 1. Ghostface — Pânico; 2. Chucky — …")
 
@@ -106,8 +124,10 @@ O plano tem, numa resposta só:
    "boneco possuído", "assassino da máscara de fantasma ao telefone", "açougueiro mascarado da motosserra",
    "mascarado silencioso da noite das bruxas", "menina possuída", "mestre dos jogos de armadilha", "criatura alada que
    volta de tempos em tempos para caçar", "espírito de abóbora em pijama", "fantasma trapaceiro de terno listrado") ·
-   em `releitura`, duas colunas: **"Âncoras (o que fica)"** (2–3 traços, em poucas palavras) e **"Reinvenção (o que
-   muda)"** (como os dois tipos refazem corpo, material, paleta e pose); em `homenagem`, os traços icônicos previstos
+   em `releitura`, três colunas: **"Criatura do Techterra"** (a classe/papel no mundo do jogo, ex.: "caçador de
+   estática", "bufão de espinhos", "coveiro de geada" — é o que se vê primeiro), **"Âncoras de forma"** (1–2, já
+   traduzidas pelos tipos, ex.: "rosto de grito alongado de estática") e **"Reinvenção pelos tipos"** (paleta de 2
+   cores dos tipos, elemento no próprio corpo, o brilho); em `homenagem`, os traços icônicos previstos
    (3–6, em poucas palavras); em `arquetipo` sem "humanoides", o
    estágio 1 (objeto/bichinho simples), o 2 (forma real) e o 3 (ultimate) em poucas palavras · tier (ou escada de
    tier) · tipos. A tabela do chat pode mostrar o nome que o usuário escreveu, para ele se localizar; o `plano.json`
@@ -122,8 +142,9 @@ O plano tem, numa resposta só:
    claramente diferente (outro arquétipo da mesma obra, outro ângulo).
 4. O **aviso de direito autoral** (acima); em `homenagem`, o **pedido das imagens**; em `releitura`, só a linha "anexe
    só se as âncoras não bastarem".
-5. **Perguntas curtas no fim** (o resto vai no padrão): em `releitura`, **o equilíbrio âncoras × reinvenção está bom**
-   (algum item precisa de mais âncora para ser entendido, ou de menos para não ficar igual)? estrutura ok (3 estágios /
+5. **Perguntas curtas no fim** (o resto vai no padrão): em `releitura`, **o equilíbrio está bom** (~25% referência /
+   ~75% Techterra: algum item ficou "o personagem" e precisa perder âncora, ou ficou irreconhecível e precisa trocar
+   a âncora por outra forma mais clara)? estrutura ok (3 estágios /
    2 estágios / só formas reais; com "humanoides": 1 por item ou com evolução)? o que fazer com os repetidos? quer
    míticos de raid ou fusões depois?
 
@@ -149,8 +170,9 @@ No modo `arquetipo`, o tema vira **arquétipos**, nunca personagens. Passo a pas
 4. **Escreva o bloco de clima do tema** que vai em todo prompt do lote (como o "HALLOWEEN PACK"): o que o tema é, o tom,
    o que é proibido. Ex. de terror: *assustador e divertido como noite de Halloween; o medo vem da silhueta, da expressão
    e do clima; sem sangue, sem ferida aberta, sem parte decepada; nunca reproduzir personagem, ator, figurino ou logo de
-   filme — siga só a descrição de cada criatura.* Em `releitura`, o clima proíbe o figurino inteiro do personagem e
-   "pessoa fantasiada" (as âncoras vêm na linha de cada criatura), além de rosto de ator, logo, nome e texto. Em
+   filme — siga só a descrição de cada criatura.* Em `releitura`, o clima proíbe as cores originais, o figurino e os
+   objetos do personagem e "pessoa fantasiada" (as âncoras de forma vêm na linha de cada criatura), além de rosto de
+   ator, logo, nome e texto. Em
    `homenagem`, o clima **não** proíbe figurino/máscara (são os traços icônicos); proíbe rosto de ator, logo, nome e
    texto. Sempre "sem sangue".
 5. **Originalidade:** o nome do filme/obra/personagem **nunca** aparece no prompt, no nome nem na descrição — nem em

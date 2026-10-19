@@ -47,8 +47,8 @@ python "<skill>/scripts/<script>.py" <pasta_do_lote> [opções]
 ```
 
 `fidelidade` (opcional; o script assume `"arquetipo"` quando falta): `"arquetipo"` = a referência vira criatura nova
-(tema aberto, sem nomes) · `"releitura"` = criatura original inspirada numa figura clássica: só 2–3 âncoras ficam e os
-dois tipos reinventam o resto (**o plano usa esta quando o usuário lista personagens nomeados**) · `"homenagem"` =
+(tema aberto, sem nomes) · `"releitura"` = criatura do Techterra com uma semente da figura clássica: só 1–2 âncoras
+de forma, traduzidas pelos tipos, e os dois tipos fazem o resto (**o plano usa esta quando o usuário lista personagens nomeados**) · `"homenagem"` =
 homenagem reconhecível à figura (só quando o usuário diz "igual", "fiel", "idêntico"); regras/lotes-tematicos.md §Nível
 de fidelidade. Copiada para cada célula; a célula pode trazer a sua. Só vale em N/L (em V/F/X/A vira `"arquetipo"`).
 
@@ -97,24 +97,27 @@ Campos que o AGENTE escreve (o resto o `compor_fichas.py` copia da entrada):
 - N/L: `arquetipo`; L: `tema` (igual nas 4 da cartela);
 - N/L com `fidelidade: "homenagem"`: `tracos_iconicos` (lista de 3–6 traços visuais concretos: forma da máscara,
   figurino, arma/objeto, cores, silhueta, postura, detalhe-assinatura), sem o nome da figura/obra/ator;
-- N/L com `fidelidade: "releitura"`: `ancoras` (lista de 2–3 traços que fazem entender a referência: em geral o
-  rosto/máscara/cabeça e UMA silhueta ou objeto-assinatura) e `reinvencao` (1–2 frases, ≥ 20 caracteres: como os DOIS
-  tipos reinventam corpo, material, paleta, detalhes e pose). Proibido: figurino inteiro, paleta original inteira,
-  réplica de arma/objeto além da âncora, "pessoa fantasiada"; sem o nome da figura/obra/ator;
+- N/L com `fidelidade: "releitura"`: `ancoras` (lista de 1–2 traços de FORMA — contorno do rosto/máscara, silhueta,
+  gesto/postura ou objeto-assinatura — já traduzidos pelos tipos) e `reinvencao` (1–2 frases, ≥ 20 caracteres, citando
+  os DOIS tipos: a camada Techterra — paleta de 2 cores dos tipos, elemento no próprio corpo, um brilho, pose); `classe`
+  = papel próprio no mundo do jogo. Proibido: cores originais, figurino original ou peça dele, arma/objeto "como no
+  filme", "pessoa fantasiada"; sem o nome da figura/obra/ator;
 - V: `epiteto`, `mantem`, `muda`;
 - F/X/A: `herda` {nome exato de cada pai: o que veio dele}, `ascensao`.
 
 `compor_fichas.py` acrescenta: campos fixos da entrada, `fidelidade`, `nome` (V = original + epíteto), `ingredientes`
 (nomes), `arquivo`, `visual` (fórmula por bloco; na homenagem, logo depois da anatomia: "traços icônicos da homenagem
 (reconhecível à primeira vista por quem conhece a figura clássica): (1) … (2) …"; na releitura, logo depois da anatomia:
-"âncoras da referência (só estas ficam reconhecíveis): (1) … (2) …; reinvenção pelos tipos: …") e roda
-`valida_fichas.py --arquivo` (que exige `tracos_iconicos` 3–6 na homenagem, `ancoras` 2–3 e `reinvencao` ≥ 20
-caracteres na releitura, e recusa nome de personagem/filme de terror em qualquer campo de texto).
+"âncoras de forma (traduzidas pelos tipos; só elas lembram a referência): (1) … (2) …; criatura do Techterra —
+reinvenção pelos tipos: …") e roda `valida_fichas.py --arquivo` (que exige `tracos_iconicos` 3–6 na homenagem,
+`ancoras` 1–2 e `reinvencao` ≥ 20 caracteres citando os dois tipos na releitura — com aviso se uma âncora citar cor ou
+peça de figurino —, e recusa nome de personagem/filme de terror em qualquer campo de texto).
 
 No prompt (`preparar_fila.py`), a linha da célula homenagem leva `HOMAGE` (`HOMAGE WITH REFERENCE` quando a figura está
 na prancha) e a cartela ganha o bloco `HOMAGE CELLS`; a linha da célula releitura leva `REIMAGINED` (`REIMAGINED WITH
-REFERENCE` com `usar_imagem`) e a cartela ganha o bloco `REIMAGINED CELLS` (só as âncoras ficam; os dois tipos
-reinventam o resto; com imagem, "use the reference figure … ONLY to read the anchors; do not copy anything else"). A
+REFERENCE` com `usar_imagem`) e a cartela ganha o bloco `REIMAGINED CELLS` (criatura do Techterra à primeira vista;
+só as 1–2 âncoras de forma, traduzidas, lembram a figura; com imagem, "use the reference figure … ONLY to read the
+shape of the anchors; do not copy anything else"). A
 avulsa de célula com figura na prancha anexa o quadrante.
 
 Faixa de `marcas_poder` por tier: T1–2 0–2, T3–4 1–2, T5–6 2–3, T7–8 3–4, T9–10 4–5; F/X/A: +1 nas duas pontas.

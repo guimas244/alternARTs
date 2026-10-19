@@ -29,8 +29,8 @@ ORDEM = ["n", "slot", "cartela", "linha", "coluna", "bloco", "tier", "tipo1", "t
          "conceito", "marca_da_habilidade", "descricao", "evolucao", "arquivo", "visual"]
 FIM = "vista frontal em três quartos, criatura inteira isolada, sem letras nem símbolos escritos"
 HOMENAGEM = "traços icônicos da homenagem (reconhecível à primeira vista por quem conhece a figura clássica): "
-ANCORAS = "âncoras da referência (só estas ficam reconhecíveis): "
-REINVENCAO = "reinvenção pelos tipos: "
+ANCORAS = "âncoras de forma (traduzidas pelos tipos; só elas lembram a referência): "
+REINVENCAO = "criatura do Techterra — reinvenção pelos tipos: "
 
 
 def homenagem(f):

@@ -22,10 +22,12 @@ Blocos: `N` novo · `V` variação (mesma criatura em outro elemento) · `F` fus
 
 Pedido com personagens/figuras **nomeados** — ex.: *"Quero lotes criando humanoides: 1. Ghostface — do filme Pânico,
 tipo fantasma; 2. Chucky — Brinquedo Assassino, docrates; …"* — é **`"fidelidade": "releitura"`** no plano: criatura
-original em que só 2–3 **âncoras** (rosto/máscara e uma silhueta ou objeto) deixam entender a referência e os dois tipos
-reinventam o resto. Com "humanoides": 1 humanoide por item na forma real (sem estágio de objeto/bichinho), `tipo1` = o
+do Techterra (~25% referência / ~75% Techterra) em que só **1–2 âncoras de FORMA** (contorno do rosto/máscara,
+silhueta, gesto ou objeto), traduzidas pelos tipos, deixam ver a referência numa segunda olhada; os dois tipos fazem o
+resto (camada Techterra obrigatória e `classe` própria — regras/lotes-tematicos.md). Com "humanoides": 1 humanoide por item na forma real (sem estágio de objeto/bichinho), `tipo1` = o
 tipo dado pelo usuário, `referencia_conteudo: {"descricao": ...}` na célula (o único lugar com o nome). O plano mostra,
-por item, **"Âncoras (o que fica)"** e **"Reinvenção (o que muda)"** e pergunta se o equilíbrio está bom. **Sem imagem
+por item, **"Criatura do Techterra"**, **"Âncoras de forma"** e **"Reinvenção pelos tipos"** e pergunta se o
+equilíbrio está bom. **Sem imagem
 do personagem por padrão** ("anexe só se as âncoras não bastarem"; se vier, `referencia_conteudo.arte` +
 `"usar_imagem": true`). A ficha ganha `ancoras` e `reinvencao`; o prompt, o bloco `REIMAGINED CELLS`.
 
