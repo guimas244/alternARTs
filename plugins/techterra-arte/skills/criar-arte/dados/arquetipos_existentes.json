@@ -1,0 +1,333 @@
+{
+ "_leia": "Arquétipos/referências que JÁ viraram monstros no jogo. Lote temático novo: avise o criador quando uma referência pedida já existe aqui e proponha trocar ou fazer uma versão claramente diferente. Atualizar à mão a cada pacote temático cadastrado.",
+ "pacotes": [
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "It: A Coisa",
+   "monstros": [
+    {
+     "nome": "Balorrubro",
+     "tier": 2,
+     "tipos": [
+      "docrates",
+      "subterraneo"
+     ]
+    },
+    {
+     "nome": "Risarjeta",
+     "tier": 5,
+     "tipos": [
+      "docrates",
+      "subterraneo"
+     ]
+    },
+    {
+     "nome": "Gargalume",
+     "tier": 9,
+     "tipos": [
+      "docrates",
+      "desconhecido"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "Alien, o Oitavo Passageiro",
+   "monstros": [
+    {
+     "nome": "Ovúnculo",
+     "tier": 3,
+     "tipos": [
+      "alien",
+      "venenoso"
+     ]
+    },
+    {
+     "nome": "Espreitácido",
+     "tier": 6,
+     "tipos": [
+      "alien",
+      "venenoso"
+     ]
+    },
+    {
+     "nome": "Matrinfesta",
+     "tier": 10,
+     "tipos": [
+      "alien",
+      "inseto"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "Sexta-Feira 13",
+   "monstros": [
+    {
+     "nome": "Estopim",
+     "tier": 2,
+     "tipos": [
+      "zumbi",
+      "terrestre"
+     ]
+    },
+    {
+     "nome": "Acampavor",
+     "tier": 5,
+     "tipos": [
+      "zumbi",
+      "terrestre"
+     ]
+    },
+    {
+     "nome": "Lagorrendo",
+     "tier": 8,
+     "tipos": [
+      "zumbi",
+      "planta"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "Tubarão",
+   "monstros": [
+    {
+     "nome": "Barbatim",
+     "tier": 1,
+     "tipos": [
+      "marinho",
+      "agua"
+     ]
+    },
+    {
+     "nome": "Mandibrava",
+     "tier": 4,
+     "tipos": [
+      "marinho",
+      "agua"
+     ]
+    },
+    {
+     "nome": "Fauceano",
+     "tier": 7,
+     "tipos": [
+      "marinho",
+      "dragao"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "A Hora do Pesadelo",
+   "monstros": [
+    {
+     "nome": "Travessonho",
+     "tier": 2,
+     "tipos": [
+      "psiquico",
+      "fogo"
+     ]
+    },
+    {
+     "nome": "Pesadunha",
+     "tier": 6,
+     "tipos": [
+      "psiquico",
+      "fogo"
+     ]
+    },
+    {
+     "nome": "Onirrasgo",
+     "tier": 9,
+     "tipos": [
+      "psiquico",
+      "trevas"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "A Múmia",
+   "monstros": [
+    {
+     "nome": "Uxabim",
+     "tier": 3,
+     "tipos": [
+      "tempo",
+      "pedra"
+     ]
+    },
+    {
+     "nome": "Ataduro",
+     "tier": 5,
+     "tipos": [
+      "tempo",
+      "pedra"
+     ]
+    },
+    {
+     "nome": "Tumbáureo",
+     "tier": 8,
+     "tipos": [
+      "tempo",
+      "deus"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "O Chamado",
+   "monstros": [
+    {
+     "nome": "Chuviscópio",
+     "tier": 1,
+     "tipos": [
+      "fantasma",
+      "nostalgico"
+     ]
+    },
+    {
+     "nome": "Fitassombra",
+     "tier": 4,
+     "tipos": [
+      "fantasma",
+      "nostalgico"
+     ]
+    },
+    {
+     "nome": "Sintonefasta",
+     "tier": 8,
+     "tipos": [
+      "fantasma",
+      "tecnologia"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "Drácula / Nosferatu",
+   "monstros": [
+    {
+     "nome": "Vespertim",
+     "tier": 3,
+     "tipos": [
+      "voador",
+      "mistico"
+     ]
+    },
+    {
+     "nome": "Sanguidalgo",
+     "tier": 7,
+     "tipos": [
+      "voador",
+      "mistico"
+     ]
+    },
+    {
+     "nome": "Brumalado",
+     "tier": 10,
+     "tipos": [
+      "voador",
+      "vento"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "O Lobisomem",
+   "monstros": [
+    {
+     "nome": "Uivote",
+     "tier": 1,
+     "tipos": [
+      "fera",
+      "magico"
+     ]
+    },
+    {
+     "nome": "Malduivo",
+     "tier": 3,
+     "tipos": [
+      "fera",
+      "magico"
+     ]
+    },
+    {
+     "nome": "Plenilobo",
+     "tier": 6,
+     "tipos": [
+      "fera",
+      "luz"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "Frankenstein",
+   "monstros": [
+    {
+     "nome": "Dedalinha",
+     "tier": 2,
+     "tipos": [
+      "eletrico",
+      "normal"
+     ]
+    },
+    {
+     "nome": "Faiscadáver",
+     "tier": 4,
+     "tipos": [
+      "eletrico",
+      "normal"
+     ]
+    },
+    {
+     "nome": "Trovártico",
+     "tier": 7,
+     "tipos": [
+      "eletrico",
+      "gelo"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "A Lenda do Cavaleiro Sem Cabeça",
+   "monstros": [
+    {
+     "nome": "Degolume",
+     "tier": 10,
+     "tipos": [
+      "trevas",
+      "fogo"
+     ]
+    }
+   ]
+  },
+  {
+   "pacote": "Halloween 2026 (out/2026)",
+   "referencia": "Hellraiser",
+   "monstros": [
+    {
+     "nome": "Enigmártir",
+     "tier": 10,
+     "tipos": [
+      "magico",
+      "docrates"
+     ]
+    }
+   ]
+  }
+ ]
+}

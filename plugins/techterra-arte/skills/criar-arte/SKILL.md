@@ -1,6 +1,6 @@
 ---
 name: criar-arte
-description: Cria arte do jogo Techterra no padrão do jogo. Monta lotes de monstros, fusões, personagens/NPCs (rosto e corpo), itens, cenários, mapas, capas e ícones. Escreve fichas e prompts, monta a fila, gera as cartelas com a ferramenta de imagem (quando o ambiente tem uma), confere e recorta com Python e entrega o pacote. Use quando pedirem arte, cartela, lote ou pacote de monstros, fusão, NPC, item, fundo, mapa, capa ou ícone do Techterra.
+description: Cria arte do jogo Techterra no padrão do jogo. Monta lotes de monstros, fusões, personagens/NPCs (rosto e corpo), itens, cenários, mapas, capas e ícones. Escreve fichas e prompts, monta a fila, gera as cartelas com a ferramenta de imagem (quando o ambiente tem uma), confere e recorta com Python e entrega o pacote. Use quando pedirem arte, cartela, lote ou pacote de monstros, fusão, NPC, item, fundo, mapa, capa ou ícone do Techterra, ou mandarem uma lista de personagens, filmes ou referências para virar monstros (ex.: "quero lotes criando: 1. ... 2. ...").
 ---
 
 # criar-arte — fábrica de arte do Techterra

@@ -33,6 +33,30 @@ Molde do pacote por tipagem: **32 monstros, 8 cartelas de 4**.
 
 ## 2. O criador dá um TEMA ou uma REFERÊNCIA EXTERNA ("filmes de terror", "Halloween", "circo", "mitologia nórdica")
 
+### 2.0 Pedido curto com uma lista ("Quero lotes criando: 1. Ghostface — Pânico; 2. Chucky — …")
+
+Uma lista de personagens, filmes, obras ou figuras, com ou sem a palavra "monstro", é um **lote temático de MONSTROS
+por referência**. Não devolva um questionário: responda já com o **plano pronto** e só peça aprovação.
+
+O plano tem, numa resposta só:
+
+1. **Tabela de arquétipos**, uma linha por item da lista: nº · arquétipo (sem nome do personagem nem da obra; ex.:
+   "boneco possuído", "assassino da máscara de fantasma ao telefone", "açougueiro mascarado da motosserra",
+   "mascarado silencioso da noite das bruxas", "menina possuída", "mestre dos jogos de armadilha", "criatura alada que
+   volta de tempos em tempos para caçar", "espírito de abóbora em pijama", "fantasma trapaceiro de terno listrado") · o
+   estágio 1 (objeto/bichinho simples), o 2 (forma real) e o 3 (ultimate) em poucas palavras · escada de tier · tipos.
+2. **Estrutura padrão:** cada item vira **1 linha evolutiva de 3 estágios**; total = 3 × itens, completado com míticos
+   T10 até fechar múltiplo de 4 (12 itens → 36 monstros = 9 cartelas, sem mítico; 10 itens → 30 + 2 míticos = 8
+   cartelas). Escadas de tier diferentes entre as linhas (da mais fraca T1→T3→T6 à mais forte T3→T7→T10). Tipagens:
+   tipo 1 fixo na linha, o estágio final troca o tipo 2; espalhe para cobrir o máximo das 30 sem repetir par.
+3. **Repetidos:** confira cada referência em `dados/arquetipos_existentes.json` (o que já virou monstro no jogo). Para
+   cada repetido, marque na tabela e proponha: trocar por outra referência do mesmo tema **ou** fazer uma versão
+   claramente diferente (outro arquétipo da mesma obra, outro ângulo).
+4. **3 perguntas curtas no fim** (o resto vai no padrão): estrutura ok (3 estágios / 2 estágios / só formas reais)?
+   o que fazer com os repetidos? quer míticos de raid ou fusões depois?
+
+Com o "ok" do criador, siga o passo a passo abaixo a partir do item 3 (tipagens já estão no plano).
+
 O tema vira **arquétipos**, nunca personagens. Passo a passo:
 
 1. **Liste os arquétipos** do tema (ex.: terror → palhaço do bueiro, predador nascido de ovo, matador mascarado do lago,
