@@ -5,6 +5,7 @@ Este repo é o plugin `techterra-arte` (skill `criar-arte`), a fábrica de arte 
 
 ## Decisões do dono (19/10/2026)
 
+- **Repositório público (19/10/2026).** Nada de segredo, caminho pessoal ou dado de jogador aqui.
 - **Só o dono (guimas244) e o Claude fazem commit.** Commit e push só com ordem explícita do dono na mensagem atual.
   Mensagens curtas, em português, sem `Co-Authored-By` de IA.
 - **Arte gerada não entra aqui.** Só referências aprovadas (`skills/criar-arte/referencias/`). Uma arte gerada vira

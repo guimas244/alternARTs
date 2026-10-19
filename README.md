@@ -7,43 +7,44 @@ corpo), itens, cenários, mapas, capas e ícones.
 **Alvo principal: ChatGPT** — é onde as imagens são geradas. Também funciona no Codex e no Claude Code (este só prepara;
 não gera imagem). Detalhe de cada ambiente: `plugins/techterra-arte/skills/criar-arte/regras/ambiente.md`.
 
-Repositório privado. Só o dono (guimas244) e o Claude fazem commit; quem usa a skill só instala.
+Repositório público. Só o dono (guimas244) e o Claude fazem commit; quem usa a skill só instala.
 
-## Instalar no ChatGPT
+## Instalar no ChatGPT (app desktop) — recomendado
 
-1. Plano com Skills liberado (pelas fontes de out/2026: Business, Enterprise, Edu ou Healthcare; em Enterprise/Edu o
-   administrador pode precisar ligar).
-2. Pegue o zip da skill: o dono gera com `python empacotar_chatgpt.py` (sai em `dist/criar-arte.zip`) e envia; ou, com
-   o repositório clonado, rode o mesmo comando.
-3. No ChatGPT: **Plugins → Skills → Create → Upload from your computer** → escolha `criar-arte.zip` → confira nome e
-   descrição → instale.
-4. Teste: "quero um lote piloto de 1 cartela de monstros novos de gelo" (roteiro em "Primeiro lote", abaixo).
-5. Atualização: quando a skill mudar, baixe/receba o zip novo e substitua a skill no ChatGPT.
+1. Na tela **Plugins** do app: **Adicionar → Adicionar marketplace**.
+2. **Origem:** `guimas244/alternARTs` · **Referência do Git:** `main` · **Caminhos esparsos:** vazio → **Adicionar
+   marketplace**.
+3. Em **Explorar diretório** (ou na aba **Pessoais**), escolha o catálogo **"alternARTs — arte do Techterra"** e instale
+   o plugin **Arte Techterra**.
+4. Confira em **Habilidades** se apareceu `criar-arte`. Teste: "criar-arte: ajuda" ou "quero um lote piloto de 1
+   cartela de monstros novos de gelo" (roteiro em "Primeiro lote", abaixo).
 
-## Instalar no Codex
+**Atualizar:** não precisa reinstalar. Quando a skill mudar no GitHub, clique no **↻** da tela Plugins (ou reabra o
+app). A versão do plugin aparece em `plugins/techterra-arte/.codex-plugin/plugin.json`.
 
-Com acesso de leitura ao repositório e credencial git na máquina (ou `GITHUB_TOKEN`), peça ao Codex para instalar a
-skill de `https://github.com/guimas244/alternARTs/tree/main/plugins/techterra-arte/skills/criar-arte` (vai para
-`~/.codex/skills/criar-arte`). Para atualizar, apague essa pasta e instale de novo.
+**Alternativa por arquivo** (se o marketplace não estiver disponível no seu ChatGPT): gere o zip com
+`python empacotar_chatgpt.py` (sai em `dist/criar-arte.zip`) e envie em Skills/Habilidades → Upload. Nesse caso, cada
+atualização exige enviar o zip de novo.
 
-## Instalar (Claude Code)
+## Instalar no Codex (linha de comando)
 
-1. Tenha acesso de leitura a este repositório no GitHub e credencial git funcionando na máquina:
-   - HTTPS: `gh auth login` e depois `gh auth setup-git`; ou
-   - SSH: chave carregada no `ssh-agent`, sem pedir senha.
-2. No Claude Code:
-   ```
-   /plugin marketplace add guimas244/alternARTs
-   /plugin install techterra-arte@alternarts
-   ```
-3. Python 3 com Pillow (`pip install pillow`) para os scripts de conferência e recorte.
+```
+codex plugin marketplace add guimas244/alternARTs
+```
 
-## Atualizar
+Atualizar: `codex plugin marketplace upgrade alternarts`.
 
-- Ligue a atualização automática em `/plugin` → **Marketplaces** → `alternarts` → **Enable auto-update**; ou
-- manualmente: `/plugin marketplace update alternarts`.
+## Instalar no Claude Code
 
-O plugin não tem número de versão: cada commit no `main` é uma versão nova.
+```
+/plugin marketplace add guimas244/alternARTs
+/plugin install techterra-arte@alternarts
+```
+
+Atualizar: ligue a atualização automática em `/plugin` → **Marketplaces** → `alternarts`, ou rode
+`/plugin marketplace update alternarts`. O Claude Code só prepara (não gera imagem).
+
+Para os scripts de conferência e recorte, em qualquer ambiente com Python local: `pip install pillow`.
 
 ## Usar
 
