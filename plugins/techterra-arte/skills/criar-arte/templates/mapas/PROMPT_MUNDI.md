@@ -1,12 +1,16 @@
 # Sessão de imagem — mapa-múndi {NOME_DO_MUNDI} ({LOTE})
 
 > Modelo da skill `criar-arte` (`templates/mapas/PROMPT_MUNDI.md`), para mundi e mapa-modelo dos lados (o mundi que
-> depois é recortado em partes). O Claude copia para `{PASTA_LOTE}/PROMPT_{LOTE}.md`, troca os `{…}` e escreve
+> depois é recortado em partes). O assistente copia para `{PASTA_LOTE}/PROMPT_{LOTE}.md`, troca os `{…}` e escreve
 > `prompts/mundi_{id}.txt` com o texto fixo do fim. Regras: `{SKILL}/regras/cenarios-mapas-capas.md` §3. Apague esta
 > caixa e o "Texto fixo" antes de entregar.
 
+Siga este roteiro numa conversa nova (ChatGPT ou Codex, com ferramenta de imagem) — regra 1 abaixo.
+
 Você **só gera**. O prompt já está escrito. Você anexa, cola, gera, confere, salva e registra. **Não** crie nem altere
-prompt, nome ou referência.
+prompt, nome ou referência. Anexo que a ferramenta de imagem não alcança: peça ao usuário para anexá-lo na conversa.
+Imagem gerada que o ambiente de código não enxerga: peça ao usuário para baixá-la e reenviá-la por upload, e salve no
+caminho mandado.
 
 ## Regras desta sessão
 
@@ -16,7 +20,7 @@ prompt, nome ou referência.
 3. **Uma geração por imagem.** Nunca edite imagem gerada. Gerar de novo do zero só por erro real: terras grudadas ou
    faltando, texto/legenda/letra na rosa dos ventos, personagem, grade de meridianos moderna. No máximo **3 imagens**
    (`_v2`, `_v3`); depois, pendente.
-4. Paisagem **3:2**. Não recorte nem redimensione (o ajuste do Claude nunca recorta).
+4. Paisagem **3:2**. Não recorte nem redimensione (o ajuste vem depois, com o script, e nunca recorta).
 
 ## FILA
 
@@ -39,7 +43,7 @@ prompt, nome ou referência.
 
 ---
 
-## Texto fixo (o Claude usa para escrever `prompts/mundi_<id>.txt`; não vai para a sessão)
+## Texto fixo (o assistente usa para escrever `prompts/mundi_<id>.txt`; não vai para a sessão)
 
 ```text
 Use a imagem anexada só como REFERÊNCIA DE TRAÇO E ESTILO. Copie dela: a técnica (mapa de

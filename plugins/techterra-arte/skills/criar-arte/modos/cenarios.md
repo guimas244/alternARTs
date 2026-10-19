@@ -3,7 +3,9 @@
 Regras de composição (o porquê de cada exigência): [../regras/cenarios-mapas-capas.md](../regras/cenarios-mapas-capas.md)
 §1 (fundo de Local) e §4 (portão). Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos:
 [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md). Sessões e ONDE SALVAR:
-[../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md).
+[../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude Code):
+[../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a
+pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
 
 - **Entra:** o mapa (nome, identidade em 1 frase, paleta por nome, luz/atmosfera) e a lista de Locais (nome, descrição
   em 2 frases, marco, vizinhos). Quem fornece é o usuário (a skill não tem banco).
@@ -40,15 +42,16 @@ Regras de composição (o porquê de cada exigência): [../regras/cenarios-mapas
    Escolha a referência de `referencias/cenarios/` que mais combina com cada Local (tabela em REFERENCIAS.md). Portão:
    sem anexo; tema novo repete a planta trocando só material, luz e paleta.
 3. **PROMPT da sessão:** copie o template para `<lote>/PROMPT_<LOTE>.md`, troque `{PASTA_LOTE}` (pasta absoluta do
-   lote), `{SKILL}` (`${CLAUDE_SKILL_DIR}` absoluto) e `{LOTE}`, preencha a FILA (todos os fundos próprios, com o
+   lote), `{SKILL}` (caminho absoluto da pasta da skill) e `{LOTE}`, preencha a FILA (todos os fundos próprios, com o
    anexo de cada um) e apague a caixa do topo e o "Texto fixo". Fila cheia antes de gerar.
-4. **Sessão de imagem** (outra sessão, não esta): gera a fila inteira em `brutos/`, uma vez cada; refaz do zero só por
+4. **Geração das imagens:** no ChatGPT/Codex, a própria conversa segue o `PROMPT_<LOTE>.md` e gera; no Claude Code,
+   entregue a frase para colar no ChatGPT/Codex. Gera a fila inteira em `brutos/`, uma vez cada; refaz do zero só por
    erro real, no máximo 3 imagens.
 5. **Normalizar e medir:**
 
    ```
-   python "${CLAUDE_SKILL_DIR}/scripts/fundos_normalizar.py" <lote> --destino local     # ou --destino lados
-   python "${CLAUDE_SKILL_DIR}/scripts/fundos_normalizar.py" <lote> --destino portao --entrada brutos/portao
+   python "{SKILL}/scripts/fundos_normalizar.py" <lote> --destino local     # ou --destino lados
+   python "{SKILL}/scripts/fundos_normalizar.py" <lote> --destino portao --entrada brutos/portao
    ```
 
    Fundos: recorte 16:9 pelo centro + redução; portão: **só redimensiona** (a interface é posicionada em % da arte).
@@ -62,6 +65,7 @@ Regras de composição (o porquê de cada exigência): [../regras/cenarios-mapas
    letra ou glifo; nenhum bicho ou pessoa em primeiro ou meio plano.
 7. **Entrega:** complete em `entregas.json` o `nome` de cada Local e, nos fundos compartilhados, `locais` (quem usa
    aquele fundo) — o script preserva esses campos. Escreva `ENTREGA.md` (próprios × reaproveitados, luminância mínima,
-   pendências e o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho.
+   pendências e o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho. No ChatGPT,
+   entregue o lote como `.zip`.
 
 Ligar o fundo aos Locais no jogo (subir imagem, preencher o Local) é do processo de cadastro, fora da skill.

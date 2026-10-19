@@ -7,20 +7,26 @@
 |---|---|---:|
 {TABELA}
 
-Cole na IA que gera as imagens. Uma sessão por faixa de 4 cartelas, todas ao mesmo tempo:
-
-{FAIXAS}
-
-**Ou tudo num prompt só** (a sessão abre um trabalhador por faixa, se a ferramenta tiver subagentes):
+Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). No ChatGPT, o normal é a
+própria conversa que preparou o lote seguir o modo TODOS, com as faixas em sequência:
 
 > Leia e execute `{ARQUIVO_PROMPT}` — TODOS
 
-Para refazer só células trocadas depois da geração (lista em `trocas.json`, escrita pelo Claude):
+(Se o ambiente tiver subagentes, o modo TODOS abre um trabalhador por faixa.) Ou uma sessão por faixa de 4 cartelas,
+todas ao mesmo tempo:
+
+{FAIXAS}
+
+Para refazer só células trocadas depois da geração (lista em `trocas.json`, escrita no preparo):
 
 > Leia e execute `{ARQUIVO_PROMPT}` — TROCAS
 
 Se a sessão cair, mande a mesma frase de novo: ela pula as cartelas que já têm imagem. As fichas, os nomes e o texto de
-cada prompt foram escritos pelo Claude e estão prontos em `fila.json`.
+cada prompt foram escritos no preparo e estão prontos em `fila.json`.
+
+Lote levado para outro ambiente (ex.: `.zip` enviado a uma conversa nova do ChatGPT, extraído em `/mnt/data/<lote>`):
+os caminhos absolutos abaixo valem para onde o lote foi preparado. Use a pasta onde o lote foi extraído no lugar da
+pasta do lote, e a pasta desta skill no seu ambiente no lugar da pasta da skill — a fila usa caminhos relativos.
 
 ---
 
@@ -33,7 +39,8 @@ faixas deste lote): só crie arquivos em cartelas/ e validacao/.
 ═══ SEU PAPEL ═══
 Você NÃO escreve fichas, nomes, descrições nem prompts. Tudo chega PRONTO na fila. O seu trabalho é só: anexar as
 imagens que a fila manda, colar o texto do prompt EXATAMENTE como está no arquivo, gerar, conferir, salvar no caminho
-indicado e registrar.
+indicado e registrar. Se esta mesma conversa preparou o lote, a partir daqui ela está na etapa de geração: fichas e
+prompts estão fechados.
 PROIBIDO, sem exceção:
 - criar ou alterar ficha (monstros.json, fichas_claude/), nome, descrição ou "visual";
 - criar, reescrever, resumir, traduzir ou "melhorar" arquivo em prompts/;
@@ -98,8 +105,13 @@ e troque o "estado" do item em trocas.json para "gerada". Orçamento: até 2 ima
 Não precisa ler plano.json, entrada.json nem fichas: não há texto para escrever.
 
 ═══ GERAÇÃO DE CADA CARTELA ═══
-- Ferramenta de imagem integrada (image_gen). Ela entrega 1254 x 1254 PNG com alfa: ESSE é o tamanho certo.
-- Anexe as imagens de "anexos" NA ORDEM (o texto do prompt as chama de Image 1, 2, 3…). Vale o que está na fila.
+- Ferramenta de imagem integrada da conversa (no ChatGPT, a geração de imagem da própria conversa; no Codex,
+  image_gen). O tamanho certo é 1254 x 1254 PNG com alfa (fundo transparente de verdade).
+- Anexe as imagens de "anexos" NA ORDEM (o texto do prompt as chama de Image 1, 2, 3…). Vale o que está na fila. Se a
+  ferramenta de imagem não alcançar um anexo (arquivo da pasta da skill ou do lote), mostre ao usuário a lista dos
+  anexos, na ordem, e peça para ele anexar as imagens na conversa.
+- Imagem gerada que o ambiente de código não enxerga (não dá para salvar com Python): peça ao usuário para baixar a
+  cartela e reenviá-la por upload, e copie para o caminho da fila antes de medir.
 - O texto enviado ao gerador é o CONTEÚDO INTEIRO do arquivo "prompt", sem cortar, resumir nem acrescentar.
 - UMA geração por cartela, e siga direto para a próxima. Quem julga a qualidade é o criador, depois.
 - Salve EXATAMENTE como veio (tentativas: cartela_NNN_v1.png, _v2.png; a aprovada também como

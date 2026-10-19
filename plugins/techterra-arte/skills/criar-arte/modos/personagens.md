@@ -7,11 +7,14 @@
 - Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).
   Sessões e onde salvar: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md).
 
-Scripts (Python 3 + Pillow; confira `python -c "import PIL"`), sempre com a pasta do lote como argumento:
+`{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
+Ambiente (ChatGPT, Codex, Claude Code): [../regras/ambiente.md](../regras/ambiente.md).
+
+Scripts (Python 3 + Pillow; fora do ChatGPT, confira `python -c "import PIL"`), sempre com a pasta do lote como argumento:
 
 ```
-python "${CLAUDE_SKILL_DIR}/scripts/npc_montar_prompts.py" <lote> [--gravar | --parte visual/parte_A.json | --contrato]
-python "${CLAUDE_SKILL_DIR}/scripts/npc_recortar.py" <lote> [--paginas 1,3]
+python "{SKILL}/scripts/npc_montar_prompts.py" <lote> [--gravar | --parte visual/parte_A.json | --contrato]
+python "{SKILL}/scripts/npc_recortar.py" <lote> [--paginas 1,3]
 ```
 
 ## Pasta do lote (dentro da pasta de trabalho do usuário, nunca na skill)
@@ -21,8 +24,8 @@ python "${CLAUDE_SKILL_DIR}/scripts/npc_recortar.py" <lote> [--paginas 1,3]
 ├── tema.json                 traço e moda do preâmbulo (você escreve)
 ├── roster.json               páginas e pessoas (você escreve)
 ├── nomes_npc_existentes.json lista de nomes de NPC do jogo (o USUÁRIO fornece; opcional, mas avise se faltar)
-├── CONTRATO-VISUAL.md        contrato dos agentes (gerado por --contrato)
-├── visual/parte_<L>.json     linhas escritas pelos agentes [{"nome", "visual"}]
+├── CONTRATO-VISUAL.md        contrato de quem escreve o texto visual (gerado por --contrato)
+├── visual/parte_<L>.json     linhas escritas por parte [{"nome", "visual"}]
 ├── prompts/pagina_NNN.txt    preâmbulo + cabeçalho + 3 colunas (gerado; _vK quando refeito)
 ├── referencias/              os 4 anexos fixos copiados da skill (gerado)
 ├── fila.json                 fila da sessão de imagem (gerado)
@@ -71,7 +74,7 @@ python "${CLAUDE_SKILL_DIR}/scripts/npc_recortar.py" <lote> [--paginas 1,3]
 | validados se vierem | `olho`, `cabelo` (a cor tem de aparecer igual na linha), `prisions` `{n: 2–4, cor}`, `estilo_roupa` e `olho` sem repetir na página, `arma: true` (só soldado/bandido/mercenário: libera a palavra arma) |
 | livres (o sorteio que o agente usa) | `pele`, `cabelo_corte`, `corpo`, `barba` (homem), `temperamento`, `peca_chave`, `paleta`, `estilo_roupa` |
 | `descricao` | lore curta da pessoa; vai para a `fichas.json` (obrigatória na entrega) |
-| `visual` | a linha da imagem; pode vir aqui ou (com agentes) em `visual/parte_<L>.json` |
+| `visual` | a linha da imagem; pode vir aqui ou (por partes) em `visual/parte_<L>.json` |
 | página: `rosto_ref` | refação fiel: `{"coluna", "arquivo", "dna"}` (ver Refação fiel) |
 | página: `tipo: "atualizar"` | atualizar personagem existente (ver abaixo) |
 
@@ -83,19 +86,23 @@ python "${CLAUDE_SKILL_DIR}/scripts/npc_recortar.py" <lote> [--paginas 1,3]
    combinam com mulheres meigas, nomes à mão por subtipo, 3 estilos e 3 cores de olho diferentes por página, nada de
    molde de etnia. Rode `npc_montar_prompts.py <lote>` para pegar erro de roster cedo (as linhas ainda faltam).
 3. **Piloto (4 páginas).** Escreva você mesmo as 12 linhas das páginas 1–4 (no `visual` do roster), valide, rode com
-   `--gravar` e mande o usuário abrir a sessão de imagem com a frase **PILOTO** do `PROMPT_IMAGEM_<LOTE>.md`. O dono
-   julga o traço; aprovado, crie `prompts/PILOTO_APROVADO.txt` (sem ele a sessão não passa da página 4).
-4. **Texto visual por agentes** (lote grande). Rode `--contrato`. Divida as páginas restantes em partes de até 12
-   páginas, uma LETRA por agente; cada agente lê `CONTRATO-VISUAL.md` + a regra, escreve só `visual/parte_<L>.json` e
-   roda `--parte visual/parte_<L>.json` até 0 erros. Depois, um **revisor cruzado** lê todas as linhas juntas (marca de
+   `--gravar` e gere o **PILOTO** do `PROMPT_IMAGEM_<LOTE>.md` (no ChatGPT/Codex, a própria conversa segue o roteiro e
+   gera; no Claude Code, entregue a frase PILOTO para colar no ChatGPT/Codex). O dono julga o traço; aprovado, crie
+   `prompts/PILOTO_APROVADO.txt` (sem ele a geração não passa da página 4).
+4. **Texto visual por partes** (lote grande). Rode `--contrato`. Divida as páginas restantes em partes de até 12
+   páginas, uma LETRA por parte — um agente por parte se o ambiente tiver subagentes; senão, escreva as partes em
+   sequência, uma por vez. Cada parte segue `CONTRATO-VISUAL.md` + a regra, vai só em `visual/parte_<L>.json` e fecha
+   com `--parte visual/parte_<L>.json` até 0 erros. Depois, uma **revisão cruzada** lê todas as linhas juntas (marca de
    estilo repetida, expressões iguais, objeto-assinatura repetido, papel × roupa) antes de liberar.
 5. **Montar a fila.** `npc_montar_prompts.py <lote> --gravar`: valida tudo (linha 750–980 caracteres, nenhum número
    além da idade, frase literal dos olhos, LADO, prisions, palavras proibidas, 2F+1M, nomes únicos) e só grava sem
    erro: `prompts/`, `referencias/`, `fila.json`, `PROMPT_IMAGEM_<LOTE>.md`. **A fila tem de estar cheia antes de
    mandar gerar.** Página que já tem imagem nunca é sobrescrita.
-6. **Sessão de imagem.** O usuário abre uma ou mais sessões com as frases do `PROMPT_IMAGEM_<LOTE>.md` (FAIXA x-y em
-   paralelo, ou TODOS). Uma geração por página; no máximo 1 refação, só por erro grave. Você **não** gera imagem.
-7. **Conferir.** Abra as páginas (Read) com a conferência da regra §10. Página que precisa voltar: renomeie para
+6. **Geração das imagens.** No ChatGPT/Codex, a própria conversa segue o `PROMPT_IMAGEM_<LOTE>.md` (TODOS, faixas em
+   sequência) e gera; no Claude Code, entregue as frases do arquivo (FAIXA x-y em paralelo, ou TODOS) para colar no
+   ChatGPT/Codex. Uma geração por página; no máximo 1 refação, só por erro grave. Na geração, roster e linhas estão
+   fechados: nada de reescrever texto para a página passar.
+7. **Conferir.** Abra as páginas (olhe a imagem) com a conferência da regra §10. Página que precisa voltar: renomeie para
    `paginas/pagina_NNN_ruimN.png`, ajuste a linha no roster/parte e rode `--gravar` — sai `prompts/pagina_NNN_vK.txt`
    e a página volta para a fila sozinha. Beleza "menor" ou detalhe: anote para o dono, não refaça.
 8. **Recortar.** `npc_recortar.py <lote>` (ou `--paginas 1,3`): rosto 512² + corpo 512×1024 por coluna, separados pela
@@ -104,12 +111,13 @@ python "${CLAUDE_SKILL_DIR}/scripts/npc_recortar.py" <lote> [--paginas 1,3]
    coluna, pés altos. Abra os recortes avisados antes de entregar.
 9. **Entrega.** `fichas.json` sai do roster com `rosto`/`corpo` preenchidos; complete as `descricao` que faltarem e
    rode o recortador de novo (ele preserva o que já está na ficha). Escreva `ENTREGA.md` (quantas, quais, pendências,
-   o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho.
+   o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho. No ChatGPT, entregue o
+   lote como `.zip`.
 
 ## Atualizar personagem que já existe
 
 Fluxo próprio, com a arte atual como referência (não embeleza): [../templates/npc/ATUALIZAR_PERSONAGEM.md](../templates/npc/ATUALIZAR_PERSONAGEM.md).
-O rosto e o corpo atuais **o usuário fornece**. A página entra no roster com `"tipo": "atualizar"` e `"anexos"`; o
+O rosto e o corpo atuais **o usuário fornece** (no ChatGPT, por upload). A página entra no roster com `"tipo": "atualizar"` e `"anexos"`; o
 prompt `prompts/atualizar_NNN.txt` é escrito à mão; a fila, o recorte e a ficha seguem os mesmos scripts.
 
 ## Refação fiel (mesma pessoa do lote, de novo)

@@ -1,7 +1,10 @@
 # Modo: Fusões
 
-Fusões usam o mesmo fluxo do [modo monstros](monstros.md) (entrada → fichas → fila → sessão de imagem → recorte →
+Fusões usam o mesmo fluxo do [modo monstros](monstros.md) (entrada → fichas → fila → geração das imagens → recorte →
 entrega). Aqui está só o que muda.
+
+Geração das imagens: no ChatGPT/Codex, a própria conversa segue o `PROMPT_<LOTE>.md` e gera; no Claude Code, entregue
+a frase para colar no ChatGPT/Codex (ver [modo monstros](monstros.md) §3 e [../regras/ambiente.md](../regras/ambiente.md)).
 
 ## Blocos
 
@@ -15,10 +18,10 @@ entrega). Aqui está só o que muda.
 
 1. Pares: o criador dá os pares, ou a regra para montá-los. Fusões de um **pacote temático** (ex.: crossover dos monstros
    de Halloween, anéis por estágio, ápice com os míticos): [../regras/lotes-tematicos.md](../regras/lotes-tematicos.md) §3.
-2. Para cada par, escreva a **leitura** de 1 linha (o conceito do crossover) no `plano.json` — os agentes de ficha seguem.
+2. Para cada par, escreva a **leitura** de 1 linha (o conceito do crossover) no `plano.json` — as fichas seguem essa leitura.
 3. Tier = maior pai + 1 (teto 10); tipo 1 da base, tipo 2 do sacrifício; par de tipos não repete no lote; base humanoide
    → fusão humanoide (o `montar_entrada.py` avisa).
-4. As **artes dos pais o usuário fornece** em `<lote>/artes/`, com os dados de cada pai (nome exato, tier, tipos,
+4. As **artes dos pais o usuário fornece** (no ChatGPT, por upload) em `<lote>/artes/`, com os dados de cada pai (nome exato, tier, tipos,
    descrição, humanoide, linhagem = outros nomes da linha dele). O `montar_entrada.py` monta a prancha de cada cartela:
    base grande à esquerda, sacrifício pequeno à direita (F: todos do mesmo tamanho).
 

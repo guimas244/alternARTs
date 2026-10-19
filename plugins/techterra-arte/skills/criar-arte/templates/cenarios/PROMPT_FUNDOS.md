@@ -1,12 +1,18 @@
 # Sessão de imagem — fundos de {LOTE}
 
-> Modelo da skill `criar-arte` (`templates/cenarios/PROMPT_FUNDOS.md`). O Claude copia para
+> Modelo da skill `criar-arte` (`templates/cenarios/PROMPT_FUNDOS.md`). O assistente copia para
 > `{PASTA_LOTE}/PROMPT_{LOTE}.md`, troca os `{…}`, preenche a FILA e escreve cada `prompts/<id>.txt` com o texto fixo
 > do fim deste modelo. Por que cada regra existe: `{SKILL}/regras/cenarios-mapas-capas.md` §1 (fundo de Local) e §4
 > (portão). Apague esta caixa e o "Texto fixo" do fim antes de entregar à sessão de imagem.
 
-Você **só gera**. Os prompts, a fila e os nomes já foram escritos e validados pelo Claude. Você anexa, cola, gera,
-confere, salva onde está mandado e registra. **Não** crie nem altere prompt, fila, nome ou referência.
+Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). Se esta mesma conversa
+preparou o lote, a partir daqui ela está na etapa de geração.
+
+Você **só gera**. Os prompts, a fila e os nomes já foram escritos e validados no preparo. Você anexa, cola, gera,
+confere, salva onde está mandado e registra. **Não** crie nem altere prompt, fila, nome ou referência. Anexo que a
+ferramenta de imagem não alcança: mostre ao usuário a lista, na ordem, e peça para ele anexar as imagens na conversa.
+Imagem gerada que o ambiente de código não enxerga: peça ao usuário para baixá-la e reenviá-la por upload, e salve no
+caminho mandado.
 
 ## Regras desta sessão
 
@@ -53,12 +59,13 @@ Todas as imagens desta sessão vão para esta pasta, e nenhuma outra:
 - A cópia no cache do gerador **não é entrega**: copie sempre para a pasta acima.
 - Registro: `{PASTA_LOTE}\validacao\geracoes_fundos.json` — lista `{"id", "arquivo", "tentativa", "motivo_refacao"}`;
   e `{PASTA_LOTE}\LEIA-ME.txt` com o que ficou pendente e por quê.
-- **Não** grave dentro da pasta da skill. **Não** redimensione nem recorte: quem normaliza é o Claude, depois.
+- **Não** grave dentro da pasta da skill. **Não** redimensione nem recorte: a normalização vem depois da geração, com
+  o script.
 - No fim, responda com a pasta absoluta num bloco de código.
 
 ---
 
-## Texto fixo (o Claude usa para escrever `prompts/<id>.txt`; não vai para a sessão)
+## Texto fixo (o assistente usa para escrever `prompts/<id>.txt`; não vai para a sessão)
 
 ### Fundo de Local (Narraris, Jornada, expansões) — abertura e fechamento fixos, mude só o `{}`
 

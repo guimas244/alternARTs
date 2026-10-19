@@ -2,10 +2,12 @@
 
 Regras: [../regras/cenarios-mapas-capas.md](../regras/cenarios-mapas-capas.md) §5. Tamanhos:
 [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).
-Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md).
+Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude
+Code): [../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md);
+`<lote>` = a pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
 
 - **Entra:** a lista de cenas (uma por tipagem, tipo de evento ou raid) e **2 ou 3 artes do próprio jogo** como
-  referência de estilo — **o usuário fornece** (ainda não há referência fixa de capa na skill). Sem elas, peça antes de
+  referência de estilo — **o usuário fornece** (no ChatGPT, por upload; ainda não há referência fixa de capa na skill). Sem elas, peça antes de
   gerar.
 - **Sai:** `finais/<grupo>_<cena>.webp` **510×680** (uma por cena) e, se houver, `finais/moldura_<tema>.png`
   **1672×941** RGBA; mais `entregas.json` e `ENTREGA.md`.
@@ -48,12 +50,14 @@ do arquivo (expedição e raid da mesma tipagem não colidem).
    `<lote>/PROMPT_<LOTE>.md`, troque `{PASTA_LOTE}`, `{SKILL}`, `{LOTE}`, deixe só o parágrafo "O que é cada cena" do
    tipo, escreva a lista de cada cartela (nome — cena em 1–2 frases com o símbolo central; cor dominante por nome) e,
    se houver, a seção da moldura. Fila cheia antes de gerar.
-3. **Sessão de imagem:** BLOCO FIXO + uma cartela por geração, todas em ordem; moldura numa geração separada.
+3. **Geração das imagens:** no ChatGPT/Codex, a própria conversa segue o `PROMPT_<LOTE>.md` e gera; no Claude Code,
+   entregue a frase para colar no ChatGPT/Codex. BLOCO FIXO + uma cartela por geração, todas em ordem; moldura numa
+   geração separada.
 4. **Converter as cartelas:**
 
    ```
-   python "${CLAUDE_SKILL_DIR}/scripts/capas_converter.py" <lote>
-   python "${CLAUDE_SKILL_DIR}/scripts/capas_converter.py" <lote>/cartelas/cartela_003_v2.png   # uma só
+   python "{SKILL}/scripts/capas_converter.py" <lote>
+   python "{SKILL}/scripts/capas_converter.py" <lote>/cartelas/cartela_003_v2.png   # uma só
    ```
 
    Acha a cruz branca (tolera cartela fora de 1536×2048, como 1086×1448, e faixa fora de 40 px; sem faixa, corta pela
@@ -63,7 +67,7 @@ do arquivo (expedição e raid da mesma tipagem não colidem).
 5. **Moldura de invasão:**
 
    ```
-   python "${CLAUDE_SKILL_DIR}/scripts/fundos_normalizar.py" <lote> --destino moldura
+   python "{SKILL}/scripts/fundos_normalizar.py" <lote> --destino moldura
    ```
 
    Só redimensiona para 1672×941 RGBA; fundo verde puro vira transparente; mede a cobertura (alvo < 15%) e avisa se há
@@ -72,4 +76,5 @@ do arquivo (expedição e raid da mesma tipagem não colidem).
 6. **Conferir no olho** por `conferencia/capas_*.jpg`: composição vertical e centrada, palco no meio, nada importante
    nas bordas, nenhum texto, rosto ou criatura em destaque, as 4 cenas da mesma coleção.
 7. **Entrega:** `entregas.json` já traz cada capa (cartela, posição, miolo); acrescente o `nome` de exibição se quiser.
-   `ENTREGA.md` com pendências (cartela que esgotou as 3 imagens, aviso de miolo) e a linha no `ENTREGAS.md`.
+   `ENTREGA.md` com pendências (cartela que esgotou as 3 imagens, aviso de miolo) e a linha no `ENTREGAS.md`. No
+   ChatGPT, entregue o lote como `.zip`.

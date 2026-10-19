@@ -4,6 +4,11 @@
 > Você **só gera**: anexa, cola, gera, confere, salva onde está mandado e registra. **Proibido** criar ou alterar
 > ficha, nome, descrição, prompt, `fila.json`, `itens.json` ou as referências, e proibido criar script que escreva
 > qualquer um deles. Cartela fora da fila ou sem arquivo de prompt: pule e anote.
+>
+> Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). Se esta mesma conversa
+> preparou o lote, a partir daqui ela está na etapa de geração. Lote levado para outro ambiente (ex.: `.zip` extraído
+> em `/mnt/data/<lote>` numa conversa nova do ChatGPT): use a pasta onde ele foi extraído no lugar da pasta abaixo e a
+> pasta desta skill no seu ambiente nos comandos — a fila usa caminhos relativos.
 
 ## ONDE SALVAR (obrigatório)
 
@@ -31,8 +36,10 @@ Nomes em minúsculas, sem acento, `_` entre palavras, números com dois dígitos
 1. Leia `fila.json`. Pule a cartela que já tem `cartelas/pagina_NN_original.png` (se a sessão cair, basta mandar a
    mesma frase de novo).
 2. **Anexe as imagens de `anexos`, nesta ordem** (1ª estilo, 2ª diagrama da grade) e cole o conteúdo do arquivo de
-   `prompt` **exatamente** como está, sem resumir nem traduzir.
+   `prompt` **exatamente** como está, sem resumir nem traduzir. Se a ferramenta de imagem não alcançar um anexo, mostre
+   ao usuário a lista, na ordem, e peça para ele anexar as imagens na conversa.
 3. Gere em **1254 × 1254**, PNG com **fundo transparente de verdade**. Salve como `pagina_NN_vK.png` + `.prompt.txt`.
+   Se o ambiente de código não enxergar a imagem gerada, peça ao usuário para baixá-la e reenviá-la por upload.
 4. **Confira no olho:** 25 objetos em 5×5; ordem igual à lista do prompt (a ordem dá o nome de cada recorte; a tabela
    de conferência abaixo diz o que é cada célula); nenhum texto; fundo sem xadrez pintado; o diagrama não aparece
    desenhado; nenhuma peça com cabo, formato de gente ou criatura dentro; faixa alta mais elaborada, não maior.
@@ -58,8 +65,9 @@ Nomes em minúsculas, sem acento, `_` entre palavras, números com dois dígitos
 
 - **Piloto:** só as cartelas que a mensagem mandar; pare e espere o dono julgar.
 - **FAIXA** (normal): "faça as cartelas X–Y" — só elas, em ordem, pulando as que já têm original; registro com sufixo `_<x>-<y>`.
-- **TODOS:** uma sessão coordena as faixas (abre um trabalhador por faixa, mandando ler este mesmo arquivo); só ela
-  junta os registros no fim.
+- **TODOS:** uma sessão coordena as faixas (se houver subagentes, abre um trabalhador por faixa, mandando ler este
+  mesmo arquivo; sem subagentes — o normal no ChatGPT —, faz as faixas em sequência, ela mesma); só ela junta os
+  registros no fim.
 
 ## Mapa das cartelas
 

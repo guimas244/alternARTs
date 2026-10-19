@@ -78,7 +78,7 @@ def main():
         print(f"\n== n {e['n']} | {e['slot']} L{e['linha']}C{e['coluna']} | bloco {b} ({NOME_BLOCO[b]}) | tier {e['tier']} | "
               f"tipos {e['tipo1']}/{e['tipo2']} | humanoide_previsto {e['humanoide_previsto']}")
         if e.get("leitura"):
-            print(f"   LEITURA (direção do Claude): {e['leitura']}")
+            print(f"   LEITURA (direção do plano): {e['leitura']}")
         if b == "N":
             ev = e.get("evolucao") or {}
             ant, seg = por_n.get(ev.get("anterior")), por_n.get(ev.get("seguinte"))

@@ -6,20 +6,21 @@ Todos os scripts: **Python 3 + Pillow**, sem banco, sem rede, sem caminho pessoa
 python "<skill>/scripts/<script>.py" <pasta_do_lote> [opções]
 ```
 
-`<skill>` = `${CLAUDE_SKILL_DIR}`. Nada é gravado dentro da skill; tudo vai para `<pasta_do_lote>`. Funções comuns em
+`<skill>` = a pasta desta skill (onde está o SKILL.md). Nada é gravado dentro da skill; tudo vai para `<pasta_do_lote>`. Funções comuns em
 `comum.py` (importar com `sys.path.insert(0, os.path.dirname(__file__))`). Texto sempre UTF-8 sem BOM.
 
 ## Pasta do lote
 
 ```
 <lote>/
-├── plano.json              entrada (escrito pelo Claude a partir do pedido; formato abaixo)
+├── plano.json              entrada (escrito pelo assistente a partir do pedido; formato abaixo)
 ├── artes/                  artes de origem que o USUÁRIO fornece (pais, originais, antecessores), PNG com alfa de preferência
 ├── entrada.json            gerado por montar_entrada.py (células numeradas)
 ├── pais/                   recortes limpos das artes de origem (gerado)
 ├── referencias/            cópia das referências da skill usadas no lote + pranchas cartela_NNN_pais.png + guia (gerado)
 │   └── avulsas/            quadrante da prancha por célula (gerado por preparar_fila.py)
-├── fichas_claude/          parte_<L>.json escritas pelos agentes + parte_<L>_validacao.json
+├── fichas_claude/          parte_<L>.json escritas por parte (agente ou sequência) + parte_<L>_validacao.json
+│                           (nome fixo da pasta das fichas: é contrato dos scripts, não indica ambiente)
 ├── monstros.json           fichas integradas (gerado por preparar_fila.py) — é também o arquivo do cadastrador
 ├── prompts/                cartela_NNN.txt, avulsa_NNN_LxCy.txt (gerado)
 ├── fila.json               fila da sessão de imagem (gerado)
@@ -51,7 +52,7 @@ Célula (ordem L1C1, L1C2, L2C1, L2C2; sempre 4 por cartela):
 | `bloco` | todos | `N` novo · `V` variação · `F` fusão de fusões (pais já fusões, todos do mesmo tamanho, nenhum é base) · `L` prodígio (tema por cartela) · `X` fusão base+sacrifício · `A` ápice (fusão base+sacrifício de míticos) |
 | `tier`, `tipo1`, `tipo2` | todos | ids de `comum.TIPOS` |
 | `humanoide_previsto` | todos | bool (opcional, padrão false) |
-| `leitura` | todos | opcional: direção de conceito escrita pelo Claude (1 linha) |
+| `leitura` | todos | opcional: direção de conceito escrita pelo assistente (1 linha) |
 | `evolui_de` | N | opcional: `[cartela, linha, coluna]` da célula antecessora (mesma cartela ou anterior) |
 | `original` | V | `{nome, tier, tipo1, tipo2, descricao, arte, humanoide}` — `arte` relativo ao lote (`artes/x.png`) |
 | `tipo_sai`, `tipo_entra` | V | qual tipo do original sai e qual entra |

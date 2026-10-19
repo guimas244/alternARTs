@@ -1,10 +1,11 @@
 # Contrato — fichas do lote {TITULO} ({LOTE})
 
-<!-- Modelo: templates/CONTRATO-FICHAS.md da skill criar-arte. O Claude copia para a pasta do lote trocando {TITULO},
+<!-- Modelo: templates/CONTRATO-FICHAS.md da skill criar-arte. O assistente copia para a pasta do lote trocando {TITULO},
      {LOTE} e {SKILL} (pasta da skill, com barras "/"), e apaga as seções de bloco que o lote não tem. -->
 
-As fichas e os prompts saem do Claude. A IA de imagem só gera, confere, salva e registra. Este contrato diz **o que** cada
-agente escreve; as regras de conteúdo moram na skill e **não** são repetidas aqui — leia-as:
+As fichas e os prompts saem do preparo, antes da geração. Na etapa de geração só se gera, confere, salva e registra.
+Este contrato diz **o que** cada parte tem (escrita por um agente, se houver subagentes, ou pelo assistente, uma parte
+por vez); as regras de conteúdo moram na skill e **não** são repetidas aqui — leia-as:
 
 | Assunto | Regra |
 |---|---|
@@ -24,18 +25,18 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
   `entrada.json` inteiro.** Cada célula traz `n`, `cartela`, `linha`, `coluna`, `bloco`, `tier`, `tipo1`, `tipo2`,
   `humanoide_previsto` e, conforme o bloco, `leitura`, `evolucao`, `original` + `tipo_sai`/`tipo_entra` ou
   `ingredientes` (com `linhagem`).
-- **`leitura`** = direção de conceito escrita pelo Claude. Siga a ideia central; o detalhe é seu.
+- **`leitura`** = direção de conceito escrita no plano. Siga a ideia central; o detalhe é seu.
 - `plano.json`: o campo `clima` (se houver) é o tom do lote e vai em todo prompt — a ficha não pode contrariá-lo.
 - `referencias/cartela_NNN_pais.png`: prancha 2x2 das cartelas com arte de origem (V: o original; F: os pais, mesmo
   tamanho; X/A: BASE grande à esquerda, SACRIFÍCIO pequeno à direita; N: o antecessor de outra cartela, quando houver).
-  **Olhe com Read antes de escrever**; para detalhe, `pais/<slug>.png`.
-- Nomes que já existem no jogo: `{SKILL}/dados/nomes_existentes.json`. Se o Claude passou uma lista dos monstros que a
+  **Olhe a imagem antes de escrever**; para detalhe, `pais/<slug>.png`.
+- Nomes que já existem no jogo: `{SKILL}/dados/nomes_existentes.json`. Se veio uma lista dos monstros que a
   tipagem/pacote já tem, ela vale como anti-repetição de arquétipo, silhueta e ideia central.
 
-## Saída (EXCLUSIVA do agente)
+## Saída (EXCLUSIVA da parte)
 
-`fichas_claude/parte_<LETRA>.json`: uma **lista** com uma ficha por célula das suas cartelas, em UTF-8 sem BOM. Não
-escreva em mais nenhum arquivo. Os campos fixos (cartela, linha, coluna, bloco, tier, tipos, `ingredientes`, `arquivo`,
+`fichas_claude/parte_<LETRA>.json`: uma **lista** com uma ficha por célula das suas cartelas, em UTF-8 sem BOM
+(`fichas_claude/` é o nome fixo da pasta das fichas, que os scripts leem). Não escreva em mais nenhum arquivo. Os campos fixos (cartela, linha, coluna, bloco, tier, tipos, `ingredientes`, `arquivo`,
 `visual`) **não** são seus: o `compor_fichas.py` copia/monta.
 
 ## Campos de todos os blocos

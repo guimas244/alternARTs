@@ -1,11 +1,17 @@
 # Sessão de imagem — ícones de mapa {LOTE}
 
-> Modelo da skill `criar-arte` (`templates/icones/PROMPT_ICONES.md`). O Claude copia para
+> Modelo da skill `criar-arte` (`templates/icones/PROMPT_ICONES.md`). O assistente copia para
 > `{PASTA_LOTE}/PROMPT_{LOTE}.md`, troca os `{…}` e escreve `prompts/cartela_NNN.txt` = texto fixo + a lista dos 16
 > da cartela. Regras: `{SKILL}/regras/cenarios-mapas-capas.md` §6. Apague esta caixa antes de entregar.
 
+Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). Se esta mesma conversa
+preparou o lote, a partir daqui ela está na etapa de geração.
+
 Você **só gera**. Os prompts, a fila e os nomes já estão escritos. Você anexa, cola, gera, confere, salva e registra.
-**Não** crie nem altere prompt, fila, nome ou referência. **Não recorte**: quem recorta é o Claude.
+**Não** crie nem altere prompt, fila, nome ou referência. **Não recorte**: o recorte vem depois da geração, com o
+script. Anexo que a ferramenta de imagem não alcança: mostre ao usuário a lista, na ordem, e peça para ele anexar as
+imagens na conversa. Imagem gerada que o ambiente de código não enxerga: peça ao usuário para baixá-la e reenviá-la
+por upload, e salve no caminho mandado.
 
 ## Regras desta sessão
 

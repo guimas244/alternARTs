@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Monta TUDO o que a sessão de imagem precisa, a partir das fichas escritas pelo Claude (ver CONTRATO-INTERNO.md).
+"""Monta TUDO o que a geração de imagem precisa, a partir das fichas escritas pelo assistente (ver CONTRATO-INTERNO.md).
 
     python preparar_fila.py <lote>                          # ensaio: só mostra o que faria
     python preparar_fila.py <lote> --gravar                 # integra as partes validadas, escreve prompts e a fila

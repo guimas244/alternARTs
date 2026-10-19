@@ -1,7 +1,8 @@
 # Contrato — texto de imagem das pessoas ({TITULO})
 
 <!-- Template: `npc_montar_prompts.py <lote> --contrato` grava este arquivo como <lote>/CONTRATO-VISUAL.md, com os
-     caminhos trocados. A sessão do Claude diz a cada agente a LETRA e as páginas dele. -->
+     caminhos trocados. O preparo diz a cada agente a LETRA e as páginas dele; sem subagentes, o próprio assistente
+     segue este contrato para cada parte, uma por vez, em sequência. -->
 
 Você escreve o `visual` (a linha da imagem) de cada pessoa das **suas páginas** do roster. Você é dono **só** do
 arquivo `visual/parte_<LETRA>.json`. Não mexa em mais nada: nem roster, nem prompts, nem imagens, nem arquivos de

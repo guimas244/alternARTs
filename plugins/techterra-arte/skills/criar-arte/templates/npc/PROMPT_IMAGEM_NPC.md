@@ -4,7 +4,8 @@
      TITULO, TOTAL, PRIMEIRA, ULTIMA) e grava como <lote>/PROMPT_IMAGEM_<LOTE>.md. Regras: regras/npc-personagens.md
      e regras/fluxo-sessoes.md. Não edite o arquivo gerado à mão: mude o template ou o roster e rode de novo. -->
 
-Abra uma sessão com ferramenta de geração de imagem e mande **uma** destas frases:
+Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem), com **uma** destas
+frases:
 
 | Modo | Frase |
 |---|---|
@@ -13,7 +14,12 @@ Abra uma sessão com ferramenta de geração de imagem e mande **uma** destas fr
 | Todos | `Leia {PASTA_LOTE}/PROMPT_IMAGEM_{LOTE}.md e faça TODOS.` |
 
 Várias sessões de FAIXA podem rodar ao mesmo tempo, cada uma com um intervalo diferente. Caiu? Mande a mesma frase de
-novo: ela pula as páginas que já têm imagem.
+novo: ela pula as páginas que já têm imagem. No ChatGPT, o normal é a própria conversa que preparou o lote fazer o
+PILOTO e depois TODOS, com as faixas em sequência.
+
+Lote levado para outro ambiente (ex.: `.zip` extraído em `/mnt/data/<lote>` numa conversa nova do ChatGPT): use a pasta
+onde ele foi extraído no lugar da pasta do lote abaixo e a pasta desta skill no seu ambiente — a fila usa caminhos
+relativos.
 
 ---
 
@@ -22,7 +28,8 @@ Seu ÚNICO trabalho é gerar a imagem de cada página da sua faixa e salvá-la n
 
 **Proibido:** criar ou alterar ficha, nome, descrição, roster, prompt, `fila.json`, referências ou qualquer arquivo fora
 de `paginas/` e `validacao/`; escrever script que escreva ficha ou prompt; recortar; cadastrar; mexer em banco, API ou
-git. A sessão de imagem só anexa, cola, gera, confere, salva e registra.
+git. A sessão de imagem só anexa, cola, gera, confere, salva e registra. Se esta mesma conversa preparou o lote, a
+partir daqui ela está na etapa de geração: roster e linhas estão fechados.
 
 ## PASTA DO LOTE
 
@@ -61,12 +68,14 @@ Todos os caminhos abaixo são relativos a essa pasta.
    4. `referencias/beleza_elira.png` (idem)
    5. só quando a fila listar um 5º anexo (tile de rosto de uma refação fiel): ele, por último.
    Página de atualizar personagem traz outros anexos (rosto e corpo atuais primeiro): siga a fila.
-   Se faltar um anexo em `referencias/`, pare e avise (quem copia é a sessão do Claude, a partir de
-   `{SKILL}/referencias/personagens/`).
+   Se faltar um anexo em `referencias/`, pare e avise (quem copia é o preparo, a partir de
+   `{SKILL}/referencias/personagens/`). Se o arquivo existe mas a ferramenta de imagem não o alcança, mostre ao
+   usuário a lista dos anexos, na ordem, e peça para ele anexar as imagens na conversa.
 2. Cole **exatamente** o texto do arquivo de prompt, inteiro, sem resumir, traduzir nem "melhorar".
 3. Saída esperada: PNG **1254 × 1254** com fundo transparente de verdade (alfa real), 3 colunas, busto em cima e corpo
    inteiro embaixo.
-4. Salve em `paginas/pagina_NNN.png`. A cópia que fica no cache do gerador **não é entrega**.
+4. Salve em `paginas/pagina_NNN.png`. A cópia que fica no cache do gerador **não é entrega**. Se o ambiente de código
+   não enxergar a imagem gerada, peça ao usuário para baixá-la e reenviá-la por upload, e copie para esse caminho.
 
 ## UMA GERAÇÃO POR PÁGINA
 
@@ -82,7 +91,7 @@ Todos os caminhos abaixo são relativos a essa pasta.
 - Se refez: a primeira fica como `paginas/pagina_NNN_v1.png` e a segunda como `paginas/pagina_NNN.png`, do jeito que
   vier. Nunca faça uma terceira.
 - A ferramenta recusou a página? Pule para a próxima e anote.
-- Imagens `pagina_NNN_ruimN.png` foram reprovadas pela sessão do Claude: não mexa nelas. Se a página ficou sem
+- Imagens `pagina_NNN_ruimN.png` foram reprovadas na conferência do preparo: não mexa nelas. Se a página ficou sem
   `pagina_NNN.png` por causa disso, ela está pendente de novo (com um prompt `_vK` novo): gere.
 
 ## CONFERÊNCIA RÁPIDA (anote; só os erros graves acima fazem refazer)

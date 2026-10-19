@@ -1,10 +1,30 @@
 # alternARTs
 
-Fábrica de arte do jogo **Techterra**, empacotada como plugin do Claude Code. A skill `criar-arte` planeja lotes,
-escreve fichas e prompts, monta a fila para a IA de imagem e confere e recorta as cartelas: monstros, fusões,
-personagens/NPCs (rosto e corpo), itens, cenários, mapas, capas e ícones.
+Fábrica de arte do jogo **Techterra**. A skill `criar-arte` (formato aberto de skills: pasta com `SKILL.md`) planeja
+lotes, escreve fichas e prompts, **gera as cartelas** e confere e recorta: monstros, fusões, personagens/NPCs (rosto e
+corpo), itens, cenários, mapas, capas e ícones.
+
+**Alvo principal: ChatGPT** — é onde as imagens são geradas. Também funciona no Codex e no Claude Code (este só prepara;
+não gera imagem). Detalhe de cada ambiente: `plugins/techterra-arte/skills/criar-arte/regras/ambiente.md`.
 
 Repositório privado. Só o dono (guimas244) e o Claude fazem commit; quem usa a skill só instala.
+
+## Instalar no ChatGPT
+
+1. Plano com Skills liberado (pelas fontes de out/2026: Business, Enterprise, Edu ou Healthcare; em Enterprise/Edu o
+   administrador pode precisar ligar).
+2. Pegue o zip da skill: o dono gera com `python empacotar_chatgpt.py` (sai em `dist/criar-arte.zip`) e envia; ou, com
+   o repositório clonado, rode o mesmo comando.
+3. No ChatGPT: **Plugins → Skills → Create → Upload from your computer** → escolha `criar-arte.zip` → confira nome e
+   descrição → instale.
+4. Teste: "quero um lote piloto de 1 cartela de monstros novos de gelo" (roteiro em "Primeiro lote", abaixo).
+5. Atualização: quando a skill mudar, baixe/receba o zip novo e substitua a skill no ChatGPT.
+
+## Instalar no Codex
+
+Com acesso de leitura ao repositório e credencial git na máquina (ou `GITHUB_TOKEN`), peça ao Codex para instalar a
+skill de `https://github.com/guimas244/alternARTs/tree/main/plugins/techterra-arte/skills/criar-arte` (vai para
+`~/.codex/skills/criar-arte`). Para atualizar, apague essa pasta e instale de novo.
 
 ## Instalar (Claude Code)
 
@@ -31,8 +51,8 @@ Peça normalmente ("quero um lote de 8 cartelas de monstros de gelo", "faz fusõ
 nórdicos", "ícones de mapa para estes Locais"). A skill escolhe o modo, lê as regras e trabalha **na sua pasta de
 trabalho** — nada é gravado dentro do plugin.
 
-A geração das imagens acontece numa sessão separada da IA de imagem: a skill entrega o `PROMPT_<LOTE>.md` e a frase para
-colar lá.
+No ChatGPT e no Codex, a própria conversa gera as imagens seguindo o `PROMPT_<LOTE>.md`. No Claude Code, a skill entrega
+o `PROMPT_<LOTE>.md` e a frase para colar no ChatGPT/Codex.
 
 ## Primeiro lote (para quem está começando)
 

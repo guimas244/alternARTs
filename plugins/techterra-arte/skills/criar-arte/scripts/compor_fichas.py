@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Completa uma parte de fichas escrita por um agente do Claude e valida.
+"""Completa uma parte de fichas escrita pelo assistente (ou por um agente dele) e valida.
 
     python compor_fichas.py <pasta_do_lote> fichas_claude/parte_A.json
 

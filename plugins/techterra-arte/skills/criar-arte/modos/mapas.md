@@ -3,7 +3,9 @@
 Regras: [../regras/cenarios-mapas-capas.md](../regras/cenarios-mapas-capas.md) §2 (sub-mapa) e §3 (mundi e
 mapa-modelo). Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos:
 [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md). Sessões e ONDE SALVAR:
-[../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md).
+[../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude Code):
+[../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a
+pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
 
 - **Entra:** sub-mapa — a Região (bioma, conceito, tipo: comum, reino, bastião ou porto), a lista de lugares (com marco
   e posição no quadro), as ligações entre eles e o ponto da Região no mundi; mundi — as terras, cada uma com posição,
@@ -33,11 +35,11 @@ mapa-modelo). Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos:
    eles e da borda; ligações (trilha, estrada, escadaria, ponte sobre rio — nunca sobre o mar); o lugar mais perigoso
    no ponto mais alto e mais distante; acréscimo do tipo de Região (§2). Se o mapa também ganha fundos de Local, faça
    já o plano de fundos do [modo cenários](cenarios.md) (passo 1 de lá).
-2. **Recorte do mundi** em volta do ponto da Região, a partir de `${CLAUDE_SKILL_DIR}/referencias/mapas/mundi-mascris-completo.jpg`
+2. **Recorte do mundi** em volta do ponto da Região, a partir de `{SKILL}/referencias/mapas/mundi-mascris-completo.jpg`
    (ou do mundi que o usuário fornecer): uma janela de cerca de 1/3 da largura e 1/3 da altura do mundi, centrada no
    ponto (na arte de 1536×1024, 480×320 px), ampliada para 1536×1024 e salva em
    `<lote>/referencias/mundi_recorte_<id>.jpg` — nunca na skill. Ainda não há script para isso: use um editor de
-   imagem. O recorte dá bioma, relevo e contorno; o sub-mapa copia só a geografia, nunca o traço de pergaminho.
+   imagem (ou, no ChatGPT, algumas linhas de Pillow: `crop` + `resize`). O recorte dá bioma, relevo e contorno; o sub-mapa copia só a geografia, nunca o traço de pergaminho.
 3. **Prompt** em `prompts/mapa_<id>.txt` com o texto fixo de
    [`templates/mapas/PROMPT_SUBMAPA.md`](../templates/mapas/PROMPT_SUBMAPA.md) (frase dos anexos + molde + acréscimo do
    tipo). Prompts dos fundos, se houver: [modo cenários](cenarios.md) passo 2.
@@ -45,12 +47,13 @@ mapa-modelo). Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos:
    `{id}`, `{N}`; anexos na ordem: `submapa-kaiangue.jpg` (sempre) + `submapa-aita.jpg` (cidade grande) ou
    `submapa-ossario.jpg` (bioma sem mar) + o recorte do mundi. Na "Fase 2", cole a FILA de fundos de
    `templates/cenarios/PROMPT_FUNDOS.md`. Fila cheia antes de gerar.
-5. **Sessão de imagem:** gera o sub-mapa e, em seguida, os fundos, sem parar.
+5. **Geração das imagens:** no ChatGPT/Codex, a própria conversa segue o `PROMPT_<LOTE>.md` e gera; no Claude Code,
+   entregue a frase para colar no ChatGPT/Codex. Gera o sub-mapa e, em seguida, os fundos, sem parar.
 6. **Ajustar e medir:**
 
    ```
-   python "${CLAUDE_SKILL_DIR}/scripts/fundos_normalizar.py" <lote> --destino submapa --entrada brutos/mapa
-   python "${CLAUDE_SKILL_DIR}/scripts/fundos_normalizar.py" <lote> --destino local
+   python "{SKILL}/scripts/fundos_normalizar.py" <lote> --destino submapa --entrada brutos/mapa
+   python "{SKILL}/scripts/fundos_normalizar.py" <lote> --destino local
    ```
 
    O sub-mapa fica em `brutos/mapa/` e os fundos na raiz de `brutos/` (o script não desce em subpastas). Mapa: **só redimensiona**, PNG; proporção longe de 3:2 vira
@@ -60,6 +63,7 @@ mapa-modelo). Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos:
    sempre (§2).
 8. **Entrega:** em `entregas.json`, acrescente ao registro do mapa a lista `lugares` (nome + onde está no quadro, como
    foi pedido) para o cadastrador achar cada um; `ENTREGA.md` com o que precisa de olho humano; linha no `ENTREGAS.md`.
+   No ChatGPT, entregue o lote como `.zip`.
 
 ## Mapa-múndi e mapa-modelo dos lados
 
@@ -67,7 +71,9 @@ mapa-modelo). Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos:
    conferir; nunca vai anexado).
 2. Prompt em `prompts/mundi_<id>.txt` com o texto fixo de
    [`templates/mapas/PROMPT_MUNDI.md`](../templates/mapas/PROMPT_MUNDI.md); PROMPT da sessão a partir do mesmo
-   template. Só texto + no máximo uma imagem de traço; **conversa nova**; tentativa nova = `_v2`, `_v3`.
+   template. Só texto + no máximo uma imagem de traço; **conversa nova** para a geração (nada de imagem anterior no
+   contexto — no ChatGPT, leve o roteiro e o lote para uma conversa nova; no Claude Code, entregue a frase para colar
+   no ChatGPT/Codex); tentativa nova = `_v2`, `_v3`.
 3. Ajustar: `fundos_normalizar.py <lote> --destino mundi` (1536×1024, só redimensiona; a moldura do mundi é proposital,
    então a borda não é medida). Mapa de Narraris (prompt pede 1600×1000): `--destino narraris_mapa` (1586×992).
 4. Conferir no olho pelos critérios do §3 (terras separadas e reconhecíveis, cores só dentro das terras, sem letra na

@@ -2,8 +2,10 @@
 
 Fluxo completo de um lote de itens em cartela 5x5, do pedido ao pacote de entrega. A regra da arte (estilo, o que é
 equipamento de monstro, faixas, grade, texto fixo do prompt, casos especiais) está em
-[../regras/itens.md](../regras/itens.md) — este arquivo só diz **como executar**. `{SKILL}` = `${CLAUDE_SKILL_DIR}`;
-`<lote>` = a pasta de trabalho do lote (fora da skill). Joia e item de passe: sem regra própria ainda, pergunte ao usuário.
+[../regras/itens.md](../regras/itens.md) — este arquivo só diz **como executar**. `{SKILL}` = a pasta desta skill
+(onde está o SKILL.md); `<lote>` = a pasta de trabalho do lote (fora da skill; no ChatGPT, `/mnt/data/<lote>`).
+Ambiente (ChatGPT, Codex, Claude Code): [../regras/ambiente.md](../regras/ambiente.md). Joia e item de passe: sem regra
+própria ainda, pergunte ao usuário.
 
 ## 0. Plano do lote
 
@@ -45,13 +47,15 @@ equipamento de monstro, faixas, grade, texto fixo do prompt, casos especiais) es
   **como prende** (correia, argola, presilha, punho, encaixe). Nunca o nome em português, nunca acento.
 - `arquivo` é preenchido pelo script: `<tipagem>/faixa_NN_<slug do nome>.png`.
 
-## 2. Visual por agentes (lote grande)
+## 2. Visual por partes (lote grande)
 
-- Divida por tipagem (ou por par de páginas). Cada agente escreve **só** o `visual` (e `nome`/`descricao`, se for dele)
-  dos itens da sua parte, num arquivo próprio (`partes/<tipagem>.json`); um só junta tudo no `itens.json`.
-- Antes de soltar os agentes, faça a **alocação nominal** das ideias por tipagem (que referência — anatomia, fenômeno,
+- Divida por tipagem (ou por par de páginas). Cada parte tem **só** o `visual` (e `nome`/`descricao`, se for dela)
+  dos itens daquela parte, num arquivo próprio (`partes/<tipagem>.json`); no fim, tudo é juntado no `itens.json`.
+  Com subagentes, um agente por parte, em paralelo; sem subagentes (ChatGPT), escreva as partes em sequência, uma por
+  vez, e faça a revisão cruzada no fim.
+- Antes de escrever as partes, faça a **alocação nominal** das ideias por tipagem (que referência — anatomia, fenômeno,
   material, artefato — vai para qual célula), para não convergirem para o mesmo objeto (regra de orquestração em
-  [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md)). Cada agente lê o que os outros já escreveram.
+  [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md)). Cada parte lê o que as outras já escreveram.
 - Padrão de criatividade: a primeira cartela Marinho — cada célula um conceito novo; a tipagem não impõe cor.
 
 ## 3. Validar e montar a fila
@@ -74,12 +78,13 @@ python "{SKILL}/scripts/itens_montar_prompts.py" <lote> --gravar   # grava
   `arquivo` de cada item no `itens.json`. `--forcar` grava mesmo com erro, só para ensaio: fila `bloqueada`.
 - Leia 1 prompt inteiro antes de liberar: a ordem das células é o que dá nome a cada recorte.
 
-## 4. Sessão de imagem
+## 4. Geração das imagens
 
-Entregue ao usuário o caminho de `<lote>/PROMPT_ITENS_<LOTE>.md` (modos piloto / FAIXA / TODOS, como em
-[../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md)). A sessão só gera, confere, simula o recorte e salva
+No ChatGPT/Codex, a própria conversa segue `<lote>/PROMPT_ITENS_<LOTE>.md` e gera; no Claude Code, entregue ao usuário
+o caminho desse arquivo e a frase para colar no ChatGPT/Codex (modos piloto / FAIXA / TODOS, como em
+[../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md)). Na geração só se gera, confere, simula o recorte e salva
 `cartelas/pagina_NN_original.png` (+ `_vK` e `.prompt.txt`); refaz só por erro real, até 3 imagens por cartela
-(regra §6). Você não gera imagem nem pede ao usuário para colar prompt.
+(regra §6). Ninguém reescreve prompt nem pede ao usuário para colar prompt célula por célula.
 
 ## 5. Recortar
 
@@ -111,6 +116,6 @@ Layout em [../regras/entrega.md](../regras/entrega.md) (Itens): `itens.json` (j�
 `<tipagem>/faixa_NN_*.png` e um `ENTREGA.md` escrito por você — quantas páginas e itens, quais células ficaram como
 avulsa ou pendentes, os avisos que sobraram e o que precisa de olho humano. Acrescente a linha em `ENTREGAS.md` da
 pasta de trabalho. Por tipagem, a descrição mínima de cada item e o índice ficam no `itens.json`; nome e classificação
-nunca na arte.
+nunca na arte. No ChatGPT, entregue o lote como `.zip`.
 
 Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).

@@ -1,7 +1,9 @@
 # scripts/
 
 Ferramentas da skill (Python 3 + Pillow; sem banco, sem rede). Antes: `python -c "import PIL"` (falta → `pip install
-pillow`). `{SKILL}` = `${CLAUDE_SKILL_DIR}`; `<lote>` = a pasta de trabalho do lote.
+pillow`; no ChatGPT, Pillow já vem). `{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a pasta de
+trabalho do lote (no ChatGPT, `/mnt/data/<lote>`). Como rodar em cada ambiente: [../regras/ambiente.md](../regras/ambiente.md).
+`fichas_claude/` (nos comandos abaixo) é o nome fixo da pasta das fichas dentro do lote: os scripts leem dali.
 
 **Regra:** todo script recebe a pasta do lote (ou uma imagem dela) por argumento e grava só ali — **nunca dentro da
 skill** (nem `__pycache__`). Rodar sem argumentos (ou com `--help`, no `recortar_grade.py`) mostra o uso. O detalhe de

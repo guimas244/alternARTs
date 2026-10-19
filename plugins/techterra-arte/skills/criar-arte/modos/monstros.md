@@ -1,7 +1,9 @@
 # Modo: Monstros (lote novo, evolução, variação, prodígio, humanoide, revitalização)
 
 Fluxo completo de um lote de monstros, do pedido ao pacote de entrega. Fusões usam o mesmo fluxo com o
-[modo fusões](fusoes.md). `{SKILL}` = `${CLAUDE_SKILL_DIR}`; `<lote>` = a pasta de trabalho do lote (fora da skill).
+[modo fusões](fusoes.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a pasta de trabalho do
+lote (fora da skill; no ChatGPT, `/mnt/data/<lote>`). Ambiente (ChatGPT, Codex, Claude Code):
+[../regras/ambiente.md](../regras/ambiente.md).
 
 ## 0. Plano do lote
 
@@ -10,7 +12,8 @@ Fluxo completo de um lote de monstros, do pedido ao pacote de entrega. Fusões u
 2. Mostre ao criador uma tabela curta: cartelas × células (bloco, tier, tipos, humanoide, leitura de 1 linha). Ajuste até
    ele aprovar. Múltiplo de 4 (cartela sempre cheia).
 3. Crie `<lote>/` e escreva `<lote>/plano.json` (formato em [../scripts/CONTRATO-INTERNO.md](../scripts/CONTRATO-INTERNO.md)).
-   Variação/evolução de monstro existente: peça ao usuário as artes de origem e salve em `<lote>/artes/`.
+   Variação/evolução de monstro existente: peça ao usuário as artes de origem (no ChatGPT, por upload) e salve em
+   `<lote>/artes/`.
 
 Blocos: `N` novo · `V` variação (mesma criatura em outro elemento) · `F` fusão de fusões · `L` prodígio (tema por cartela)
 · `X`/`A` fusões (ver [fusoes.md](fusoes.md)).
@@ -24,41 +27,48 @@ python "{SKILL}/scripts/montar_entrada.py" <lote>
 Gera `entrada.json` (células numeradas), `pais/`, as pranchas `referencias/cartela_NNN_pais.png` (V/F/X/A) e copia as
 referências da skill para `<lote>/referencias/`. Corrija o plano até sair sem erro.
 
-## 2. Fichas (agentes em paralelo)
+## 2. Fichas (por partes; em paralelo se houver subagentes)
 
 1. Copie para `<lote>/` os modelos `{SKILL}/templates/CONTRATO-FICHAS.md` e `INSTRUCOES-AGENTE-FICHAS.md`, trocando
    `{TITULO}`, `{LOTE}` e `{SKILL}`.
-2. Divida as cartelas em partes (ex.: 2 cartelas por agente, letras A, B, C…). Cada agente escreve só
-   `fichas_claude/parte_<L>.json`, olhando `python "{SKILL}/scripts/ver_celulas.py" <lote> <cartelas>` e as pranchas, e
-   fecha com:
+2. Divida as cartelas em partes (ex.: 2 cartelas por parte, letras A, B, C…). Se o ambiente tiver subagentes, um agente
+   por parte, em paralelo; senão (ChatGPT), escreva as partes em sequência, uma por vez. Cada parte vai só em
+   `fichas_claude/parte_<L>.json` (`fichas_claude/` é o nome fixo da pasta das fichas, que os scripts leem), olhando
+   `python "{SKILL}/scripts/ver_celulas.py" <lote> <cartelas>` e as pranchas, e fecha com:
    ```
    python "{SKILL}/scripts/compor_fichas.py" <lote> fichas_claude/parte_<L>.json
    ```
    (completa os campos fixos, monta o `visual` e valida; repetir até **OK**).
-3. Revisão cruzada no fim, com todas as partes: `python "{SKILL}/scripts/valida_fichas.py" <lote>`. Em lote grande, um
-   agente revisor lê as fichas contra as pranchas (membros, olhos, "base com enfeite", ideias repetidas).
+3. Revisão cruzada no fim, com todas as partes: `python "{SKILL}/scripts/valida_fichas.py" <lote>`. Em lote grande,
+   releia as fichas contra as pranchas (membros, olhos, "base com enfeite", ideias repetidas) — com um agente revisor,
+   se houver subagentes, ou você mesmo, numa passada só no fim.
 4. Toda ficha tem **descrição de jogo** ([../regras/fichas-nomes-descricoes.md](../regras/fichas-nomes-descricoes.md)).
 
-## 3. Fila e prompt da sessão de imagem
+## 3. Fila, prompt e geração das imagens
 
 ```
 python "{SKILL}/scripts/preparar_fila.py" <lote>            # ensaio
 python "{SKILL}/scripts/preparar_fila.py" <lote> --gravar
 ```
 
-Gera `monstros.json` (fichas integradas), `prompts/`, `fila.json` e `PROMPT_<LOTE>.md`. Entregue ao usuário a frase para
-colar na IA de imagem (aberta **dentro de `<lote>`**):
+Gera `monstros.json` (fichas integradas), `prompts/`, `fila.json` e `PROMPT_<LOTE>.md`. Depois:
+
+- **No ChatGPT/Codex:** a própria conversa segue o `PROMPT_<LOTE>.md` (modo TODOS, faixas em sequência) e gera as
+  cartelas. Daqui em diante as fichas e os prompts estão fechados: só gerar, medir o enquadramento, consertar por
+  avulsa e registrar.
+- **No Claude Code:** entregue ao usuário a frase para colar no ChatGPT/Codex (com o lote disponível lá: no ChatGPT,
+  o `.zip` do lote enviado na conversa; no Codex, sessão aberta **dentro de `<lote>`**):
 
 ```
 Leia e execute <lote>/PROMPT_<LOTE>.md — TODOS
 ```
 
-(ou `— FAIXA 001–004`, uma sessão por faixa). A sessão só gera, mede o enquadramento, conserta por avulsa e registra.
+(ou `— FAIXA 001–004`, uma sessão por faixa). Detalhe por ambiente: [../regras/ambiente.md](../regras/ambiente.md).
 
 ## 4. Depois da geração
 
 1. Confira `cartelas/` e `validacao/` (cartelas "pendente de conserto", avulsas). Para refazer uma cartela já gerada:
-   `preparar_fila.py <lote> --gravar --conserto N` e a sessão de imagem no modo TROCAS ou avulsa.
+   `preparar_fila.py <lote> --gravar --conserto N` e a geração no modo TROCAS ou avulsa.
 2. Recorte:
    ```
    python "{SKILL}/scripts/recortar_cartela.py" <lote>
@@ -70,7 +80,8 @@ Leia e execute <lote>/PROMPT_<LOTE>.md — TODOS
    python "{SKILL}/scripts/montar_entrega.py" <lote>
    ```
    Valida (descrição em toda ficha, recorte de toda célula) e escreve `cadastro.json` (corpo sugerido) e `ENTREGA.md`.
-   Pacote: [../regras/entrega.md](../regras/entrega.md).
+   Pacote: [../regras/entrega.md](../regras/entrega.md). No ChatGPT, entregue o lote como `.zip`
+   (`shutil.make_archive`).
 
 ## Regras deste modo
 

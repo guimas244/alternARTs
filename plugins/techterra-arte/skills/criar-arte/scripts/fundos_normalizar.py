@@ -18,7 +18,7 @@ orientação. Nos fundos de Local/lados isso REPROVA: o final não é gravado (g
 
 Nunca sobrescreve um final que já existe (arte refeita = nome novo, `_v2`): só mede de novo. Ignora `*_ruimN.*`.
 Prompt usado: procura `prompts/<nome>.txt` (também sem o `_vN`) ou `<bruto>.prompt.txt`; copia para
-`<final>.prompt.txt`. Escreve/atualiza `<lote>/entregas.json` (preserva os campos que o Claude escreveu, como
+`<final>.prompt.txt`. Escreve/atualiza `<lote>/entregas.json` (preserva os campos que o assistente escreveu, como
 `nome`, `locais`, `usa_fundo_de`) e grava `conferencia/prancha_<destino>.jpg` (e a grade de 10% dos portões).
 Sai com código 1 se alguma imagem reprovou.
 """

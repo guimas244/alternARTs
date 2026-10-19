@@ -1,12 +1,18 @@
 # Sessão de imagem — sub-mapa {NOME_DA_REGIAO} ({LOTE})
 
-> Modelo da skill `criar-arte` (`templates/mapas/PROMPT_SUBMAPA.md`). O Claude copia para
+> Modelo da skill `criar-arte` (`templates/mapas/PROMPT_SUBMAPA.md`). O assistente copia para
 > `{PASTA_LOTE}/PROMPT_{LOTE}.md`, troca os `{…}` e escreve `prompts/mapa_{id}.txt` com o texto fixo do fim. Se o
 > mapa também tem fundos de Local, cola a FILA e as regras de `templates/cenarios/PROMPT_FUNDOS.md` na seção
 > "Fase 2". Regras: `{SKILL}/regras/cenarios-mapas-capas.md` §2. Apague esta caixa e o "Texto fixo" antes de entregar.
 
+Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). Se esta mesma conversa
+preparou o lote, a partir daqui ela está na etapa de geração.
+
 Você **só gera**. Prompts, fila e nomes já estão escritos. Você anexa, cola, gera, confere, salva e registra.
 **Não** crie nem altere prompt, fila, nome ou referência. **Faça o mapa inteiro sem parar entre as fases**, até o fim.
+Anexo que a ferramenta de imagem não alcança: mostre ao usuário a lista, na ordem, e peça para ele anexar as imagens
+na conversa. Imagem gerada que o ambiente de código não enxerga: peça ao usuário para baixá-la e reenviá-la por
+upload, e salve no caminho mandado.
 
 ## Regras desta sessão
 
@@ -14,7 +20,7 @@ Você **só gera**. Prompts, fila e nomes já estão escritos. Você anexa, cola
    bússola na arte, moldura ou borda, criatura ou personagem, lugares que não dá para apontar (grudados ou faltando),
    ponte sobre o mar, geografia que não segue o recorte anexado. No máximo **3 imagens** (`_v2`, `_v3`), depois
    pendente.
-2. Paisagem **3:2** (1536×1024). Não recorte nem redimensione: quem ajusta é o Claude (e o ajuste nunca recorta, porque
+2. Paisagem **3:2** (1536×1024). Não recorte nem redimensione: o ajuste vem depois, com o script (e nunca recorta, porque
    os pinos dos Locais vão por cima desta arte depois).
 3. No máximo 5 anexos por geração, na ordem da fila.
 
@@ -47,7 +53,7 @@ sem moldura; a geografia lembra o recorte; nenhuma ponte sobre o mar.
 
 ---
 
-## Texto fixo (o Claude usa para escrever `prompts/mapa_<id>.txt`; não vai para a sessão)
+## Texto fixo (o assistente usa para escrever `prompts/mapa_<id>.txt`; não vai para a sessão)
 
 Frase dos anexos (primeira linha do prompt):
 

@@ -2,8 +2,8 @@ Como escrever a ficha de cada monstro (campos, nome e descrição de jogo), para
 
 # Fichas, nomes e descrições
 
-A ficha é escrita pelo Claude, nunca pela IA de imagem. Dela saem o texto do prompt (campos visuais) e o texto do jogo
-(`nome` e `descricao`). Regras próprias de fusão, evolução e variação estão em [fusoes.md](fusoes.md); de humanoide, em
+A ficha é escrita pelo assistente no preparo, nunca na etapa de geração da imagem. Dela saem o texto do prompt
+(campos visuais) e o texto do jogo (`nome` e `descricao`). Regras próprias de fusão, evolução e variação estão em [fusoes.md](fusoes.md); de humanoide, em
 [humanoides.md](humanoides.md); o que nunca pode aparecer, em [restricoes.md](restricoes.md).
 
 ## Antes de escrever
@@ -14,7 +14,8 @@ A ficha é escrita pelo Claude, nunca pela IA de imagem. Dela saem o texto do pr
 - **Tipagem sai da arte**, dentro do repertório do lugar ou do lote.
 - **Leia as fichas que já existem** no lote (e nos lotes anteriores que o usuário indicar). Agentes que escrevem em
   paralelo repetem raízes e ideias (já saíram cinco "pipas" e cinco "sinos" numa leva). Por isso: cada um lê as partes
-  dos outros desde o início, e um revisor cruzado confere tudo no fim.
+  dos outros desde o início, e um revisor cruzado confere tudo no fim. Sem subagentes, as partes saem em sequência,
+  com a mesma regra: cada parte lê as anteriores e a revisão cruzada roda no fim.
 - **Escolha o temperamento de cada ficha antes de escrever** (cotas abaixo).
 
 ## Campos comuns

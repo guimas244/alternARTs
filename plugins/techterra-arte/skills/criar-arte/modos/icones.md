@@ -2,7 +2,9 @@
 
 Regras: [../regras/cenarios-mapas-capas.md](../regras/cenarios-mapas-capas.md) §6. Tamanhos:
 [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).
-Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md).
+Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude
+Code): [../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md);
+`<lote>` = a pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
 
 - **Entra:** a lista de ícones de mapa (id + cenário em 1 frase, com o marco), em grupos de 16.
 - **Sai:** `recortes/<id>.png` **300×300 RGBA** (medalhão redondo, borda branca, fora do círculo transparente; no jogo
@@ -35,13 +37,14 @@ Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md)
    [`templates/icones/PROMPT_ICONES.md`](../templates/icones/PROMPT_ICONES.md) + os 16 itens
    "(linha L, coluna C) {cenário}". Copie o template para `<lote>/PROMPT_<LOTE>.md` e troque `{PASTA_LOTE}`, `{SKILL}`,
    `{LOTE}` e a FILA. Fila cheia antes de gerar.
-3. **Sessão de imagem:** uma cartela por geração, com as 4 referências `referencias/icones/` (castelo, vila, cachoeira,
+3. **Geração das imagens:** no ChatGPT/Codex, a própria conversa segue o `PROMPT_<LOTE>.md` e gera; no Claude Code,
+   entregue a frase para colar no ChatGPT/Codex. Uma cartela por geração, com as 4 referências `referencias/icones/` (castelo, vila, cachoeira,
    portal_magico); fundo **transparente de verdade** (xadrez pintado ou branco reprova); medalhões separados por espaço
    transparente (círculos que se tocam pela sombra viram um só no recorte).
 4. **Recortar** cada cartela com o recortador único de grade:
 
    ```
-   python "${CLAUDE_SKILL_DIR}/scripts/recortar_grade.py" <lote>/cartelas/cartela_001_original.png --grade 4x4 --lado 300 --mascara-circular --nomes <lote>/nomes/cartela_001.json --saida <lote>/recortes
+   python "{SKILL}/scripts/recortar_grade.py" <lote>/cartelas/cartela_001_original.png --grade 4x4 --lado 300 --mascara-circular --nomes <lote>/nomes/cartela_001.json --saida <lote>/recortes
    ```
 
    Ele separa os medalhões por região conectada, apaga o que fica fora do círculo e centraliza em 300×300 RGBA;
@@ -53,6 +56,7 @@ Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md)
    texto; reconhecível reduzido a 80×80. Célula reprovada: gere a cartela de novo do zero (máximo 3 imagens) ou anote
    como pendente.
 6. **Entrega:** `entregas.json` com um registro por ícone (`id`, `arquivo: recortes/<id>.png`, `medida: [300, 300]`,
-   `cartela`, `linha`, `coluna`, `prompt`), `ENTREGA.md` com pendências e a linha no `ENTREGAS.md`.
+   `cartela`, `linha`, `coluna`, `prompt`), `ENTREGA.md` com pendências e a linha no `ENTREGAS.md`. No ChatGPT,
+   entregue o lote como `.zip`.
 
 Atribuir o ícone a cada Local no jogo é do processo de cadastro, fora da skill.

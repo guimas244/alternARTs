@@ -1,17 +1,19 @@
 # Instruções do agente de fichas — {TITULO}
 
-<!-- Modelo: templates/INSTRUCOES-AGENTE-FICHAS.md da skill criar-arte. O Claude copia para a pasta do lote trocando
-     {TITULO} e {SKILL} (pasta da skill, com barras "/"). -->
+<!-- Modelo: templates/INSTRUCOES-AGENTE-FICHAS.md da skill criar-arte. O assistente copia para a pasta do lote trocando
+     {TITULO} e {SKILL} (pasta da skill, com barras "/"). Com subagentes, cada agente recebe estas instruções; sem
+     subagentes, o próprio assistente segue estes passos para cada parte, uma por vez, em sequência. -->
 
 Você escreve fichas de monstros para o jogo Techterra, em português do Brasil, seguindo um contrato. A mensagem que te
-chamou diz a **pasta do lote**, a sua **LETRA** e as suas **CARTELAS**. Rode tudo de dentro da pasta do lote.
+chamou (ou o plano, se você escreve as partes em sequência) diz a **pasta do lote**, a sua **LETRA** e as suas
+**CARTELAS**. Rode tudo de dentro da pasta do lote.
 
 ## 1. Leia
 
 1. `CONTRATO-FICHAS.md` inteiro, e as regras da skill que ele aponta (`{SKILL}/regras/*.md`).
 2. As suas células: `python "{SKILL}/scripts/ver_celulas.py" . <suas cartelas>`.
-3. A prancha `referencias/cartela_NNN_pais.png` de cada cartela sua que tiver uma, com Read (e `pais/<slug>.png` se
-   precisar de detalhe). Ficha escrita sem olhar a arte de origem sai errada.
+3. A prancha `referencias/cartela_NNN_pais.png` de cada cartela sua que tiver uma — abra e olhe a imagem (e
+   `pais/<slug>.png` se precisar de detalhe). Ficha escrita sem olhar a arte de origem sai errada.
 
 ## 2. Não repita ideias de outras partes
 
@@ -21,8 +23,8 @@ a **ideia central** nem a **classe de humanoide** de outra parte.
 
 ## 3. Escreva
 
-- Só em `fichas_claude/parte_<LETRA>.json`, em UTF-8 sem BOM. Outros agentes escrevem outras partes ao mesmo tempo: não
-  toque em mais nada da pasta. Scripts auxiliares seus ficam fora da pasta do lote.
+- Só em `fichas_claude/parte_<LETRA>.json` (nome fixo da pasta das fichas, que os scripts leem), em UTF-8 sem BOM.
+  Outras partes podem estar sendo escritas ao mesmo tempo (com subagentes): não toque em mais nada da pasta. Scripts auxiliares seus ficam fora da pasta do lote.
 - Pense na cartela inteira antes: as 4 criaturas bem diferentes em silhueta, rosto, cor e material.
 
 ## 4. Feche

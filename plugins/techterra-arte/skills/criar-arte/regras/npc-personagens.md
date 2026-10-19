@@ -256,7 +256,7 @@ corte e cor>; <N por extenso> prisions <cor> <onde ficam>. Expressão <concreta,
 - Sem dois nomes quase iguais no mesmo lote (Tilila × Tiril), sem nome que soe como palavra comum (Popoca, "pipoca"),
   sem várias pessoas com a mesma inicial rara.
 
-### Conferência de cada página (quem gera confere; a sessão do Claude confere de novo)
+### Conferência de cada página (quem gera confere; o preparo confere de novo antes de recortar)
 
 1. **Beleza:** as três pessoas são bonitas de verdade, no nível das referências 3 e 4. Abaixo disso: anote para o dono (não gera refação).
 2. **Traço:** as três têm o traço do tema, cada uma de um subtipo (não a mesma loira três vezes).
@@ -276,7 +276,8 @@ julga a beleza é o dono, depois.
 1. **Piloto de 4 páginas** (uma por sessão de imagem): o dono julga o traço antes de escalar.
 2. **Roster**: sexo, idade, subtipo, pele, cabelo, olho, corpo, temperamento, papel, peça-chave, paleta e prisions,
    sem repetir na página.
-3. Textos escritos por agentes em paralelo, cada um dono de um arquivo, seguindo o § 6; revisor cruzado no fim.
+3. Textos escritos por partes, cada parte dona de um arquivo, seguindo o § 6 — por agentes em paralelo, se o
+   ambiente tiver subagentes; senão, uma parte por vez, em sequência; revisor cruzado no fim.
 4. Validar todas as linhas (tamanho, frase literal dos olhos, LADO, prisions, palavras proibidas) e montar
    `prompts/pagina_NNN.txt`. **A fila tem de estar cheia antes de mandar colar.**
 5. Sessões de imagem com páginas de 4 em 4, uma geração por página, direto até a última.

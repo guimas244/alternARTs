@@ -162,7 +162,7 @@ cima.
 
 A Agenda é o aparelho pessoal do treinador (não é equipamento de monstro; o § 2 não se aplica).
 
-- **Orientação ao Claude (não vai para o prompt):** o estilo lembra os aparelhos de treinador de animes de monstrinhos
+- **Orientação ao assistente (não vai para o prompt):** o estilo lembra os aparelhos de treinador de animes de monstrinhos
   — **o prompt nunca nomeia a franquia nem produto dela**; descreva só a forma abaixo.
 - **Só o estilo, nunca o tema:** desenho de brinquedo
   robusto, cascas arredondadas de pílula e cápsula, carcaça em duas cores fortes e saturadas, plástico injetado brilhante

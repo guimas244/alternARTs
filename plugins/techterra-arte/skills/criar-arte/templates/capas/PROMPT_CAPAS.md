@@ -1,12 +1,18 @@
 # Sessão de imagem — capas {LOTE}
 
-> Modelo da skill `criar-arte` (`templates/capas/PROMPT_CAPAS.md`). O Claude copia para
+> Modelo da skill `criar-arte` (`templates/capas/PROMPT_CAPAS.md`). O assistente copia para
 > `{PASTA_LOTE}/PROMPT_{LOTE}.md`, troca os `{…}`, escolhe o parágrafo "O que é cada cena" do tipo (expedição, raid ou
 > cartaz de evento), lista as 4 cenas de cada cartela e, se houver, a moldura de invasão. Regras:
 > `{SKILL}/regras/cenarios-mapas-capas.md` §5. Apague esta caixa e os parágrafos de tipo que não se aplicam.
 
+Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). Se esta mesma conversa
+preparou o lote, a partir daqui ela está na etapa de geração.
+
 Você **só gera**. As cenas, a fila e os nomes já estão escritos. Você anexa, cola, gera, confere, salva e registra.
-**Não** crie nem altere cena, prompt, fila, nome ou referência. **Não recorte** as cartelas: quem recorta é o Claude.
+**Não** crie nem altere cena, prompt, fila, nome ou referência. **Não recorte** as cartelas: o recorte vem depois da
+geração, com o script de conversão. Anexo que a ferramenta de imagem não alcança: mostre ao usuário a lista, na ordem,
+e peça para ele anexar as imagens na conversa. Imagem gerada que o ambiente de código não enxerga: peça ao usuário para
+baixá-la e reenviá-la por upload, e salve no caminho mandado.
 
 ## Regras desta sessão
 
