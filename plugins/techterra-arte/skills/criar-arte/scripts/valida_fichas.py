@@ -201,8 +201,27 @@ def main():
                 erros.append(f"{tag}: 'ascensao' precisa dizer o que a torna um degrau acima dos pais")
         if b == "L" and len(str(f["tema"]).strip()) < 3:
             erros.append(f"{tag}: prodígio precisa de 'tema'")
-        if b == "N" and (e.get("evolucao") or {}).get("anterior") and not norm(str(f["anatomia"])).startswith("evolucao d"):
-            avisos.append(f"{tag}: estágio de evolução — a anatomia deveria começar com \"Evolução do/da <nome>.\"")
+        if b == "N":
+            ev = e.get("evolucao") or {}
+            ant_nome, tem_ant = None, bool(ev.get("anterior") or ev.get("externo"))
+            if ev.get("externo"):
+                ant_nome = ev["externo"]["nome"]
+            elif ev.get("anterior"):
+                ant_nome = str((leva.get(ev["anterior"]) or {}).get("nome") or "").strip() or None
+            if tem_ant:
+                an = " ".join(norm(str(f["anatomia"])).split())
+                if ant_nome:
+                    alvos = {norm(f"evolucao {art} {x}") for art in ("do", "da") for x in (ant_nome, sem_numero(ant_nome))}
+                    if not any(re.match(re.escape(x) + r"(?![a-z0-9])", an) for x in alvos):
+                        erros.append(f"{tag}: estágio de evolução — a anatomia tem que começar com "
+                                     f"\"Evolução do {ant_nome}.\" ou \"Evolução da {ant_nome}.\"")
+                    if norm(sem_numero(nome)).strip() == norm(sem_numero(ant_nome)).strip():
+                        erros.append(f"{tag}: nome igual ao do antecessor '{ant_nome}' — a evolução tem nome próprio")
+                else:
+                    if not re.match(r"evolucao d[oa] ", an):
+                        erros.append(f"{tag}: estágio de evolução — a anatomia tem que começar com \"Evolução do/da <nome>.\"")
+                    avisos.append(f"{tag}: ficha do antecessor n {ev['anterior']} ainda não existe — o nome na anatomia "
+                                  f"não foi conferido (a revisão cruzada confere)")
         # descrição
         d = str(f["descricao"]).strip()
         nd = norm(d)

@@ -5,8 +5,10 @@
 
 O agente escreve SÓ o conteúdo criativo (campos em CONTRATO-INTERNO.md, seção "Fichas"). Este script copia da
 entrada.json os campos fixos (n, slot, cartela, linha, coluna, bloco, tier, tipo1, tipo2), monta o `nome` da variação
-(original sem "#N" + epíteto), `variacao_de`, `ingredientes` [{papel, nome}], `evolucao` (N), `arquivo` e `visual`
-(fórmula por bloco), regrava a parte (ordenada por n) e roda valida_fichas.py --arquivo nela.
+(original sem "#N" + epíteto), `variacao_de`, `ingredientes` [{papel, nome}], `evolucao` (N; com `externo` quando o
+antecessor é um monstro existente), `arquivo` e `visual` (fórmula por bloco), regrava a parte (ordenada por n) e roda
+valida_fichas.py --arquivo nela (que exige, na N com antecessor, a anatomia começando com "Evolução do/da <nome>." e
+nome diferente do antecessor).
 O caminho da parte pode ser relativo à pasta atual ou à pasta do lote.
 """
 import os

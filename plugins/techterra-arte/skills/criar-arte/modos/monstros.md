@@ -18,13 +18,27 @@ lote (fora da skill; no ChatGPT, `/mnt/data/<lote>`). Ambiente (ChatGPT, Codex, 
 Blocos: `N` novo · `V` variação (mesma criatura em outro elemento) · `F` fusão de fusões · `L` prodígio (tema por cartela)
 · `X`/`A` fusões (ver [fusoes.md](fusoes.md)).
 
+### Linhas evolutivas
+
+Toda evolução é célula `N` (regras em [../regras/fusoes.md](../regras/fusoes.md) §Evolução). Dois casos:
+
+- **Linha nova dentro do lote** — o estágio aponta para a célula antecessora com `evolui_de: [cartela, linha, coluna]`
+  (mesma cartela ou anterior). Ex.: *"lote com 4 linhas de 3 estágios de Gelo"*.
+- **Evoluir monstro que já existe no jogo** — o usuário envia a arte do antecessor (salve em `<lote>/artes/`) e a
+  célula leva `antecessor_externo: {nome, tier, tipo1, tipo2, descricao, arte, humanoide}`; ele aparece grande no
+  quadrante da célula na prancha. Ex.: *"crie a evolução destes 3 monstros"* + as 3 artes.
+
+Os dois são exclusivos na mesma célula; `evolucao_modo`/`level_requerido` são opcionais em qualquer um. O tier da
+evolução nunca é menor que o do antecessor.
+
 ## 1. Entrada
 
 ```
 python "{SKILL}/scripts/montar_entrada.py" <lote>
 ```
 
-Gera `entrada.json` (células numeradas), `pais/`, as pranchas `referencias/cartela_NNN_pais.png` (V/F/X/A) e copia as
+Gera `entrada.json` (células numeradas), `pais/`, as pranchas `referencias/cartela_NNN_pais.png` (V/F/X/A e N com
+antecessor externo) e copia as
 referências da skill para `<lote>/referencias/`. Corrija o plano até sair sem erro.
 
 ## 2. Fichas (por partes; em paralelo se houver subagentes)

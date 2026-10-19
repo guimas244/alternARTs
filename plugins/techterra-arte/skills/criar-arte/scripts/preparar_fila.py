@@ -9,7 +9,8 @@
 Para cada parte validada em fichas_claude/parte_<L>.json (com parte_<L>_validacao.json sem erros):
 1. integra as fichas em monstros.json (substitui a mesma célula, se já existir), no formato do cadastrador;
 2. escreve prompts/cartela_NNN.txt — o texto FINAL (cabeçalho de templates/ + blocos da cartela), pronto para colar;
-3. escreve prompts/avulsa_NNN_LxCy.txt (+ referencias/avulsas/cartela_NNN_LxCy_pais.png, o quadrante da prancha);
+3. escreve prompts/avulsa_NNN_LxCy.txt (+ referencias/avulsas/cartela_NNN_LxCy_pais.png, o quadrante da prancha:
+   pais, original ou antecessor externo);
 4. atualiza fila.json (cartela só entra quando as 4 fichas dela existem) e escreve PROMPT_<LOTE>.md.
 
 Cartela que já tem cartelas/cartela_NNN_original.png não é reescrita (só as avulsas dela, com --conserto).
@@ -76,6 +77,19 @@ EVOLUCAO_ANTERIOR = ("EVOLUTION LINES: creatures marked EVOLVES FROM are evolved
 EVOLUCAO_AVULSA = ("EVOLUTION: this creature is the evolved form of the creature named in its line, shown on an attached sheet. "
                    "It must be instantly recognizable as the same lineage: same two colors, same eye shape and eye color, and "
                    "the same signature feature, but older, sturdier and more complex, with a different silhouette and pose.")
+# antecessor externo = monstro que JÁ EXISTE no jogo (arte enviada pelo usuário), no quadrante da prancha
+EVOLUCAO_EXTERNO = ("EVOLUTION LINES: creatures marked EVOLVES FROM are evolved forms of the creature named in their line. When "
+                    "that earlier stage is an EXISTING creature of this game, it is shown in the matching quadrant of the "
+                    "attached earlier-stages board (same 2x2 grid as this sheet){outros}. An evolved form must be instantly "
+                    "recognizable as the same lineage: same two colors, same eye shape and eye color, and the same signature "
+                    "feature, but with a completely NEW body: older, sturdier and more complex, with a different silhouette "
+                    "and pose. Never redraw the earlier stage as it is; redraw its features in the style of this sheet.")
+EVOLUCAO_EXTERNO_OUTROS = {"mesma": "; otherwise it is on this same sheet",
+                           "anterior": "; otherwise it is on this same sheet or on the attached earlier sheet"}
+EVOLUCAO_AVULSA_EXTERNO = ("EVOLUTION: this creature is the evolved form of {nome}, an EXISTING creature of this game shown in "
+                           "the attached quadrant image. It must be instantly recognizable as the same lineage: same two "
+                           "colors, same eye shape and eye color, and the same signature feature, but with a completely NEW "
+                           "body: older, sturdier and more complex, with a different silhouette and pose.")
 
 # blocos: (cabeça quando a cartela é toda desse bloco, cabeça quando a cartela mistura blocos, corpo)
 BLOCO = {
@@ -140,8 +154,9 @@ PESO_PRANCHA = {
            "and the SMALLER one on the right is the SACRIFICE (take from it only what the line says)"),
     "V": "Image {k} is the originals board: keep each original recognizable and change only what its line says",
     "F": "Image {k} is the parents board: take from each parent only what its line says",
-    "N": ("Image {k} is the earlier-stages board: it shows the earlier stage of the creatures marked EVOLVES FROM; keep their "
-          "two colors, eye shape, eye color and signature feature, but draw a new body and pose"),
+    "N": ("Image {k} is the earlier-stages board, in the same 2x2 grid as this sheet: the quadrant of each creature marked "
+          "EVOLVES FROM an existing creature shows that earlier stage (empty quadrants show nothing); keep its two colors, "
+          "eye shape, eye color and signature feature, but draw a new body and pose"),
     "MISTA": ("Image {k} is the board of origins, in the same 2x2 grid as this sheet: each quadrant shows what its cell's line "
               "refers to (in BASE + SACRIFICE fusions, the LARGE creature on the left is the BASE and the SMALLER one on the "
               "right is the SACRIFICE); take from it only what each line says"),
@@ -160,8 +175,9 @@ PESO_QUADRANTE["L"] = PESO_QUADRANTE["N"]
 # ---------------------------------------------------------------- textos do PROMPT_<LOTE>.md (pt-BR, para conferir)
 DESCRICAO_PT = {
     "N": ('NOVOS ("leva": "novos"): criaturas inéditas. A criatura marcada EVOLVES FROM é a forma evoluída de outra (da '
-          "mesma cartela ou de uma anterior, que vai anexada): mesmas 2 cores, mesmos olhos, mesmo traço marcante; mais "
-          "velha e robusta, outra silhueta e outra pose."),
+          "mesma cartela, de uma anterior, que vai anexada, ou de um monstro que JÁ EXISTE no jogo, mostrado no quadrante "
+          "dela na prancha): mesmas 2 cores, mesmos olhos, mesmo traço marcante; corpo novo, mais velha e robusta, outra "
+          "silhueta e outra pose."),
     "V": ('VARIAÇÕES ("leva": "variacoes"): cada criatura é uma espécie que JÁ EXISTE no jogo (a prancha mostra o original '
           "na mesma grade 2x2), nascida em outro elemento. Reconhecível como o original à primeira vista (~70%: silhueta, "
           "anatomia, rosto, pose), com material, superfície, paleta e detalhes do tipo novo. Mesmo porte, mesma idade e "
@@ -180,7 +196,8 @@ DESCRICAO_PT = {
           "os mesmos pais em papéis trocados têm que sair dois seres bem diferentes."),
 }
 CONFERE_PT = {
-    "N": "  NOVOS: a evolução é reconhecível como o estágio anterior (cores, olhos, traço marcante), com corpo novo.",
+    "N": ("  NOVOS: a evolução é reconhecível como o estágio anterior (cores, olhos, traço marcante; o do monstro existente "
+          "está no quadrante da prancha), com corpo novo — não é o antecessor redesenhado."),
     "V": "  VARIAÇÕES: reconhecível como o original; o tipo novo aparece no material e nas cores; não cresceu nem envelheceu.",
     "F": "  FUSÕES DE FUSÕES: não lembra nenhum pai sozinho; traz algo de cada pai; um degrau acima dos pais.",
     "L": "  PRODÍGIOS: as 4 conversam com o tema da cartela e são bem diferentes entre si.",
@@ -222,6 +239,11 @@ def tipos_txt(a, b):
     return f"{TIPOS[a]}/{TIPOS[b]}"
 
 
+def externo(e):
+    """Antecessor externo (monstro existente, fora do lote) de uma célula N, ou None."""
+    return (e.get("evolucao") or {}).get("externo")
+
+
 def ingr(e, papel):
     return next(i for i in e.get("ingredientes", []) if i.get("papel") == papel)
 
@@ -233,7 +255,8 @@ def linha(f, e, nomes, avulsa=False):
     b = e["bloco"]
     if b in ("N", "L"):
         ant = (e.get("evolucao") or {}).get("anterior")
-        de = f", EVOLVES FROM {nomes[ant]}" if ant else ""
+        ext = externo(e)
+        de = f", EVOLVES FROM {ext['nome']}" if ext else (f", EVOLVES FROM {nomes[ant]}" if ant else "")
         return f"{pos}tier {e['tier']}{hum}{de}{fim}"
     if b == "V":
         o = e["original"]
@@ -347,9 +370,11 @@ def integrar(lote, entrada, doc, partes):
     for n, f in por_n.items():   # evolução no formato do cadastrador (precisa de todos os nomes)
         e = entrada.get(n, {})
         ant = (e.get("evolucao") or {}).get("anterior")
+        ext = externo(e)
         f.pop("evolucao", None)
-        if ant and ant in nomes:
-            ev = {"de": nomes[ant], "modo": e.get("evolucao_modo", "a_definir")}
+        de = ext["nome"] if ext else (nomes[ant] if ant and ant in nomes else None)
+        if de:
+            ev = {"de": de, "modo": e.get("evolucao_modo") or "a_definir"}
             if e.get("level_requerido") is not None:
                 ev["level_requerido"] = e["level_requerido"]
             f["evolucao"] = ev
@@ -410,8 +435,9 @@ def main(argv):
             continue
         blocos = sorted({e["bloco"] for e in es}, key=ORDEM.index)
         mista = len(blocos) > 1
-        # antecessores: nome precisa existir; os de cartela anterior viram anexo (se não houver prancha)
+        # antecessores: nome precisa existir; os de cartela anterior viram anexo (a prancha só mostra antecessor EXTERNO)
         falta_ant, anteriores = [], {}
+        tem_ext = any(externo(e) for e in es)
         for e in es:
             ant = (e.get("evolucao") or {}).get("anterior")
             if ant:
@@ -424,11 +450,11 @@ def main(argv):
             continue
         prancha_rel = f"referencias/cartela_{c:03d}_pais.png"
         tem_prancha = os.path.exists(os.path.join(lote, prancha_rel))
-        if PRECISA_PRANCHA & set(blocos) and not tem_prancha:
+        if (PRECISA_PRANCHA & set(blocos) or tem_ext) and not tem_prancha:
             print(f"cartela {c:03d}: falta {prancha_rel} (rode montar_entrada.py)")
             continue
         hum = any(f["humanoide"] for f in fs)
-        ant_cartelas = [] if tem_prancha else sorted(set(anteriores.values()))
+        ant_cartelas = sorted(set(anteriores.values()))
         anexos = [ref("estilo"), ref("variedade")] + ([("prancha", prancha_rel)] if tem_prancha else []) + \
                  [("anterior", f"cartelas/cartela_{a:03d}_original.png") for a in ant_cartelas] + \
                  [ref("guia")] + ([ref("humanoides")] if hum else [])
@@ -441,11 +467,17 @@ def main(argv):
                 or temas_plano.get(c)
         pares_a = [(ingr(e, "BASE")["nome"], ingr(e, "SACRIFICIO")["nome"]) for e in es if e["bloco"] == "A"]
         espelho = any((s, b) in pares_a for b, s in pares_a)
-        tem_evol = any((e.get("evolucao") or {}).get("anterior") for e in es)
+        tem_int = any((e.get("evolucao") or {}).get("anterior") for e in es)
+        if tem_ext:
+            evol = [EVOLUCAO_EXTERNO.format(outros=EVOLUCAO_EXTERNO_OUTROS["anterior" if anteriores else "mesma"]
+                                            if tem_int else "")]
+        elif tem_int:
+            evol = [EVOLUCAO_ANTERIOR if anteriores else EVOLUCAO]
+        else:
+            evol = []
         extras = ([clima] if clima else []) + \
                  [t for t in (texto_bloco(b, mista, tema, espelho) for b in blocos) if t] + \
-                 ([HUMANOID] if hum else []) + \
-                 ([EVOLUCAO_ANTERIOR if anteriores else EVOLUCAO] if tem_evol else [])
+                 ([HUMANOID] if hum else []) + evol
         tipo1s = {e["tipo1"] for e in es}
         tipo = TIPOS[tipo1s.pop()] if blocos == ["N"] and len(tipo1s) == 1 else None
         rotulo = tipo or " + ".join(ROTULO[b] for b in blocos)
@@ -460,8 +492,9 @@ def main(argv):
         for f, e in zip(fs, es):
             l, k, b = e["linha"], e["coluna"], e["bloco"]
             ant_c = anteriores.get(e["n"])
+            ext = externo(e)
             quad = None
-            if tem_prancha and (b in PRECISA_PRANCHA or ant_c):
+            if tem_prancha and (b in PRECISA_PRANCHA or ext):
                 quad = f"referencias/avulsas/cartela_{c:03d}_L{l}C{k}_pais.png"
                 crops.append((prancha_rel, quad, l, k))
             an = [ref("estilo"), ref("variedade")] + ([("quadrante", quad)] if quad else []) + \
@@ -470,7 +503,8 @@ def main(argv):
             assert len(an) <= MAX_ANEXOS, (c, an)
             ex = ([clima] if clima else []) + [t for t in [texto_bloco(b, False, tema, False)] if t] + \
                  ([HUMANOID] if f["humanoide"] else []) + \
-                 ([EVOLUCAO_AVULSA] if (e.get("evolucao") or {}).get("anterior") else [])
+                 ([EVOLUCAO_AVULSA_EXTERNO.format(nome=ext["nome"])] if ext else
+                  [EVOLUCAO_AVULSA] if (e.get("evolucao") or {}).get("anterior") else [])
             ta = montar(cab, GRADE_AVULSA, LAYOUT_AVULSA, tipo, rotulo, progressao([e["tier"]]), ex,
                         [linha(f, e, nomes, avulsa=True)], c, total, peso(an, [b], b, ONDE[(l, k)]))
             item["avulsas"].append(dict(linha=l, coluna=k, nome=f["nome"], prompt=f"prompts/avulsa_{c:03d}_L{l}C{k}.txt",

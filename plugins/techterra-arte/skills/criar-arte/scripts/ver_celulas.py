@@ -81,15 +81,21 @@ def main():
             print(f"   LEITURA (direção do plano): {e['leitura']}")
         if b == "N":
             ev = e.get("evolucao") or {}
-            ant, seg = por_n.get(ev.get("anterior")), por_n.get(ev.get("seguinte"))
-            if ant or seg:
+            ant, seg, ext = por_n.get(ev.get("anterior")), por_n.get(ev.get("seguinte")), ev.get("externo")
+            if ant or seg or ext:
                 txt = []
+                if ext:
+                    txt.append(f"evolui de {ext['nome']} (monstro EXISTENTE, fora do lote; no quadrante da prancha) — a "
+                               f"anatomia começa com 'Evolução do/da {ext['nome']}.'; mantém as 2 cores, os olhos e um "
+                               f"traço; corpo NOVO, mais velho e robusto; nome novo diferente do antecessor")
                 if ant:
                     txt.append(f"evolui de n {ant['n']} ({ant['slot']}, tier {ant['tier']}) — anatomia começa com "
                                f"\"Evolução do/da <nome>.\"; mantém as 2 cores, os olhos e um traço")
                 if seg:
                     txt.append(f"evolui para n {seg['n']} ({seg['slot']}, tier {seg['tier']})")
                 print("   EVOLUÇÃO: " + " | ".join(txt))
+                if ext:
+                    origem(ext, "ANTECESSOR")
         elif b == "V":
             o = e["original"]
             print(f"   sai {e['tipo_sai']} -> entra {e['tipo_entra']} | nome final = \"{o['nome']} <epíteto>\" (sem #N)")

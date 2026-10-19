@@ -104,6 +104,8 @@ pai sozinho.
 - A `anatomia` (ou o `visual`) do estágio novo começa com "Evolução do <nome>." / "Evolução da <nome>.".
 - Anexe a cartela (ou o recorte) do antecessor. Um estágio nunca fica numa cartela anterior à do antecessor; quando o
   lote pede, os dois estágios ficam na mesma cartela.
+- Antecessor que já existe no jogo (fora do lote): `antecessor_externo` na célula, com a arte enviada pelo usuário; ele
+  vai no quadrante da prancha e as regras acima valem igual (tier ≥ o dele, nome novo).
 - Nome próprio, sem prefixo obrigatório em comum com o antecessor.
 
 ## Variação

@@ -9,7 +9,8 @@ Lê <lote>/plano.json (formato em CONTRATO-INTERNO.md), valida e gera:
 - <lote>/referencias/cartela_NNN_pais.png
                                  prancha 2x2 de cada cartela que tem origem: V = original grande e centrado;
                                  X/A = base grande à esquerda + sacrifício menor à direita; F = todos os pais do mesmo
-                                 tamanho; N/L = quadrante vazio (cartela só de N/L não ganha prancha);
+                                 tamanho; N com antecessor_externo = o antecessor grande e centrado; demais N/L =
+                                 quadrante vazio (cartela só de N/L sem antecessor externo não ganha prancha);
 - <lote>/referencias/            cópia das referências da skill (estilo, variedade, humanoides, guia 2x2).
 
 Idempotente: pode rodar de novo depois de corrigir o plano.
@@ -104,6 +105,11 @@ def recortar(lote, o, feitos, p):
     return rel
 
 
+def externo(cel):
+    """Antecessor externo (monstro existente, fora do lote) de uma célula N, ou None."""
+    return (cel.get("evolucao") or {}).get("externo")
+
+
 def encaixa(img, w, h):
     f = min(w / img.width, h / img.height)
     return img.resize((max(1, int(img.width * f)), max(1, int(img.height * f))), Image.LANCZOS)
@@ -113,8 +119,11 @@ def quadrante(board, lote, cel, x0, y0):
     C = comum.CEL
     abre = lambda rel: Image.open(os.path.join(lote, rel)).convert("RGBA")  # noqa: E731
     b = cel["bloco"]
-    if b == "V":
-        s = encaixa(abre(cel["original"]["recorte"]), int(C * 0.8), int(C * 0.8))
+    if b in ("V", "N"):
+        o = cel["original"] if b == "V" else externo(cel)
+        if not o:
+            return
+        s = encaixa(abre(o["recorte"]), int(C * 0.8), int(C * 0.8))
         board.alpha_composite(s, (x0 + (C - s.width) // 2, y0 + (C - s.height) // 2))
     elif b in ("X", "A"):
         base, sac = (abre(i["recorte"]) for i in cel["ingredientes"])
@@ -201,8 +210,29 @@ def main():
             e["humanoide_previsto"] = bool(e.get("humanoide_previsto", False))
             if b == "N":
                 ev = e.get("evolui_de")
+                ext = e.get("antecessor_externo")
                 if ev is not None and not (isinstance(ev, list) and len(ev) == 3 and all(isinstance(x, int) for x in ev)):
                     p.erro(f"{tag}: evolui_de tem que ser [cartela, linha, coluna]")
+                if ev is not None and ext is not None:
+                    p.erro(f"{tag}: use evolui_de (antecessor no lote) OU antecessor_externo (monstro existente), nunca os dois")
+                elif ext is not None and checa_origem(p, f"{tag} antecessor_externo", ext, lote):
+                    if tier_ok(e.get("tier")):
+                        if e["tier"] < ext["tier"]:
+                            p.erro(f"{tag}: evolução com tier {e['tier']} menor que o do antecessor {ext['nome']} ({ext['tier']})")
+                        elif e["tier"] == ext["tier"]:
+                            p.aviso(f"{tag}: evolução não sobe de tier ({ext['nome']} {ext['tier']} → {e['tier']})")
+                    if {ext["tipo1"], ext["tipo2"]} != {e.get("tipo1"), e.get("tipo2")}:
+                        p.aviso(f"{tag}: evolução troca de tipos ({ext['tipo1']}/{ext['tipo2']} → {e.get('tipo1')}/{e.get('tipo2')})")
+                    if ext["humanoide"] and not e["humanoide_previsto"]:
+                        e["humanoide_previsto"] = True
+                        p.aviso(f"{tag}: antecessor externo humanoide → humanoide_previsto = true")
+                if "evolucao_modo" in e and not (isinstance(e["evolucao_modo"], str) and e["evolucao_modo"].strip()):
+                    p.erro(f"{tag}: evolucao_modo tem que ser texto (ex.: \"level\")")
+                lv = e.get("level_requerido")
+                if lv is not None and not (isinstance(lv, int) and not isinstance(lv, bool) and lv >= 1):
+                    p.erro(f"{tag}: level_requerido tem que ser inteiro ≥ 1")
+                if ev is None and ext is None and ("evolucao_modo" in e or lv is not None):
+                    p.aviso(f"{tag}: evolucao_modo/level_requerido sem antecessor (evolui_de ou antecessor_externo): ignorados")
             elif b == "V":
                 o = e.get("original")
                 if checa_origem(p, f"{tag} original", o, lote):
@@ -308,6 +338,10 @@ def main():
     for e in celulas:
         if e["bloco"] == "V":
             e["original"]["recorte"] = recortar(lote, e["original"], feitos, p)
+        ext = e.pop("antecessor_externo", None) if e["bloco"] == "N" else None
+        if ext:
+            e["evolucao"]["externo"] = {**{k: ext[k] for k in ("nome", "tier", "tipo1", "tipo2", "descricao")},
+                                        "recorte": recortar(lote, ext, feitos, p), "humanoide": ext["humanoide"]}
         for i in e.get("ingredientes") or []:
             i["recorte"] = recortar(lote, i, feitos, p)
             i.setdefault("linhagem", [])
@@ -328,11 +362,11 @@ def main():
     for c in cartelas:
         cels = [e for e in saida if e["cartela"] == c["cartela"]]
         alvo = os.path.join(refs, f"cartela_{c['cartela']:03d}_pais.png")
-        if any(e["bloco"] in ("V", "F", "X", "A") for e in cels):
+        if any(e["bloco"] in ("V", "F", "X", "A") or externo(e) for e in cels):
             prancha(lote, cels, alvo)
             pranchas += 1
         elif os.path.exists(alvo):
-            os.remove(alvo)   # cartela virou N/L: prancha antiga sai
+            os.remove(alvo)   # cartela virou N/L sem origem: prancha antiga sai
     for r in REFS_LOTE:
         orig = os.path.join(comum.REFS_DIR, *r.split("/"))
         if os.path.isfile(orig):

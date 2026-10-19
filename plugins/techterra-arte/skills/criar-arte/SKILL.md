@@ -19,7 +19,7 @@ registra — nada de reescrever ficha ou prompt.
 ## 0. Ajuda / comandos
 
 Se o usuário pedir **"ajuda"**, **"comandos"**, **"menu"**, **"o que você faz"** ou algo parecido, responda só com a
-tabela abaixo (em português, curta), começando por "Skill criar-arte, versão 1.2.2", e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
+tabela abaixo (em português, curta), começando por "Skill criar-arte, versão 1.3.0", e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
 basta — os exemplos são pontos de partida.
 
 | Quero… | Exemplo de pedido | Modo |
@@ -27,6 +27,7 @@ basta — os exemplos são pontos de partida.
 | lote de monstros novos | "crie um lote de 8 cartelas de monstros de Gelo" · "lote piloto de 1 cartela de monstros novos" | [monstros](modos/monstros.md) |
 | lote temático | "lote de 32 monstros inspirados em circo assombrado" (tema vira arquétipos) | [lotes temáticos](regras/lotes-tematicos.md) |
 | variação / evolução | "faça a variação de Fogo destes 4 monstros" (envie as artes) | [monstros](modos/monstros.md) |
+| evoluir monstro existente | "crie a evolução destes 3 monstros" (envie as artes) | [monstros](modos/monstros.md) §Linhas evolutivas |
 | fusões | "fusões entre estes pares" · "fusões com os monstros de Halloween" · "4 visões desta fusão" | [fusões](modos/fusoes.md) |
 | personagens / NPCs | "lote de 30 NPCs nórdicos (rosto + corpo)" · "crie 3 personagens: …" | [personagens](modos/personagens.md) |
 | atualizar personagem | "envelheça este personagem 10 anos" · "troque a roupa dele" (envie rosto e corpo) | [personagens](modos/personagens.md) |

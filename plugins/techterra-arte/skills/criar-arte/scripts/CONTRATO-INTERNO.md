@@ -54,6 +54,8 @@ Célula (ordem L1C1, L1C2, L2C1, L2C2; sempre 4 por cartela):
 | `humanoide_previsto` | todos | bool (opcional, padrão false) |
 | `leitura` | todos | opcional: direção de conceito escrita pelo assistente (1 linha) |
 | `evolui_de` | N | opcional: `[cartela, linha, coluna]` da célula antecessora (mesma cartela ou anterior) |
+| `antecessor_externo` | N | opcional, **exclusivo com `evolui_de`**: monstro que JÁ EXISTE no jogo (fora do lote) do qual esta célula evolui — `{nome, tier, tipo1, tipo2, descricao, arte, humanoide}`, `arte` relativo ao lote (`artes/x.png`, enviada pelo usuário). Tier da célula ≥ tier dele (igual = aviso; menor = erro); humanoide liga `humanoide_previsto` |
+| `evolucao_modo`, `level_requerido` | N | opcionais, com `evolui_de` ou `antecessor_externo`: vão para `evolucao` no `monstros.json` (padrão `"a_definir"`; level inteiro ≥ 1) |
 | `original` | V | `{nome, tier, tipo1, tipo2, descricao, arte, humanoide}` — `arte` relativo ao lote (`artes/x.png`) |
 | `tipo_sai`, `tipo_entra` | V | qual tipo do original sai e qual entra |
 | `ingredientes` | F, X, A | lista `{papel, nome, tier, tipo1, tipo2, descricao, arte, humanoide, linhagem}`; X/A: exatamente 2, papéis `BASE` e `SACRIFICIO`; F: 2–3, papel `PAI`; `linhagem` = outros nomes da linha evolutiva/avós (para o nome novo não carregar pedaço) |
@@ -62,7 +64,16 @@ Célula (ordem L1C1, L1C2, L2C1, L2C2; sempre 4 por cartela):
 
 Cada célula = a do plano + `n` (1..4×cartelas, ordem de leitura), `cartela`, `linha`, `coluna`, `slot` (`X001_1`),
 `arquivo` = `"{n:02d}_t{tier:02d}_{slug_do_nome}.png"` (o `{slug_do_nome}` literal até o nome existir),
-`evolucao` (N: `{"anterior": n|null, "seguinte": n|null}`), e nos ingredientes/original `recorte` = `pais/<slug>.png`.
+`evolucao` (N: `{"anterior": n|null, "seguinte": n|null}`; com antecessor externo, `{"anterior": null, "seguinte": …,
+"externo": {nome, tier, tipo1, tipo2, descricao, recorte, humanoide}}` — o `antecessor_externo` do plano sai da célula),
+e nos ingredientes/original/antecessor externo `recorte` = `pais/<slug>.png`.
+
+Prancha `referencias/cartela_NNN_pais.png`: toda cartela com V/F/X/A **ou** com célula N de antecessor externo (este
+grande e centrado no quadrante da célula; quadrantes sem origem ficam vazios). Antecessor interno nunca vai na prancha:
+mesma cartela = está na própria folha; cartela anterior = a cartela gerada vai anexada.
+
+Na N com antecessor (interno ou externo), a `anatomia` começa com "Evolução do <nome>." / "Evolução da <nome>." e o
+`nome` novo é diferente do antecessor (erro no `valida_fichas.py`).
 
 ## Fichas (`fichas_claude/parte_<L>.json`, lista)
 
@@ -83,8 +94,9 @@ Faixa de `marcas_poder` por tier: T1–2 0–2, T3–4 1–2, T5–6 2–3, T7�
 
 `{"lote", "status", "monstros": [ficha completa, ordenada por n]}`. Cada ficha tem, além dos campos acima, os campos que o
 cadastrador lê: `nome`, `tipo1`, `tipo2`, `tier`, `descricao`, `arquivo`, `humanoide`, `evolucao` no formato
-`{"de": "<nome do antecessor>", "modo": "a_definir"}` quando há antecessor (o criador decide modo/level; o plano pode
-trazer `evolucao_modo`/`level_requerido` na célula), `ingredientes` `[{"papel","nome"}]` em F/X/A, `variacao_de` em V.
+`{"de": "<nome do antecessor>", "modo": "a_definir"}` quando há antecessor, interno ou externo (o criador decide
+modo/level; o plano pode trazer `evolucao_modo`/`level_requerido` na célula, e aí sai
+`{"de", "modo": <evolucao_modo>, "level_requerido"}`), `ingredientes` `[{"papel","nome"}]` em F/X/A, `variacao_de` em V.
 
 ## `fila.json` (lista, uma por cartela)
 

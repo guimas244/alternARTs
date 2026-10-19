@@ -28,7 +28,8 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
 - **`leitura`** = direção de conceito escrita no plano. Siga a ideia central; o detalhe é seu.
 - `plano.json`: o campo `clima` (se houver) é o tom do lote e vai em todo prompt — a ficha não pode contrariá-lo.
 - `referencias/cartela_NNN_pais.png`: prancha 2x2 das cartelas com arte de origem (V: o original; F: os pais, mesmo
-  tamanho; X/A: BASE grande à esquerda, SACRIFÍCIO pequeno à direita; N: o antecessor de outra cartela, quando houver).
+  tamanho; X/A: BASE grande à esquerda, SACRIFÍCIO pequeno à direita; N: o antecessor externo — monstro que já existe no
+  jogo —, quando houver).
   **Olhe a imagem antes de escrever**; para detalhe, `pais/<slug>.png`.
 - Nomes que já existem no jogo: `{SKILL}/dados/nomes_existentes.json`. Se veio uma lista dos monstros que a
   tipagem/pacote já tem, ela vale como anti-repetição de arquétipo, silhueta e ideia central.
@@ -62,7 +63,7 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
 ### N — novos
 
 - `arquetipo`: 2–5 palavras; nenhum igual ou parecido aos do lote nem aos da lista de anti-repetição.
-- Célula com `evolucao.anterior`: o estágio novo muda de forma (corpo, postura, armas) e mantém só as 2 cores, os olhos e
+- Célula com `evolucao.anterior` ou `evolucao.externo` (monstro existente, na prancha): o estágio novo muda de forma (corpo, postura, armas) e mantém só as 2 cores, os olhos e
   um traço marcante; a `anatomia` começa com "Evolução do <nome>." / "Evolução da <nome>.". Nome sem prefixo obrigatório
   em comum com o antecessor.
 - O tipo 1 dá conceito e anatomia; o tipo 2 dá material, cor e comportamento.
