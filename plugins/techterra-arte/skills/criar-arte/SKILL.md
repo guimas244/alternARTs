@@ -16,6 +16,33 @@ Você planeja e prepara a arte e, no ChatGPT/Codex, também gera. Fichas, nomes,
 e a fila saem **antes** da geração; na etapa de geração só se anexa, cola, gera, confere, salva onde foi mandado e
 registra — nada de reescrever ficha ou prompt.
 
+## 0. Ajuda / comandos
+
+Se o usuário pedir **"ajuda"**, **"comandos"**, **"menu"**, **"o que você faz"** ou algo parecido, responda só com a
+tabela abaixo (em português, curta) e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
+basta — os exemplos são pontos de partida.
+
+| Quero… | Exemplo de pedido | Modo |
+|---|---|---|
+| lote de monstros novos | "crie um lote de 8 cartelas de monstros de Gelo" · "lote piloto de 1 cartela de monstros novos" | [monstros](modos/monstros.md) |
+| lote temático | "lote de 32 monstros inspirados em circo assombrado" (tema vira arquétipos) | [lotes temáticos](regras/lotes-tematicos.md) |
+| variação / evolução | "faça a variação de Fogo destes 4 monstros" (envie as artes) | [monstros](modos/monstros.md) |
+| fusões | "fusões entre estes pares" · "fusões com os monstros de Halloween" · "4 visões desta fusão" | [fusões](modos/fusoes.md) |
+| personagens / NPCs | "lote de 30 NPCs nórdicos (rosto + corpo)" · "crie 3 personagens: …" | [personagens](modos/personagens.md) |
+| atualizar personagem | "envelheça este personagem 10 anos" · "troque a roupa dele" (envie rosto e corpo) | [personagens](modos/personagens.md) |
+| itens | "25 equipamentos de monstro da tipagem Água, faixas 1–5" · "arte do livro de habilidade" | [itens](modos/itens.md) |
+| fundos de batalha | "fundos para estes 6 Locais: …" · "portão da Jornada X" | [cenários](modos/cenarios.md) |
+| mapas | "sub-mapa da Região X com estes Locais" · "mapa-múndi com estas ilhas" | [mapas](modos/mapas.md) |
+| capas | "capas 3:4 para estes 8 eventos" · "moldura da invasão de Natal" | [capas](modos/capas.md) |
+| ícones | "16 ícones de mapa: castelo, vila, …" | [ícones](modos/icones.md) |
+| **só recortar** | "recorte esta cartela de monstros" (2x2 → 512²) · "recorte esta cartela de itens" (5x5 → 320²) · "recorte esta página de NPCs" (rosto + corpo) · "recorte estes ícones" (4x4 → 300², círculo) | `scripts/recortar_cartela.py` (lote) ou `scripts/recortar_grade.py --grade 2x2 --lado 512` (imagem solta) · `recortar_grade.py --grade 5x5` · `npc_recortar.py` · `recortar_grade.py --grade 4x4 --lado 300 --mascara-circular` |
+| **só conferir** | "confira o enquadramento desta cartela" | `scripts/checa_enquadramento.py` |
+| **ajustar fundo/capa** | "deixe este fundo no tamanho do jogo" · "converta esta cartela de capas" | `scripts/fundos_normalizar.py` · `scripts/capas_converter.py` |
+| **fechar o lote** | "monte a entrega do lote" (recortes + fichas com descrição, prontos para cadastrar) | `scripts/montar_entrega.py` · [entrega](regras/entrega.md) |
+
+No Codex também dá para chamar a skill pelo nome (`$criar-arte ajuda`); no ChatGPT, basta pedir "criar-arte: ajuda" ou
+"quais comandos a skill de arte tem?".
+
 ## 1. Descubra o modo e leia o arquivo dele
 
 | Pedido | Leia |
