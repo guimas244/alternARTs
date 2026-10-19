@@ -44,11 +44,11 @@ Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md)
    python "${CLAUDE_SKILL_DIR}/scripts/recortar_grade.py" <lote>/cartelas/cartela_001_original.png --grade 4x4 --lado 300 --mascara-circular --nomes <lote>/nomes/cartela_001.json --saida <lote>/recortes
    ```
 
-   Ele separa os medalhões por região conectada, apaga o que fica fora do círculo e centraliza em 300×300 RGBA; célula
-   vazia, cortada ou grudada no vizinho sai como erro daquela célula (as boas são gravadas). Opções e saída: docstring
-   de `scripts/recortar_grade.py`. Atenção: o recortador **não redimensiona**; medalhão com mais de ~284 px de
-   diâmetro não cabe em 300 com a margem mínima e a célula reprova ("objeto grande demais"). Por isso o prompt pede
-   ~270 px: confira o diâmetro na cartela antes de recortar.
+   Ele separa os medalhões por região conectada, apaga o que fica fora do círculo e centraliza em 300×300 RGBA;
+   `--mascara-circular` liga `--reduzir`, então medalhão maior que cabe em 300 é reduzido (mesma proporção) em vez de
+   reprovar. Célula vazia, cortada na borda ou grudada no vizinho sai como erro daquela célula (as boas são gravadas).
+   Use `--simular` para conferir sem gravar e `--substituir` para trocar de propósito um recorte que já existe.
+   Opções e saída: docstring de `scripts/recortar_grade.py`.
 5. **Conferir no olho:** 16 medalhões do mesmo tamanho, círculo inteiro com a borda branca, sem resto do vizinho, sem
    texto; reconhecível reduzido a 80×80. Célula reprovada: gere a cartela de novo do zero (máximo 3 imagens) ou anote
    como pendente.

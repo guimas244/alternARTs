@@ -39,7 +39,7 @@ Nada disto pode envolver os 20 primordiais — nem como pai, original, antecesso
 - Referência de estilo = só o traço; referência de variedade pesa **mais** (detalhe, material, brilho, presença).
 - **Prancha dos pais** por cartela: em cada quadrante, a BASE grande à esquerda e o SACRIFÍCIO pequeno à direita.
   **Olhe a prancha antes de escrever a ficha.** As artes dos pais (e do original/antecessor) **o usuário fornece** — a
-  skill não tem banco nem acervo; o script que monta a prancha chega na E3 (até lá, pré-monte a folha com um editor de imagem).
+  skill não tem banco nem acervo; a prancha é montada por `scripts/montar_entrada.py` a partir delas.
 - Para refazer uma arte, parta **sempre dos pais** (prancha/quadrante), nunca de uma tentativa anterior. *Por quê: cada
   refação a partir da anterior acumula o erro.*
 

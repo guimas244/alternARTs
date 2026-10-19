@@ -44,7 +44,7 @@ Para que serve: como dividir o trabalho entre a sessão do Claude e a sessão da
   - personagens: **no máximo 1 refação**, só por erro grave (não saíram 3 pessoas, fundo todo opaco, nudez);
   - itens: ver [itens.md](itens.md) §6;
   - cenários, mapas, capas e ícones: ver [cenarios-mapas-capas.md](cenarios-mapas-capas.md) (Regras comuns).
-- O verificador e os recortadores chegam na E3–E6 (`scripts/`); até lá, conferir no olho com os mesmos critérios.
+- O verificador e os recortadores estão em `scripts/` (lista em [../scripts/LEIA-ME.md](../scripts/LEIA-ME.md)).
 
 ## Limite de anexos
 
@@ -83,7 +83,7 @@ Regras junto:
 ## Pedido de "proposta" de pacote
 
 - "Proposta" de pacote de monstros = **já montar no padrão de fabricação**: pasta do lote, contrato das fichas,
-  fichas escritas por agentes em paralelo, validador (script na E3; até lá, conferência manual), prompts por cartela, `fila.json` e o prompt da sessão de imagem.
+  fichas escritas por agentes em paralelo, validador (`valida_fichas.py`/`compor_fichas.py`), prompts por cartela, `fila.json` e o prompt da sessão de imagem.
   **Não** fazer HTML de proposta nem formulário. — o dono avalia olhando as fichas e as cartelas.
 - Decisões abertas: tomar com o padrão recomendado e listar na resposta.
 

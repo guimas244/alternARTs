@@ -1,4 +1,4 @@
-# Contrato interno dos scripts — monstros e fusões (E3)
+# Contrato interno dos scripts — monstros e fusões
 
 Todos os scripts: **Python 3 + Pillow**, sem banco, sem rede, sem caminho pessoal. Rodam assim:
 

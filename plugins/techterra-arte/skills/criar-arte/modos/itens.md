@@ -90,14 +90,19 @@ python "{SKILL}/scripts/recortar_grade.py" <lote>                # grava
 
 - Recorta todas as `cartelas/pagina_NN_original.png` que existirem: um PNG por item no `arquivo` dele
   (`<lote>/<tipagem>/faixa_NN_<descricao>.png`, `lado` × `lado` RGBA, sem redimensionar, margem 16 / mínimo 8),
-  `cartelas/pagina_NN_grade.png` e `validacao/recorte_pagina_NN.json`. Opções: `--pagina N`, `--lado`, `--saida`,
-  `--substituir` (sem ela, recorte editado à mão nunca é sobrescrito: a página inteira fica parada e avisa).
+  `cartelas/pagina_NN_grade.png` e `validacao/recorte_pagina_NN.json`. Opções: `--pagina N`, `--lado`, `--margem`,
+  `--saida`, `--substituir` (sem ela, recorte editado à mão nunca é sobrescrito: a página inteira fica parada e avisa),
+  `--reduzir` (objeto que não cabe é reduzido, mesma proporção; itens **não** reduzem por padrão — use só por decisão
+  do dono).
 - Resposta por página: **OK**, **ATENÇÃO** (duas manchas grandes separadas na célula, máscara cortando objeto — olhe)
   ou **REPROVADA** (fundo opaco/xadrez, célula vazia, objeto cortado na borda, objeto grande demais). As células boas
   são gravadas mesmo com outra reprovada.
 - Célula reprovada vira **avulsa**: gere só aquele objeto (grade 1, mesmo estilo e mesma linha de célula), salve
   `cartelas/avulsa_NN_LxCy_vK.png` e recorte com
-  `python "{SKILL}/scripts/recortar_grade.py" <lote>/cartelas/avulsa_NN_LxCy_vK.png --grade 1x1 --nomes <lista com o arquivo> --saida <lote>`.
+  `python "{SKILL}/scripts/recortar_grade.py" <lote>/cartelas/avulsa_NN_LxCy_vK.png --grade 1x1 --nomes <lote>/nomes/avulsa_NN_LxCy.json --saida <lote>`,
+  onde o JSON é uma lista com o `arquivo` do item (ex.: `["marinho/faixa_03_arpao_de_osso.png"]`). A avulsa não lê o
+  `lado` do `itens.json`: lote de 512 (pedra ritual) passa `--lado 512`. Esse passo é à mão (o script não acha a
+  avulsa sozinho).
 - Confira no olho 3 ou 4 recortes por página (objeto inteiro, sem pedaço do vizinho). Quem aprova a arte é o dono.
 
 ## 6. Entrega

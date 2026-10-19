@@ -39,7 +39,7 @@ habilidade ou texto genérico.
 - Criatura ou item que **faz referência a outra obra, personagem, jogo, anime, filme ou elemento cultural
   reconhecível**. A ligação com a referência é a melhor explicação do tipo.
 - Infância e anos 1990/2000 são fontes frequentes, mas não limitam o tipo.
-- Combina com outro tipo. Exemplos do dono: monstro inspirado em Frankenstein = Zumbi/Nostálgico (Zumbi
+- Combina com outro tipo. Exemplos do dono: monstro inspirado no gigante costurado do romance clássico de terror = Zumbi/Nostálgico (Zumbi
   caracteriza, Nostálgico indica a referência); uma asa de cavaleiro-dragão de um jogo online antigo = equipamento
   Nostálgico.
 - **Sempre escrever na ficha qual é a referência.** É o único tipo em que a referência a obra existente é permitida

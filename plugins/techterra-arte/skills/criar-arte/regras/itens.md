@@ -121,7 +121,7 @@ Return only the transparent 25-item parent sheet.
     com `_` (ex.: `marinho/faixa_06_astrolabio_de_conchas.png`).
 - Por tipagem, guardar também a descrição mínima de cada item e um índice com faixa, página, posição, arquivo e estado
   de aprovação. Nome e classificação ficam nos documentos, nunca na arte.
-- **Recorte** (o recortador chega na E5; até lá, conferir no olho com os mesmos critérios): separa os objetos **antes** de enquadrar (senão a janela pega pedaço do vizinho), centraliza em
+- **Recorte** (`scripts/recortar_grade.py`): separa os objetos **antes** de enquadrar (senão a janela pega pedaço do vizinho), centraliza em
   **320×320 RGBA sem redimensionar**, margem de referência 16 px (mínimo 8); objeto maior que 304 px em qualquer lado é
   rejeitado. Os pixels mantidos não mudam. A cartela original nunca é editada.
 - Quem aprova a arte é o dono. Nunca marque uma cartela como aprovada por ele sem que isso aconteça.

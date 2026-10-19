@@ -9,8 +9,8 @@ capa, moldura de invasão e ícone de mapa. Tamanhos finais em [formatos.md](for
 - **Nunca editar imagem gerada** (nada de inpaint, image-to-image, "corrija isto"). Saiu errada: gere de novo do zero,
   com o texto ajustado. **Uma geração por imagem**; refazer do zero só por erro real (medida reprovada, vista de cima,
   texto, criatura na cena, encaixe/posição fora do lugar), no máximo 3 imagens; depois, anote como pendente e siga
-  (regra geral em [fluxo-sessoes.md](fluxo-sessoes.md)). As medidas citadas abaixo serão conferidas por script na
-  E6; até lá, confira no olho com os mesmos critérios.
+  (regra geral em [fluxo-sessoes.md](fluxo-sessoes.md)). As medidas citadas abaixo são conferidas por script
+  (`scripts/fundos_normalizar.py` e `scripts/capas_converter.py`); o que a medida não vê, confira no olho.
 - **Nada escrito:** sem texto, letra, número, placa legível, lombada com título, runa legível, ícone, seta, bússola,
   moldura, borda, vinheta ou marca d'água (salvo onde a regra abaixo pede moldura de propósito, como no mundi). O que
   mais puxa texto é livro, placa e estandarte: **nomeie o suporte liso** ("lombadas lisas sem título", "placas em
@@ -118,7 +118,7 @@ Fundo não é um por Local: o mapa ganha um conjunto pequeno, e Locais parecidos
   `referencias/mapas/submapa-*.jpg` (kaiangue = principal; aita = natureza com cidade grande; ossario = bioma que ocupa o
   quadro todo, sem mar).
 - Anexe também **o recorte do mapa-múndi em volta do ponto** da Região: recorte-o de
-  `referencias/mapas/mundi-mascris-completo.jpg` (o script que faz isso chega na E6; até lá, recorte com um editor de
+  `referencias/mapas/mundi-mascris-completo.jpg` (sem script: recorte com um editor de
   imagem e salve na pasta de trabalho, nunca na skill). Ele dá bioma, relevo e contorno. O recorte é pintado como pergaminho de atlas: **o sub-mapa copia só a geografia, nunca esse traço**.
   Frase junto: *"Use as imagens anexadas só como referência de estilo, câmera e contorno. O conteúdo é o do texto."*
 - **Os pinos dos Locais vão por cima da arte**, depois. Por isso a arte precisa de **N lugares distintos, bem separados e

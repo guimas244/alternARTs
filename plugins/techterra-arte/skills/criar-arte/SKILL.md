@@ -49,8 +49,14 @@ o cadastrador do jogo lê).
 Scripts em `${CLAUDE_SKILL_DIR}/scripts/` (Python 3 + Pillow). Antes de usar, confira `python -c "import PIL"`; se
 faltar, oriente `pip install pillow`. Os scripts recebem a pasta de trabalho por argumento.
 
-> Estado (19/10/2026): regras prontas (`regras/`). Fluxos completos e scripts chegam por etapas — E3 monstros e
-> fusões, E4 personagens, E5 itens, E6 cenários, mapas, capas e ícones. Modo marcado "em construção" ainda não tem fluxo completo:
-> diga isso ao usuário em vez de improvisar. Enquanto um script não existe, confira no olho com os mesmos critérios
-> descritos nas regras. Artes de origem (pais de fusão, original, antecessor, artes do jogo para capa, personagem a
-> atualizar) e listas de nomes de NPC **o usuário fornece**: a skill não tem banco nem acervo.
+Lista dos scripts, por modo, com o comando de cada um: [scripts/LEIA-ME.md](scripts/LEIA-ME.md).
+
+> Estado (19/10/2026): todos os modos têm fluxo completo e scripts. Ainda é **manual** (feito pelo Claude, sem script):
+> - recorte do mundi em volta do ponto da Região (sub-mapa), com editor de imagem;
+> - `ENTREGA.md` de itens, NPC, cenários, mapas, capas e ícones (só monstros/fusões têm `montar_entrega.py`);
+> - recorte da avulsa de item: `recortar_grade.py <avulsa.png> --grade 1x1 --nomes <lista>` chamado à mão;
+> - `trocas.json` do modo TROCAS (monstros), escrito pelo Claude;
+> - cotas de temperamento por lote: sem checagem automática, confira ao revisar as fichas.
+>
+> Artes de origem (pais de fusão, original, antecessor, artes do jogo para capa, personagem a atualizar) e listas de
+> nomes de NPC **o usuário fornece**: a skill não tem banco nem acervo.

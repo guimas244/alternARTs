@@ -4,8 +4,8 @@ Para que serve: como pedir, conferir, consertar e recortar uma cartela sem perde
 
 Medidas de cada tipo: [formatos.md](formatos.md). Diagramas a anexar: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).
 
-> **Scripts:** o verificador de enquadramento e os recortadores citados aqui chegam na E3–E6 (`scripts/`). Até lá,
-> confira no olho com os mesmos critérios e não improvise script.
+> **Scripts:** o verificador de enquadramento e os recortadores citados aqui estão em `scripts/` (lista em
+> [../scripts/LEIA-ME.md](../scripts/LEIA-ME.md)). Não improvise script.
 
 ## A cartela 2x2 de monstros
 

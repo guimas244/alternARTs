@@ -14,7 +14,7 @@ chama pela ordem, com o rótulo do molde de cada modo ("Image N", "Reference N" 
 |---|---|---|---|
 | 1 | `monstros/referencia-estilo.png` | 1254² | **só a técnica** (contorno escuro de espessura variável, cel-shading, luz de cima-frente, granulado só no acento). Nunca copiar anatomia, rosto, olhos, pose ou paleta do escorpião |
 | 2 | `monstros/referencia-variedade.png` | 1254² | 12 monstros aprovados: o nível de detalhe e de **diferença** entre criaturas. Pesa MAIS que a 1. Nunca copiar |
-| 3 | prancha do lote (pais, original ou antecessor) | 1254² | montada para cada lote com as artes que **o usuário fornece** (a skill não tem acervo; script da prancha na E3) — não fica aqui |
+| 3 | prancha do lote (pais, original ou antecessor) | 1254² | montada para cada lote com as artes que **o usuário fornece** (a skill não tem acervo; `scripts/montar_entrada.py` monta a prancha) — não fica aqui |
 | 4 | `guias/guia_enquadramento_2x2.png` | 1254² | diagrama de layout: quadrados cinza = onde cada criatura pode estar; cruz rosa = proibido. Nunca é desenhado |
 | 5 | `monstros/referencia-humanoides.png` | 2048×512 | só nas cartelas com humanoide: proporção e leitura de figurino |
 
@@ -58,7 +58,7 @@ câmera. Gere uma paisagem nova do zero; o lugar, a paleta e o conteúdo são os
 | `mapas/mundi-mascris-completo.jpg` | 1536×1024 | mapa-múndi aprovado (traço de mundi) |
 
 O sub-mapa também leva o **recorte do mundi em volta do ponto**, recortado de `mapas/mundi-mascris-completo.jpg` para
-cada mapa e salvo na pasta de trabalho (script na E6; até lá, recorte com um editor de imagem) — não fica aqui.
+cada mapa e salvo na pasta de trabalho (sem script: recorte com um editor de imagem) — não fica aqui.
 
 ## Ícones de mapa (cartela 4x4)
 
