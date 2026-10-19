@@ -1,13 +1,13 @@
 {
   "name": "techterra-arte",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Criação de arte do jogo Techterra: monstros, fusões, personagens/NPCs, itens, cenários, mapas, capas e ícones — fichas, prompts, geração das cartelas, conferência e recorte.",
   "skills": "./skills/",
   "interface": {
     "displayName": "Arte Techterra",
-    "shortDescription": "Lotes de arte do Techterra no padrão do jogo",
+    "shortDescription": "Monstros, fusões, personagens, itens, fundos, mapas, capas e ícones do Techterra",
     "developerName": "guimas244",
     "category": "Design",
-    "defaultPrompt": "Quero um lote piloto de 1 cartela de monstros novos de gelo."
+    "defaultPrompt": "Mostre o menu de ajuda da skill de arte: o que ela cria e exemplos de pedidos."
   }
 }
