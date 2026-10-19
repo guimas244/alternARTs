@@ -19,14 +19,15 @@ registra — nada de reescrever ficha ou prompt.
 ## 0. Ajuda / comandos
 
 Se o usuário pedir **"ajuda"**, **"comandos"**, **"menu"**, **"o que você faz"** ou algo parecido, responda só com a
-tabela abaixo (em português, curta), começando por "Skill criar-arte, versão 1.4.0", e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
+tabela abaixo (em português, curta), começando por "Skill criar-arte, versão 1.5.0", e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
 basta — os exemplos são pontos de partida.
 
 | Quero… | Exemplo de pedido | Modo |
 |---|---|---|
 | lote de monstros novos | "crie um lote de 8 cartelas de monstros de Gelo" · "lote piloto de 1 cartela de monstros novos" | [monstros](modos/monstros.md) |
 | lote temático | "lote de 32 monstros inspirados em circo assombrado" (tema vira arquétipos) | [lotes temáticos](regras/lotes-tematicos.md) |
-| homenagem reconhecível | "Quero lotes criando humanoides: 1. … — do filme …, tipo fantasma; 2. … — …, docrates; …" (+ anexe 1 imagem de cada) | [lotes temáticos](regras/lotes-tematicos.md) §Nível de fidelidade |
+| personagens como referência (releitura) | "Quero lotes criando humanoides: 1. … — do filme …, tipo fantasma; 2. … — …, docrates; …" (só âncoras ficam; os tipos reinventam o resto) | [lotes temáticos](regras/lotes-tematicos.md) §Nível de fidelidade |
+| homenagem reconhecível | "… humanoides iguais aos personagens: 1. …, tipo fantasma; 2. …" (só com "igual/fiel/idêntico"; + anexe 1 imagem de cada, opcional) | [lotes temáticos](regras/lotes-tematicos.md) §Nível de fidelidade |
 | variação / evolução | "faça a variação de Fogo destes 4 monstros" (envie as artes) | [monstros](modos/monstros.md) |
 | evoluir monstro existente | "crie a evolução destes 3 monstros" (envie as artes) | [monstros](modos/monstros.md) §Linhas evolutivas |
 | fusões | "fusões entre estes pares" · "fusões com os monstros de Halloween" · "4 visões desta fusão" | [fusões](modos/fusoes.md) |

@@ -10,7 +10,8 @@ Lê <lote>/plano.json (formato em CONTRATO-INTERNO.md), valida e gera:
                                  prancha 2x2 de cada cartela que tem origem: V = original grande e centrado;
                                  X/A = base grande à esquerda + sacrifício menor à direita; F = todos os pais do mesmo
                                  tamanho; N com antecessor_externo = o antecessor grande e centrado; N/L homenagem
-                                 com referencia_conteudo.arte = a figura de referência grande e centrada; demais N/L =
+                                 (ou releitura com usar_imagem) com referencia_conteudo.arte = a figura de referência
+                                 grande e centrada; demais N/L =
                                  quadrante vazio (cartela só de N/L sem antecessor externo nem referência com arte não
                                  ganha prancha);
 - <lote>/referencias/            cópia das referências da skill (estilo, variedade, humanoides, guia 2x2).
@@ -36,7 +37,8 @@ FUNDO, LINHA = (128, 128, 132, 255), (90, 90, 94, 255)
 REFS_LOTE = ["monstros/referencia-estilo.png", "monstros/referencia-variedade.png", "monstros/referencia-humanoides.png",
              "guias/guia_enquadramento_2x2.png"]
 CAMPOS_ORIGEM = ("nome", "tier", "tipo1", "tipo2", "descricao", "arte", "humanoide")
-FIDELIDADES = ("arquetipo", "homenagem")
+FIDELIDADES = ("arquetipo", "releitura", "homenagem")
+FID_TXT = "use \"arquetipo\", \"releitura\" ou \"homenagem\""
 
 
 class Plano:
@@ -114,22 +116,26 @@ def externo(cel):
 
 
 def ref_arte(cel):
-    """Recorte da figura de referência (homenagem) de uma célula N/L, ou None."""
+    """Recorte da figura de referência (homenagem, ou releitura com usar_imagem) de uma célula N/L, ou None."""
     return (cel.get("referencia_conteudo") or {}).get("recorte")
 
 
 def checa_referencia(p, tag, e, lote):
-    """referencia_conteudo (N/L homenagem): {descricao, arte?}; arte relativa ao lote."""
+    """referencia_conteudo (N/L releitura ou homenagem): {descricao, arte?}; arte relativa ao lote.
+    Na releitura, a arte só entra com "usar_imagem": true na célula (por padrão a releitura não anexa imagem)."""
     rc = e["referencia_conteudo"]
     if e["bloco"] not in ("N", "L"):
         p.erro(f"{tag}: referencia_conteudo só vale em célula N ou L"); return
-    if e.get("fidelidade") != "homenagem":
-        p.erro(f"{tag}: referencia_conteudo só vale com fidelidade \"homenagem\""); return
+    if e.get("fidelidade") not in ("releitura", "homenagem"):
+        p.erro(f"{tag}: referencia_conteudo só vale com fidelidade \"releitura\" ou \"homenagem\""); return
     if not isinstance(rc, dict) or not str(rc.get("descricao") or "").strip():
         p.erro(f"{tag}: referencia_conteudo tem que ser {{\"descricao\": \"...\", \"arte\": \"artes/x.png\" (opcional)}}")
         return
     if rc.get("arte") is not None:
-        if not os.path.isfile(os.path.join(lote, str(rc["arte"]))):
+        if e.get("fidelidade") == "releitura" and e.get("usar_imagem") is not True:
+            p.erro(f"{tag}: releitura não anexa imagem do personagem por padrão — tire a 'arte' da referencia_conteudo "
+                   f"ou ponha \"usar_imagem\": true na célula (só se as âncoras não bastarem)")
+        elif not os.path.isfile(os.path.join(lote, str(rc["arte"]))):
             p.erro(f"{tag}: arte da referencia_conteudo não encontrada: {rc['arte']} (caminho relativo à pasta do lote)")
         elif e.get("antecessor_externo") is not None:
             p.erro(f"{tag}: antecessor_externo e referencia_conteudo com arte na mesma célula não cabem no quadrante da "
@@ -208,7 +214,7 @@ def main():
     cartelas = sorted(cartelas, key=lambda c: c["cartela"])
     fid_lote = plano.get("fidelidade", "arquetipo")
     if fid_lote not in FIDELIDADES:
-        print(f"plano.json: fidelidade {fid_lote!r} inválida (use \"arquetipo\" ou \"homenagem\")")
+        print(f"plano.json: fidelidade {fid_lote!r} inválida ({FID_TXT})")
         sys.exit(2)
 
     # 1) células cruas + validação de campos
@@ -240,12 +246,21 @@ def main():
             e["humanoide_previsto"] = bool(e.get("humanoide_previsto", False))
             fid = e.get("fidelidade", fid_lote)   # a célula pode trocar a do lote
             if fid not in FIDELIDADES:
-                p.erro(f"{tag}: fidelidade {fid!r} inválida (use \"arquetipo\" ou \"homenagem\")")
-            elif fid == "homenagem" and b not in ("N", "L"):
+                p.erro(f"{tag}: fidelidade {fid!r} inválida ({FID_TXT})")
+            elif fid in ("releitura", "homenagem") and b not in ("N", "L"):
                 if "fidelidade" in e:
-                    p.aviso(f"{tag}: homenagem só vale em célula N/L; bloco {b} fica \"arquetipo\"")
+                    p.aviso(f"{tag}: {fid} só vale em célula N/L; bloco {b} fica \"arquetipo\"")
                 fid = "arquetipo"
             e["fidelidade"] = fid
+            if "usar_imagem" in e:
+                ui = e["usar_imagem"]
+                if not isinstance(ui, bool):
+                    p.erro(f"{tag}: usar_imagem tem que ser true/false")
+                elif fid != "releitura":
+                    p.aviso(f"{tag}: usar_imagem só vale em célula N/L releitura (ignorado)")
+                    e.pop("usar_imagem")
+                elif ui and not (e.get("referencia_conteudo") or {}).get("arte"):
+                    p.erro(f"{tag}: usar_imagem true pede referencia_conteudo.arte (a imagem do personagem em artes/)")
             if "referencia_conteudo" in e:
                 checa_referencia(p, tag, e, lote)
             if b == "N":
@@ -393,7 +408,7 @@ def main():
 
     # 4) entrada.json
     ordem = ["n", "slot", "cartela", "linha", "coluna", "bloco", "tier", "tipo1", "tipo2", "humanoide_previsto", "fidelidade",
-             "leitura", "tema", "referencia_conteudo", "evolui_de", "evolucao", "original", "tipo_sai", "tipo_entra",
+             "leitura", "tema", "referencia_conteudo", "usar_imagem", "evolui_de", "evolucao", "original", "tipo_sai", "tipo_entra",
              "ingredientes", "arquivo"]
     saida = [{**{k: e[k] for k in ordem if k in e}, **{k: v for k, v in e.items() if k not in ordem}}
              for e in sorted(celulas, key=lambda e: e["n"])]

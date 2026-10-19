@@ -23,13 +23,15 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
 
 - `python "{SKILL}/scripts/ver_celulas.py" . <cartelas>` mostra as suas células (aceita `3,4` ou `3-6`). **Não leia o
   `entrada.json` inteiro.** Cada célula traz `n`, `cartela`, `linha`, `coluna`, `bloco`, `tier`, `tipo1`, `tipo2`,
-  `humanoide_previsto`, `fidelidade` e, conforme o bloco, `leitura`, `referencia_conteudo` (homenagem), `evolucao`,
+  `humanoide_previsto`, `fidelidade` e, conforme o bloco, `leitura`, `referencia_conteudo` (releitura/homenagem),
+  `usar_imagem` (releitura com imagem), `evolucao`,
   `original` + `tipo_sai`/`tipo_entra` ou `ingredientes` (com `linhagem`).
 - **`leitura`** = direção de conceito escrita no plano. Siga a ideia central; o detalhe é seu.
 - `plano.json`: o campo `clima` (se houver) é o tom do lote e vai em todo prompt — a ficha não pode contrariá-lo.
 - `referencias/cartela_NNN_pais.png`: prancha 2x2 das cartelas com arte de origem (V: o original; F: os pais, mesmo
   tamanho; X/A: BASE grande à esquerda, SACRIFÍCIO pequeno à direita; N: o antecessor externo — monstro que já existe no
-  jogo —, quando houver; N/L homenagem: a figura de referência enviada pelo usuário, quando houver).
+  jogo —, quando houver; N/L homenagem, ou releitura com `usar_imagem`: a figura de referência enviada pelo usuário,
+  quando houver).
   **Olhe a imagem antes de escrever**; para detalhe, `pais/<slug>.png`.
 - Nomes que já existem no jogo: `{SKILL}/dados/nomes_existentes.json`. Se veio uma lista dos monstros que a
   tipagem/pacote já tem, ela vale como anti-repetição de arquétipo, silhueta e ideia central.
@@ -68,7 +70,27 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
   em comum com o antecessor.
 - O tipo 1 dá conceito e anatomia; o tipo 2 dá material, cor e comportamento.
 
-### N/L — homenagem reconhecível (célula com `fidelidade: "homenagem"`)
+### N/L — releitura (célula com `fidelidade: "releitura"`; padrão para personagens nomeados)
+
+- `ancoras`: lista de **2 a 3** traços — só os que fazem entender a referência: em geral o rosto/máscara/cabeça e UMA
+  silhueta ou objeto-assinatura. Ex. (assassino da máscara de grito, Fantasma/Elétrico): "rosto de grito alongado, de
+  olhos caídos e boca aberta, feito de estática", "silhueta de manto com capuz pontudo".
+- `reinvencao`: 1–2 frases (≥ 20 caracteres) dizendo como os **DOIS tipos** reinventam todo o resto — corpo/anatomia,
+  material, paleta, detalhes e pose (em lote **de humanoides**, mantenha cabeça, tronco, 2 braços e 2 pernas, de pé — os
+  tipos mudam material e paleta, não tiram membros). Ex.: "o fantasma deixa o corpo de névoa translúcida; o elétrico faz o
+  manto de estática chiando, com fios de alta tensão no lugar das costuras, paleta azul-petróleo e ciano, pose torta de
+  quem desliza".
+- **Proibido:** copiar o figurino inteiro; a paleta original inteira (só a cor que for parte de uma âncora); réplica de
+  arma/objeto além do que for âncora; "pessoa fantasiada". O resultado não pode parecer o personagem original — nem
+  virar criatura sem relação com ele.
+- `anatomia`, `paleta`, `rosto` e `marcas_poder` seguem a reinvenção (não o figurino original). `tracos_iconicos` é só
+  da homenagem.
+- O `compor_fichas.py` põe no `visual`, logo depois da `anatomia`: "âncoras da referência (só estas ficam
+  reconhecíveis): …" e "reinvenção pelos tipos: …". `ver_celulas.py` mostra a figura (descrição interna); se a célula
+  tiver `usar_imagem`, a figura está no quadrante da prancha — olhe só para tirar as âncoras.
+- **Nunca** o nome do personagem, da obra ou do ator em campo nenhum: o validador recusa.
+
+### N/L — homenagem reconhecível (célula com `fidelidade: "homenagem"`; só quando pedirem "igual/fiel/idêntico")
 
 - `tracos_iconicos`: lista de **3 a 6** traços visuais concretos que fazem a figura clássica ser reconhecida à primeira
   vista — forma da máscara ou do rosto, figurino, arma/objeto, cores, silhueta, postura, detalhe-assinatura. Ex.:

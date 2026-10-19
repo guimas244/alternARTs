@@ -35,26 +35,45 @@ Molde do pacote por tipagem: **32 monstros, 8 cartelas de 4**.
 
 ### Nível de fidelidade (campo `fidelidade` do plano)
 
-Antes do plano, decida o quanto a criatura se parece com a referência:
+Antes do plano, decida o quanto a criatura se parece com a referência. São três níveis:
 
-| | `arquetipo` (padrão) | `homenagem` |
-|---|---|---|
-| Quando | tema aberto: "circo assombrado", "filmes de terror", "Halloween" | o usuário lista personagens **NOMEADOS** e pede humanoides, ou diz "parecido", "igual", "reconhecível" |
-| O que sai | o arquétipo vira **criatura nova** (como o pacote Halloween de out/2026: o balão, o boneco, o mascarado viraram monstros próprios) | **homenagem reconhecível**: quem conhece a figura clássica a reconhece à primeira vista pelos **traços icônicos** (forma da máscara, figurino, arma/objeto, cores, silhueta, postura, detalhe-assinatura), redesenhada no traço do jogo |
-| Figurino/máscara da obra | não (só o arquétipo) | sim, como traço icônico redesenhado |
-| Sempre proibido | nome do personagem/obra/ator no prompt, no nome e na ficha; rosto de ator; logo, marca ou texto | o mesmo |
-| Na ficha | `arquetipo` | `arquetipo` + `tracos_iconicos` (3–6), que vão para o `visual` |
-| No prompt | — | bloco `HOMAGE CELLS` + marca `HOMAGE` na linha (`preparar_fila.py`) |
+| | `arquetipo` | `releitura` (**padrão com nomes**) | `homenagem` |
+|---|---|---|---|
+| Quando | tema aberto, **sem nomes**: "circo assombrado", "filmes de terror", "Halloween" | o usuário lista personagens/figuras **NOMEADOS** (com ou sem "humanoides"), ou diz "parecido", "reconhecível", "como referência" | **só** quando o usuário diz "igual", "fiel", "idêntico", "exatamente como" o personagem |
+| O que sai | o arquétipo vira **criatura nova** que só lembra o tema | **criatura original inspirada na figura**: 2–3 **âncoras** deixam entender a referência; os **dois tipos reinventam todo o resto** (corpo, material, paleta, detalhes, pose) | **homenagem reconhecível** à primeira vista pelos **traços icônicos** (máscara, figurino, arma, cores, silhueta, postura), no traço do jogo |
+| Figurino/máscara da obra | não | só o que for âncora (em geral o rosto/máscara e UMA silhueta ou objeto); nunca o figurino inteiro, a paleta original inteira nem "pessoa fantasiada" | sim, como traço icônico redesenhado |
+| Imagem do personagem | não | **não, por padrão**; só se as âncoras não bastarem: `referencia_conteudo.arte` + `"usar_imagem": true` na célula (o prompt manda ler só as âncoras dela) | opcional, `referencia_conteudo.arte` |
+| Sempre proibido | nome do personagem/obra/ator no prompt, no nome e na ficha; rosto de ator; logo, marca ou texto | o mesmo | o mesmo |
+| Na ficha | `arquetipo` | `arquetipo` + `ancoras` (2–3) + `reinvencao` (1–2 frases), que vão para o `visual` | `arquetipo` + `tracos_iconicos` (3–6), que vão para o `visual` |
+| No prompt | — | bloco `REIMAGINED CELLS` + marca `REIMAGINED` na linha | bloco `HOMAGE CELLS` + marca `HOMAGE` na linha |
 
-Na dúvida entre os dois, pergunte em uma linha no próprio plano. *Por quê: um pedido de "humanoides: 1. … 2. …" com
-personagens nomeados saiu todo em arquétipo genérico, sem máscara nem figurino, com um bichinho no estágio 1 — "nenhum
-ficou parecido com a referência".*
+**O mesmo personagem nos três níveis** — "assassino da máscara de grito", célula Fantasma/Elétrico:
+
+- `arquetipo`: criatura nova que só lembra o medo de ser perseguido de noite (ex.: um espectro de corredor que some
+  quando a luz acende) — sem máscara de grito, sem manto; quem conhece o filme não liga uma coisa à outra.
+- `releitura`: espectro do tipo fantasma/elétrico com **o rosto de grito alongado feito de estática** e **a silhueta de
+  manto com capuz** (as duas âncoras); o resto é reinventado — corpo de névoa translúcida, fios de alta tensão no lugar
+  das costuras, paleta azul-petróleo e ciano, pose torta de quem desliza. Quem conhece a figura entende a inspiração;
+  ninguém diria que é o personagem.
+
+**Lote "de humanoides" em releitura:** a reinvenção muda **material, paleta, superfície, detalhes e pose**, mas mantém o
+corpo humanoide — cabeça, tronco, dois braços e **duas pernas**, de pé (regras/humanoides.md). Nada de "sem pernas",
+"cauda no lugar das pernas" ou corpo de bicho: o tipo fantasma deixa o corpo translúcido ou de névoa, não tira as
+pernas. Fora de lote de humanoides, a anatomia pode mudar à vontade.
+- `homenagem`: a figura reconhecível no traço do jogo — máscara branca de grito, manto preto de capuz esfarrapado,
+  faca erguida, a postura de quem espreita.
+
+Na dúvida, use `releitura` e diga em uma linha no próprio plano que dá para subir para homenagem ou descer para
+arquétipo. *Por quê: em arquétipo, uma lista de personagens nomeados saiu "incompreensível" (nada lembrava a
+referência); em homenagem com a imagem do personagem anexada, saiu "idêntico". O dono quer "como referência: dá pra
+entender, mas não incompreensível nem idêntico".*
 
 ### 2.0 Pedido curto com uma lista ("Quero lotes criando: 1. Ghostface — Pânico; 2. Chucky — …")
 
 Uma lista de personagens, filmes, obras ou figuras, com ou sem a palavra "monstro", é um **lote temático de MONSTROS
 por referência**. Não devolva um questionário: responda já com o **plano pronto** e só peça aprovação. Primeiro escolha a
-**fidelidade** (tabela acima): personagens nomeados + "humanoides" (ou "parecido/igual/reconhecível") = `homenagem`.
+**fidelidade** (tabela acima): personagens nomeados = **`releitura`** (padrão, com ou sem "humanoides"); só
+"igual/fiel/idêntico" = `homenagem`; tema aberto sem nomes = `arquetipo`.
 
 **Se o pedido diz "humanoides"** (ex.: *"Quero lotes criando humanoides: 1. Ghostface — do filme Pânico, tipo
 fantasma; 2. Chucky — Brinquedo Assassino, docrates; …"*):
@@ -65,13 +84,21 @@ fantasma; 2. Chucky — Brinquedo Assassino, docrates; …"*):
 - as células levam `humanoide_previsto: true` — cartela com as 4 humanoides é cartela "de humanoides" (o limite de 1–2
   por cartela vale só para lote misto, regras/humanoides.md);
 - total múltiplo de 4 (4 itens = 1 cartela); sobrando vaga, proponha completar com mais personagens do mesmo tema;
-- na mesma resposta do plano, **peça para anexar 1 imagem de cada personagem** (print ou arte) como referência de
-  conteúdo — é opcional, mas é o que mais aproxima o resultado. Cada imagem vai para `<lote>/artes/` e para a célula
-  como `referencia_conteudo: {"descricao": "<quem é a figura>", "arte": "artes/x.png"}` (sem imagem, só `descricao`).
+- toda célula leva `referencia_conteudo: {"descricao": "<quem é a figura>"}` (interno: é o único lugar onde o nome pode
+  aparecer).
 
-**Aviso obrigatório no plano em modo homenagem** (mostre ao usuário, curto): *personagens reconhecíveis são propriedade
-de terceiros — usá-los no jogo tem risco de direito autoral, e o gerador de imagem pode recusar; a decisão de usar é do
-dono do jogo.*
+**Imagem do personagem:**
+
+- `releitura`: **não peça imagem**. No máximo, uma linha no plano: *"anexe a imagem de um personagem só se as âncoras
+  não bastarem"*. Se ele anexar, a imagem vai para `<lote>/artes/` e a célula ganha `referencia_conteudo.arte` **e**
+  `"usar_imagem": true` (sem `usar_imagem`, o `montar_entrada.py` recusa a arte); o prompt manda usar a figura só para
+  ler as âncoras e não copiar mais nada.
+- `homenagem`: peça 1 imagem de cada personagem (print ou arte), opcional mas é o que mais aproxima o resultado:
+  `referencia_conteudo: {"descricao": "...", "arte": "artes/x.png"}`.
+
+**Aviso de direito autoral** (mostre ao usuário, curto) — obrigatório em `homenagem`: *personagens reconhecíveis são
+propriedade de terceiros — usá-los no jogo tem risco de direito autoral, e o gerador de imagem pode recusar; a decisão
+de usar é do dono do jogo.* Em `releitura`, uma linha basta: *a releitura reduz o risco, mas não o zera.*
 
 O plano tem, numa resposta só:
 
@@ -79,7 +106,9 @@ O plano tem, numa resposta só:
    "boneco possuído", "assassino da máscara de fantasma ao telefone", "açougueiro mascarado da motosserra",
    "mascarado silencioso da noite das bruxas", "menina possuída", "mestre dos jogos de armadilha", "criatura alada que
    volta de tempos em tempos para caçar", "espírito de abóbora em pijama", "fantasma trapaceiro de terno listrado") ·
-   em `homenagem`, os traços icônicos previstos (3–6, em poucas palavras); em `arquetipo` sem "humanoides", o
+   em `releitura`, duas colunas: **"Âncoras (o que fica)"** (2–3 traços, em poucas palavras) e **"Reinvenção (o que
+   muda)"** (como os dois tipos refazem corpo, material, paleta e pose); em `homenagem`, os traços icônicos previstos
+   (3–6, em poucas palavras); em `arquetipo` sem "humanoides", o
    estágio 1 (objeto/bichinho simples), o 2 (forma real) e o 3 (ultimate) em poucas palavras · tier (ou escada de
    tier) · tipos. A tabela do chat pode mostrar o nome que o usuário escreveu, para ele se localizar; o `plano.json`
    (fora de `referencia_conteudo.descricao`), as fichas e os prompts, nunca.
@@ -91,12 +120,15 @@ O plano tem, numa resposta só:
 3. **Repetidos:** confira cada referência em `dados/arquetipos_existentes.json` (o que já virou monstro no jogo). Para
    cada repetido, marque na tabela e proponha: trocar por outra referência do mesmo tema **ou** fazer uma versão
    claramente diferente (outro arquétipo da mesma obra, outro ângulo).
-4. Em `homenagem`: o **aviso de direito autoral** e o **pedido das imagens** (acima).
-5. **Perguntas curtas no fim** (o resto vai no padrão): estrutura ok (3 estágios / 2 estágios / só formas reais; com
-   "humanoides": 1 por item ou com evolução)? o que fazer com os repetidos? quer míticos de raid ou fusões depois?
+4. O **aviso de direito autoral** (acima); em `homenagem`, o **pedido das imagens**; em `releitura`, só a linha "anexe
+   só se as âncoras não bastarem".
+5. **Perguntas curtas no fim** (o resto vai no padrão): em `releitura`, **o equilíbrio âncoras × reinvenção está bom**
+   (algum item precisa de mais âncora para ser entendido, ou de menos para não ficar igual)? estrutura ok (3 estágios /
+   2 estágios / só formas reais; com "humanoides": 1 por item ou com evolução)? o que fazer com os repetidos? quer
+   míticos de raid ou fusões depois?
 
-Com o "ok" do criador, siga o passo a passo abaixo a partir do item 3 (tipagens já estão no plano); em `homenagem`,
-os itens 1–2 não se aplicam (a estrutura já está no plano).
+Com o "ok" do criador, siga o passo a passo abaixo a partir do item 3 (tipagens já estão no plano); em `releitura` e
+`homenagem`, os itens 1–2 não se aplicam (a estrutura já está no plano).
 
 No modo `arquetipo`, o tema vira **arquétipos**, nunca personagens. Passo a passo:
 
@@ -117,14 +149,16 @@ No modo `arquetipo`, o tema vira **arquétipos**, nunca personagens. Passo a pas
 4. **Escreva o bloco de clima do tema** que vai em todo prompt do lote (como o "HALLOWEEN PACK"): o que o tema é, o tom,
    o que é proibido. Ex. de terror: *assustador e divertido como noite de Halloween; o medo vem da silhueta, da expressão
    e do clima; sem sangue, sem ferida aberta, sem parte decepada; nunca reproduzir personagem, ator, figurino ou logo de
-   filme — siga só a descrição de cada criatura.* Em `homenagem`, o clima **não** proíbe figurino/máscara (são os
-   traços icônicos); proíbe rosto de ator, logo, nome e texto, e mantém o "sem sangue".
+   filme — siga só a descrição de cada criatura.* Em `releitura`, o clima proíbe o figurino inteiro do personagem e
+   "pessoa fantasiada" (as âncoras vêm na linha de cada criatura), além de rosto de ator, logo, nome e texto. Em
+   `homenagem`, o clima **não** proíbe figurino/máscara (são os traços icônicos); proíbe rosto de ator, logo, nome e
+   texto. Sempre "sem sangue".
 5. **Originalidade:** o nome do filme/obra/personagem **nunca** aparece no prompt, no nome nem na descrição — nem em
-   `homenagem` (o validador recusa em qualquer campo de texto da ficha). Pode ficar só num campo interno `inspiracao` da
-   ficha (ou, na homenagem, em `referencia_conteudo.descricao` do plano), para o criador saber de onde veio. A descrição
-   evoca o arquétipo sem citar (ex.: "o ciclo que volta a cada vinte e sete anos", não o nome do palhaço). Exceções:
-   tipagem Nostálgico, onde a referência reconhecível é a definição do tipo, e o modo `homenagem` pedido pelo criador
-   (regras/restricoes.md).
+   `releitura`/`homenagem` (o validador recusa em qualquer campo de texto da ficha). Pode ficar só num campo interno
+   `inspiracao` da ficha (ou, em releitura/homenagem, em `referencia_conteudo.descricao` do plano), para o criador saber
+   de onde veio. A descrição evoca o arquétipo sem citar (ex.: "o ciclo que volta a cada vinte e sete anos", não o nome
+   do palhaço). Exceções: tipagem Nostálgico, onde a referência reconhecível é a definição do tipo, e os modos
+   `releitura` e `homenagem` (regras/restricoes.md).
 6. **Obtenção e evolução no jogo** (chance, level, evento, quantos por jogador) são decisão do criador: pergunte e
    registre no `monstros.json` como ele disse (regras/entrega.md). No Halloween: estágio 1→2 por chance, 2→3 por level.
 
@@ -151,7 +185,8 @@ Molde aprovado (fusões de Halloween, 19/10/2026):
 - Pergunte para quê: **estilo** (traço, luz, acabamento), **conteúdo** (a criatura/objeto a seguir) ou **encaixe**
   (onde fica a arte e onde fica vazio). Isso muda o texto do anexo no prompt.
 - Imagem de **personagem** num lote `homenagem` é referência de conteúdo daquela célula: `referencia_conteudo.arte`
-  (vai para o quadrante da célula na prancha; seção "Nível de fidelidade").
+  (vai para o quadrante da célula na prancha; seção "Nível de fidelidade"). Em `releitura`, só com `"usar_imagem": true`
+  na célula, e o prompt manda tirar dela apenas as âncoras.
 - Ela entra como **anexo do lote** (na pasta de trabalho), dentro do limite de 5 anexos por geração.
 - Só vira referência da skill (`referencias/`) se o dono do repositório escolher.
 - Nunca copiar a imagem como figura: o prompt diz o que tirar dela ("só o traço", "só a silhueta", "só o encaixe").

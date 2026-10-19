@@ -7,7 +7,8 @@
 Com --arquivo, a parte é conferida contra as outras partes do lote (nome repetido, rosto repetido na cartela, molde).
 Grava <parte>_validacao.json (ou <lote>/validacao/fichas.json) e sai com código 1 se houver erro.
 Regras: regras/fichas-nomes-descricoes.md e regras/fusoes.md. Célula N/L com fidelidade homenagem exige `tracos_iconicos`
-(3–6) e o trecho no visual; nome de personagem/filme de terror é proibido em todo campo de texto (regras/lotes-tematicos.md).
+(3–6) e o trecho no visual; com fidelidade releitura exige `ancoras` (2–3), `reinvencao` (≥ 20 caracteres) e os dois
+trechos no visual; nome de personagem/filme de terror é proibido em todo campo de texto (regras/lotes-tematicos.md).
 """
 import difflib
 import glob
@@ -32,8 +33,8 @@ FILMES = re.compile(r"\b(freddy|krueger|jason|voorhees|pennywise|dracula|nosfera
                     r"hellraiser|pinhead|xenomorfos?|imhotep|ghost ?face|chucky|leather ?face|myers|regan|jig ?saw|"
                     r"creepers?|beetle ?juice)\b")
 # campos da ficha que vão para o prompt ou para o monstros.json (inspiracao é interno e não entra)
-CAMPOS_TEXTO = ("nome", "epiteto", "classe", "tema", "arquetipo", "tracos_iconicos", "mantem", "muda", "herda", "ascensao",
-                "anatomia", "rosto", "marcas_poder", "brilho", "conceito", "marca_da_habilidade", "descricao", "visual")
+CAMPOS_TEXTO = ("nome", "epiteto", "classe", "tema", "arquetipo", "tracos_iconicos", "ancoras", "reinvencao", "mantem", "muda",
+                "herda", "ascensao", "anatomia", "rosto", "marcas_poder", "brilho", "conceito", "marca_da_habilidade", "descricao", "visual")
 _COR = r"(azu|verde|vermelh|dourad|amarel|rox|pret|branc|rosad|laranj|pratead|cinz|negr|escarlat|violet|lilas|turques)\w*"
 FISICO = re.compile(r"\b(pele|peles|armadura|armaduras|luvas?|roupas?|jaleco|vestido|uniforme|olhos? " + _COR + r"|olhos? de cor|"
                     r"escamas? " + _COR + r"|pelagem " + _COR + r"|penas? " + _COR + r")\b")
@@ -44,6 +45,8 @@ POR_BLOCO = {"N": ["arquetipo"], "L": ["tema", "arquetipo"], "V": ["epiteto", "m
 MARCAS = {1: (0, 2), 2: (0, 2), 3: (1, 2), 4: (1, 2), 5: (2, 3), 6: (2, 3), 7: (3, 4), 8: (3, 4), 9: (4, 5), 10: (4, 5)}
 FIXOS = ("slot", "cartela", "linha", "coluna", "bloco", "tier", "tipo1", "tipo2")
 HOMENAGEM_VISUAL = "traços icônicos da homenagem"   # começo do trecho que o compor_fichas.py põe no visual
+RELEITURA_VISUAL = ("âncoras da referência", "reinvenção pelos tipos")   # idem, na releitura
+ANCORA_MAX = 140   # âncora é UM traço; mais longo que isso costuma ser o figurino inteiro descrito
 
 
 def faixa_marcas(bloco, tier):
@@ -150,12 +153,38 @@ def main():
             erros.append(f"{tag}: n inexistente na entrada"); continue
         b = e["bloco"]
         homen = b in ("N", "L") and e.get("fidelidade") == "homenagem"
+        relei = b in ("N", "L") and e.get("fidelidade") == "releitura"
         falta = [c for c in COMUNS + POR_BLOCO[b] + (["tracos_iconicos"] if homen else [])
+                 + (["ancoras", "reinvencao"] if relei else [])
                  if c not in f or f[c] in (None, "", [])]
         if falta:
             erros.append(f"{tag}: faltam campos {falta}"
                          + (" (célula homenagem: escreva 'tracos_iconicos', 3 a 6 traços visuais)"
-                            if "tracos_iconicos" in falta else "")); continue
+                            if "tracos_iconicos" in falta else "")
+                         + (" (célula releitura: escreva 'ancoras', 2 a 3 traços que fazem entender a referência, e "
+                            "'reinvencao', como os dois tipos reinventam todo o resto)"
+                            if {"ancoras", "reinvencao"} & set(falta) else "")); continue
+        if relei:
+            an = f["ancoras"]
+            if not isinstance(an, list) or not 2 <= len(an) <= 3 or not all(isinstance(x, str) and x.strip() for x in an):
+                erros.append(f"{tag}: 'ancoras' = lista de 2 a 3 traços (em geral o rosto/máscara/cabeça e UMA silhueta "
+                             f"ou objeto-assinatura); o resto a 'reinvencao' reinventa")
+            else:
+                for x in an:
+                    if len(x.strip()) > ANCORA_MAX:
+                        avisos.append(f"{tag}: âncora com {len(x.strip())} caracteres — âncora é UM traço, não o figurino "
+                                      f"inteiro: '{x.strip()[:60]}…'")
+            if not isinstance(f["reinvencao"], str) or len(f["reinvencao"].strip()) < 20:
+                erros.append(f"{tag}: 'reinvencao' = 1–2 frases (≥ 20 caracteres) dizendo como os DOIS tipos reinventam "
+                             f"corpo, material, paleta, detalhes e pose")
+            vis = norm(str(f["visual"]))
+            if not all(norm(x) in vis for x in RELEITURA_VISUAL):
+                erros.append(f"{tag}: o visual não traz as âncoras e a reinvenção da releitura (rode compor_fichas.py)")
+            if f.get("tracos_iconicos"):
+                avisos.append(f"{tag}: 'tracos_iconicos' é só da homenagem; na releitura use 'ancoras' (ignorado)")
+        elif f.get("ancoras") or f.get("reinvencao"):
+            avisos.append(f"{tag}: 'ancoras'/'reinvencao' só entram no visual em célula N/L com fidelidade releitura "
+                          f"(ignorados)")
         if homen:
             tr = f["tracos_iconicos"]
             if not isinstance(tr, list) or not 3 <= len(tr) <= 6 or not all(isinstance(x, str) and x.strip() for x in tr):
@@ -163,7 +192,7 @@ def main():
                              f"arma/objeto, cores, silhueta, postura, detalhe-assinatura)")
             elif norm(HOMENAGEM_VISUAL) not in norm(str(f["visual"])):
                 erros.append(f"{tag}: o visual não traz os traços icônicos da homenagem (rode compor_fichas.py)")
-        elif f.get("tracos_iconicos"):
+        elif f.get("tracos_iconicos") and not relei:
             avisos.append(f"{tag}: 'tracos_iconicos' só entra no visual em célula N/L com fidelidade homenagem (ignorado)")
         for k in FIXOS:
             if f.get(k) != e.get(k):
@@ -270,7 +299,8 @@ def main():
             m = FILMES.search(texto_campo(f.get(campo)))
             if m:
                 erros.append(f"{tag}: '{campo}' cita filme/personagem ({m.group(0)}) — "
-                             + ("na homenagem, descreva os traços sem o nome" if homen else "use só o arquétipo"))
+                             + ("na homenagem, descreva os traços sem o nome" if homen else
+                                "na releitura, descreva as âncoras sem o nome" if relei else "use só o arquétipo"))
         if nd.startswith("mede"):
             erros.append(f"{tag}: descrição começa com 'Mede'")
         cit = [nome]

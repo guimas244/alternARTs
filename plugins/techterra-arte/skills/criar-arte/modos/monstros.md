@@ -18,14 +18,21 @@ lote (fora da skill; no ChatGPT, `/mnt/data/<lote>`). Ambiente (ChatGPT, Codex, 
 Blocos: `N` novo · `V` variação (mesma criatura em outro elemento) · `F` fusão de fusões · `L` prodígio (tema por cartela)
 · `X`/`A` fusões (ver [fusoes.md](fusoes.md)).
 
-### Homenagem reconhecível
+### Personagens nomeados: releitura (padrão) ou homenagem
 
-Pedido com personagens **nomeados** e "humanoides" (ou "parecido", "igual", "reconhecível") — ex.: *"Quero lotes criando
-humanoides: 1. Ghostface — do filme Pânico, tipo fantasma; 2. Chucky — Brinquedo Assassino, docrates; …"* (+ anexe 1
-imagem de cada) — é `"fidelidade": "homenagem"` no plano: 1 humanoide por item na forma real (sem estágio de
-objeto/bichinho), `tipo1` = o tipo dado pelo usuário, imagens em `<lote>/artes/` e na célula como
-`referencia_conteudo`. A ficha ganha `tracos_iconicos`, o prompt ganha o bloco `HOMAGE CELLS`; nunca o nome da figura.
-O plano traz o aviso de direito autoral. Detalhe: [../regras/lotes-tematicos.md](../regras/lotes-tematicos.md)
+Pedido com personagens/figuras **nomeados** — ex.: *"Quero lotes criando humanoides: 1. Ghostface — do filme Pânico,
+tipo fantasma; 2. Chucky — Brinquedo Assassino, docrates; …"* — é **`"fidelidade": "releitura"`** no plano: criatura
+original em que só 2–3 **âncoras** (rosto/máscara e uma silhueta ou objeto) deixam entender a referência e os dois tipos
+reinventam o resto. Com "humanoides": 1 humanoide por item na forma real (sem estágio de objeto/bichinho), `tipo1` = o
+tipo dado pelo usuário, `referencia_conteudo: {"descricao": ...}` na célula (o único lugar com o nome). O plano mostra,
+por item, **"Âncoras (o que fica)"** e **"Reinvenção (o que muda)"** e pergunta se o equilíbrio está bom. **Sem imagem
+do personagem por padrão** ("anexe só se as âncoras não bastarem"; se vier, `referencia_conteudo.arte` +
+`"usar_imagem": true`). A ficha ganha `ancoras` e `reinvencao`; o prompt, o bloco `REIMAGINED CELLS`.
+
+Só quando o usuário disser **"igual", "fiel", "idêntico"** aos personagens é `"fidelidade": "homenagem"`: traços
+icônicos reconhecíveis à primeira vista (`tracos_iconicos`, bloco `HOMAGE CELLS`), imagem de cada personagem opcional em
+`referencia_conteudo.arte`. Tema aberto sem nomes ("filmes de terror") continua `arquetipo`. Nunca o nome da figura em
+ficha ou prompt; o plano traz o aviso de direito autoral. Detalhe: [../regras/lotes-tematicos.md](../regras/lotes-tematicos.md)
 §Nível de fidelidade e §2.0.
 
 ### Linhas evolutivas

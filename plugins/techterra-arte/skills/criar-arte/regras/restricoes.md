@@ -30,12 +30,18 @@ Os 20 nomes:
   criatura é criação própria e o texto não cita obra alheia.
 - **Exceção 1: a tipagem Nostálgico**, cuja definição é ser uma referência cultural reconhecível (infância, cultura
   pop). Mesmo assim: sem logotipo nem cópia literal, e a ficha diz qual é a referência (ver [tipagens.md](tipagens.md)).
-- **Exceção 2: o modo `homenagem`**, só quando o criador pedir (lista de personagens nomeados + "humanoides", ou
-  "parecido", "igual", "reconhecível" — [lotes-tematicos.md](lotes-tematicos.md) §Nível de fidelidade). A criatura é
-  uma homenagem reconhecível pelos traços icônicos (máscara, figurino, arma, cores, silhueta, postura), com estes
-  limites: **sem o nome** do personagem, da obra ou do ator no prompt e na ficha; **sem rosto de ator**; **sem logo,
-  marca ou texto**; **redesenho no traço do jogo**, nunca a imagem de referência copiada. O plano avisa o criador do
-  risco de direito autoral (personagem de terceiros); a decisão de usar é do dono.
+- **Exceção 2: o modo `releitura`** (padrão quando o criador lista personagens/figuras nomeados —
+  [lotes-tematicos.md](lotes-tematicos.md) §Nível de fidelidade). A criatura é original e só **2–3 âncoras** (em geral
+  o rosto/máscara/cabeça e UMA silhueta ou objeto-assinatura) deixam entender a referência; os dois tipos reinventam
+  todo o resto. **Proibido em releitura:** copiar o figurino inteiro; a paleta original inteira (só a cor que for parte
+  de uma âncora); réplica de arma/objeto além do que for âncora; "pessoa fantasiada"; anexar a imagem do personagem sem
+  `"usar_imagem": true` na célula.
+- **Exceção 3: o modo `homenagem`**, só quando o criador pedir "igual", "fiel", "idêntico" ao personagem. A criatura é
+  uma homenagem reconhecível pelos traços icônicos (máscara, figurino, arma, cores, silhueta, postura).
+- Limites que valem para releitura e homenagem: **sem o nome** do personagem, da obra ou do ator no prompt e na ficha
+  (o validador recusa); **sem rosto de ator**; **sem logo, marca ou texto**; **redesenho no traço do jogo**, nunca a
+  imagem de referência copiada. O plano avisa o criador do risco de direito autoral (personagem de terceiros; menor na
+  releitura, mas não zero); a decisão de usar é do dono.
 
 ## Nenhum texto na arte
 
@@ -56,8 +62,9 @@ Os 20 nomes:
 - **Sem sangue, sem ferida aberta, sem parte decepada como machucado** (a cabeça que falta de um cavaleiro é lenda, não
   ferida).
 - **Nunca cópia de personagem de filme**: sem nome, sem figurino idêntico, sem rosto de ator, sem logo. Arquétipo, sim.
-  No modo `homenagem` pedido pelo criador, os traços icônicos (máscara, figurino) entram redesenhados — nome, rosto de
-  ator e logo continuam proibidos (Originalidade, exceção 2).
+  No modo `releitura`, só as âncoras ficam e o resto é reinventado pelos tipos (Originalidade, exceção 2); no modo
+  `homenagem` pedido pelo criador, os traços icônicos (máscara, figurino) entram redesenhados (exceção 3) — nome, rosto
+  de ator e logo continuam proibidos nos dois.
 
 ## Vocabulário
 

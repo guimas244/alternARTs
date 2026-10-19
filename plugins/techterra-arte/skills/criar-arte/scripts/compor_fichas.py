@@ -7,7 +7,8 @@ O agente escreve SÓ o conteúdo criativo (campos em CONTRATO-INTERNO.md, seçã
 entrada.json os campos fixos (n, slot, cartela, linha, coluna, bloco, tier, tipo1, tipo2, fidelidade), monta o `nome` da variação
 (original sem "#N" + epíteto), `variacao_de`, `ingredientes` [{papel, nome}], `evolucao` (N; com `externo` quando o
 antecessor é um monstro existente), `arquivo` e `visual` (fórmula por bloco; em N/L homenagem, com os
-`tracos_iconicos` logo depois da anatomia), regrava a parte (ordenada por n) e roda
+`tracos_iconicos` logo depois da anatomia; em N/L releitura, com as `ancoras` e a `reinvencao` logo depois da
+anatomia), regrava a parte (ordenada por n) e roda
 valida_fichas.py --arquivo nela (que exige, na N com antecessor, a anatomia começando com "Evolução do/da <nome>." e
 nome diferente do antecessor).
 O caminho da parte pode ser relativo à pasta atual ou à pasta do lote.
@@ -23,11 +24,13 @@ import comum  # noqa: E402
 USO = "uso: python compor_fichas.py <pasta_do_lote> <arquivo_da_parte>"
 FIXOS = ("n", "slot", "cartela", "linha", "coluna", "bloco", "tier", "tipo1", "tipo2")
 ORDEM = ["n", "slot", "cartela", "linha", "coluna", "bloco", "tier", "tipo1", "tipo2", "fidelidade", "nome", "epiteto",
-         "humanoide", "classe", "tema", "arquetipo", "tracos_iconicos", "variacao_de", "tipo_sai", "tipo_entra", "mantem",
+         "humanoide", "classe", "tema", "arquetipo", "tracos_iconicos", "ancoras", "reinvencao", "variacao_de", "tipo_sai", "tipo_entra", "mantem",
          "muda", "ingredientes", "herda", "ascensao", "paleta", "anatomia", "rosto", "marcas_poder", "brilho", "temperamento",
          "conceito", "marca_da_habilidade", "descricao", "evolucao", "arquivo", "visual"]
 FIM = "vista frontal em três quartos, criatura inteira isolada, sem letras nem símbolos escritos"
 HOMENAGEM = "traços icônicos da homenagem (reconhecível à primeira vista por quem conhece a figura clássica): "
+ANCORAS = "âncoras da referência (só estas ficam reconhecíveis): "
+REINVENCAO = "reinvenção pelos tipos: "
 
 
 def homenagem(f):
@@ -38,6 +41,17 @@ def homenagem(f):
     if not isinstance(tr, list):   # formato errado: o validador acusa
         tr = [tr]
     return HOMENAGEM + " ".join(f"({k}) {t}" for k, t in enumerate(tr, 1))
+
+
+def releitura(f):
+    """Trechos do visual com as âncoras e a reinvenção (só célula N/L com fidelidade releitura)."""
+    if f.get("fidelidade") != "releitura":
+        return []
+    an, re_ = f.get("ancoras"), str(f.get("reinvencao") or "").strip()
+    if an and not isinstance(an, list):   # formato errado: o validador acusa
+        an = [an]
+    return [(ANCORAS + " ".join(f"({k}) {t}" for k, t in enumerate(an, 1))) if an else None,
+            (REINVENCAO + re_) if re_ else None]
 
 
 def sem_numero(nome):
@@ -69,7 +83,7 @@ def visual(f, e):
     so_ele = f"brilho: {f['brilho']}, halo curto aderido, somente esse sistema emite luz"
     mais_forte = f"brilho: {f['brilho']}, halo curto aderido, é a luz mais forte do corpo"
     if b in ("N", "L"):
-        partes = [f["anatomia"], homenagem(f), cor, rosto, marcas(f), so_ele, fim]
+        partes = [f["anatomia"], homenagem(f), *releitura(f), cor, rosto, marcas(f), so_ele, fim]
     elif b == "V":
         partes = [f"a MESMA criatura do original da prancha, agora do tipo {comum.TIPOS[e['tipo_entra']]}",
                   f"fica igual ao original: {f['mantem']}", f"muda com o tipo novo: {f['muda']}", f["anatomia"], cor, rosto,
