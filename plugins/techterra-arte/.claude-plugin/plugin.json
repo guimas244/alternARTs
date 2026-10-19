@@ -1,0 +1,8 @@
+{
+  "name": "techterra-arte",
+  "description": "Criação de arte do Techterra: fichas, prompts, fila para a IA de imagem e conferência/recorte de cartelas (monstros, fusões, personagens, itens, cenários, mapas, capas, ícones).",
+  "author": {
+    "name": "guimas244"
+  },
+  "repository": "https://github.com/guimas244/alternARTs"
+}

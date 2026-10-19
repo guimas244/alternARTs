@@ -1,0 +1,16 @@
+{
+  "name": "alternarts",
+  "owner": {
+    "name": "guimas244"
+  },
+  "metadata": {
+    "description": "Fábrica de arte do jogo Techterra: monstros, fusões, personagens, itens, cenários, mapas, capas e ícones."
+  },
+  "plugins": [
+    {
+      "name": "techterra-arte",
+      "source": "./plugins/techterra-arte",
+      "description": "Skill criar-arte: planeja lotes, escreve fichas e prompts, monta a fila para a IA de imagem e confere e recorta as cartelas, seguindo as regras e referências do Techterra."
+    }
+  ]
+}

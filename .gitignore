@@ -1,0 +1,24 @@
+# Arte gerada nunca entra: só referências aprovadas
+*.png
+*.jpg
+*.jpeg
+*.webp
+!plugins/techterra-arte/skills/criar-arte/referencias/**/*.png
+!plugins/techterra-arte/skills/criar-arte/referencias/**/*.jpg
+
+# Saídas de trabalho, se alguém rodar dentro do repo por engano
+entrega/
+cartelas/
+recortes/
+validacao/
+
+# Python e ambiente
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+
+# Sistema
+Thumbs.db
+.DS_Store
