@@ -9,8 +9,10 @@ Lê <lote>/plano.json (formato em CONTRATO-INTERNO.md), valida e gera:
 - <lote>/referencias/cartela_NNN_pais.png
                                  prancha 2x2 de cada cartela que tem origem: V = original grande e centrado;
                                  X/A = base grande à esquerda + sacrifício menor à direita; F = todos os pais do mesmo
-                                 tamanho; N com antecessor_externo = o antecessor grande e centrado; demais N/L =
-                                 quadrante vazio (cartela só de N/L sem antecessor externo não ganha prancha);
+                                 tamanho; N com antecessor_externo = o antecessor grande e centrado; N/L homenagem
+                                 com referencia_conteudo.arte = a figura de referência grande e centrada; demais N/L =
+                                 quadrante vazio (cartela só de N/L sem antecessor externo nem referência com arte não
+                                 ganha prancha);
 - <lote>/referencias/            cópia das referências da skill (estilo, variedade, humanoides, guia 2x2).
 
 Idempotente: pode rodar de novo depois de corrigir o plano.
@@ -34,6 +36,7 @@ FUNDO, LINHA = (128, 128, 132, 255), (90, 90, 94, 255)
 REFS_LOTE = ["monstros/referencia-estilo.png", "monstros/referencia-variedade.png", "monstros/referencia-humanoides.png",
              "guias/guia_enquadramento_2x2.png"]
 CAMPOS_ORIGEM = ("nome", "tier", "tipo1", "tipo2", "descricao", "arte", "humanoide")
+FIDELIDADES = ("arquetipo", "homenagem")
 
 
 class Plano:
@@ -110,6 +113,29 @@ def externo(cel):
     return (cel.get("evolucao") or {}).get("externo")
 
 
+def ref_arte(cel):
+    """Recorte da figura de referência (homenagem) de uma célula N/L, ou None."""
+    return (cel.get("referencia_conteudo") or {}).get("recorte")
+
+
+def checa_referencia(p, tag, e, lote):
+    """referencia_conteudo (N/L homenagem): {descricao, arte?}; arte relativa ao lote."""
+    rc = e["referencia_conteudo"]
+    if e["bloco"] not in ("N", "L"):
+        p.erro(f"{tag}: referencia_conteudo só vale em célula N ou L"); return
+    if e.get("fidelidade") != "homenagem":
+        p.erro(f"{tag}: referencia_conteudo só vale com fidelidade \"homenagem\""); return
+    if not isinstance(rc, dict) or not str(rc.get("descricao") or "").strip():
+        p.erro(f"{tag}: referencia_conteudo tem que ser {{\"descricao\": \"...\", \"arte\": \"artes/x.png\" (opcional)}}")
+        return
+    if rc.get("arte") is not None:
+        if not os.path.isfile(os.path.join(lote, str(rc["arte"]))):
+            p.erro(f"{tag}: arte da referencia_conteudo não encontrada: {rc['arte']} (caminho relativo à pasta do lote)")
+        elif e.get("antecessor_externo") is not None:
+            p.erro(f"{tag}: antecessor_externo e referencia_conteudo com arte na mesma célula não cabem no quadrante da "
+                   f"prancha — use um só (ou tire a arte da referência e deixe só a descrição)")
+
+
 def encaixa(img, w, h):
     f = min(w / img.width, h / img.height)
     return img.resize((max(1, int(img.width * f)), max(1, int(img.height * f))), Image.LANCZOS)
@@ -119,9 +145,9 @@ def quadrante(board, lote, cel, x0, y0):
     C = comum.CEL
     abre = lambda rel: Image.open(os.path.join(lote, rel)).convert("RGBA")  # noqa: E731
     b = cel["bloco"]
-    if b in ("V", "N"):
-        o = cel["original"] if b == "V" else externo(cel)
-        if not o:
+    if b in ("V", "N", "L"):
+        o = cel["original"] if b == "V" else (externo(cel) or cel.get("referencia_conteudo"))
+        if not o or not o.get("recorte"):
             return
         s = encaixa(abre(o["recorte"]), int(C * 0.8), int(C * 0.8))
         board.alpha_composite(s, (x0 + (C - s.width) // 2, y0 + (C - s.height) // 2))
@@ -180,6 +206,10 @@ def main():
         print(f"as cartelas têm que ser numeradas 1..{len(cartelas)}, sem buraco nem repetição (veio {nums})")
         sys.exit(2)
     cartelas = sorted(cartelas, key=lambda c: c["cartela"])
+    fid_lote = plano.get("fidelidade", "arquetipo")
+    if fid_lote not in FIDELIDADES:
+        print(f"plano.json: fidelidade {fid_lote!r} inválida (use \"arquetipo\" ou \"homenagem\")")
+        sys.exit(2)
 
     # 1) células cruas + validação de campos
     celulas = []
@@ -208,6 +238,16 @@ def main():
             if "humanoide_previsto" in e and not isinstance(e["humanoide_previsto"], bool):
                 p.erro(f"{tag}: humanoide_previsto tem que ser true/false")
             e["humanoide_previsto"] = bool(e.get("humanoide_previsto", False))
+            fid = e.get("fidelidade", fid_lote)   # a célula pode trocar a do lote
+            if fid not in FIDELIDADES:
+                p.erro(f"{tag}: fidelidade {fid!r} inválida (use \"arquetipo\" ou \"homenagem\")")
+            elif fid == "homenagem" and b not in ("N", "L"):
+                if "fidelidade" in e:
+                    p.aviso(f"{tag}: homenagem só vale em célula N/L; bloco {b} fica \"arquetipo\"")
+                fid = "arquetipo"
+            e["fidelidade"] = fid
+            if "referencia_conteudo" in e:
+                checa_referencia(p, tag, e, lote)
             if b == "N":
                 ev = e.get("evolui_de")
                 ext = e.get("antecessor_externo")
@@ -330,7 +370,7 @@ def main():
             p.aviso(f"par de tipos {'/'.join(sorted(par))} repete {q}× entre as fusões da leva")
     for c in cartelas:
         h = sum(e["humanoide_previsto"] for e in celulas if e["cartela"] == c["cartela"])
-        if h > 2:
+        if 2 < h < 4:   # 4 de 4 = cartela de humanoides pedida de propósito (lote "de humanoides")
             p.aviso(f"cartela {c['cartela']:03d}: {h} humanoides previstos (o normal é 1–2)")
 
     # 3) recortes
@@ -345,12 +385,16 @@ def main():
         for i in e.get("ingredientes") or []:
             i["recorte"] = recortar(lote, i, feitos, p)
             i.setdefault("linhagem", [])
+        rc = e.get("referencia_conteudo")
+        if rc and rc.get("arte"):
+            rc["recorte"] = recortar(lote, {"nome": f"referencia {e['n']:02d}", "arte": rc["arte"]}, feitos, p)
     if p.erros:
         fim(p, None)
 
     # 4) entrada.json
-    ordem = ["n", "slot", "cartela", "linha", "coluna", "bloco", "tier", "tipo1", "tipo2", "humanoide_previsto", "leitura",
-             "tema", "evolui_de", "evolucao", "original", "tipo_sai", "tipo_entra", "ingredientes", "arquivo"]
+    ordem = ["n", "slot", "cartela", "linha", "coluna", "bloco", "tier", "tipo1", "tipo2", "humanoide_previsto", "fidelidade",
+             "leitura", "tema", "referencia_conteudo", "evolui_de", "evolucao", "original", "tipo_sai", "tipo_entra",
+             "ingredientes", "arquivo"]
     saida = [{**{k: e[k] for k in ordem if k in e}, **{k: v for k, v in e.items() if k not in ordem}}
              for e in sorted(celulas, key=lambda e: e["n"])]
     comum.gravar_json(os.path.join(lote, "entrada.json"), saida)
@@ -362,7 +406,7 @@ def main():
     for c in cartelas:
         cels = [e for e in saida if e["cartela"] == c["cartela"]]
         alvo = os.path.join(refs, f"cartela_{c['cartela']:03d}_pais.png")
-        if any(e["bloco"] in ("V", "F", "X", "A") or externo(e) for e in cels):
+        if any(e["bloco"] in ("V", "F", "X", "A") or externo(e) or ref_arte(e) for e in cels):
             prancha(lote, cels, alvo)
             pranchas += 1
         elif os.path.exists(alvo):

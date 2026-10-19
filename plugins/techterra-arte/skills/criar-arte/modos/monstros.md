@@ -18,6 +18,16 @@ lote (fora da skill; no ChatGPT, `/mnt/data/<lote>`). Ambiente (ChatGPT, Codex, 
 Blocos: `N` novo · `V` variação (mesma criatura em outro elemento) · `F` fusão de fusões · `L` prodígio (tema por cartela)
 · `X`/`A` fusões (ver [fusoes.md](fusoes.md)).
 
+### Homenagem reconhecível
+
+Pedido com personagens **nomeados** e "humanoides" (ou "parecido", "igual", "reconhecível") — ex.: *"Quero lotes criando
+humanoides: 1. Ghostface — do filme Pânico, tipo fantasma; 2. Chucky — Brinquedo Assassino, docrates; …"* (+ anexe 1
+imagem de cada) — é `"fidelidade": "homenagem"` no plano: 1 humanoide por item na forma real (sem estágio de
+objeto/bichinho), `tipo1` = o tipo dado pelo usuário, imagens em `<lote>/artes/` e na célula como
+`referencia_conteudo`. A ficha ganha `tracos_iconicos`, o prompt ganha o bloco `HOMAGE CELLS`; nunca o nome da figura.
+O plano traz o aviso de direito autoral. Detalhe: [../regras/lotes-tematicos.md](../regras/lotes-tematicos.md)
+§Nível de fidelidade e §2.0.
+
 ### Linhas evolutivas
 
 Toda evolução é célula `N` (regras em [../regras/fusoes.md](../regras/fusoes.md) §Evolução). Dois casos:

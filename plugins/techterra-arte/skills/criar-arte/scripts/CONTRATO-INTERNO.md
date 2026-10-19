@@ -39,11 +39,16 @@ python "<skill>/scripts/<script>.py" <pasta_do_lote> [opções]
   "lote": "fusoes_halloween",
   "titulo": "Fusões de Halloween",
   "clima": "texto opcional do bloco de clima do tema (vai em todo prompt)",
+  "fidelidade": "arquetipo",
   "cartelas": [
     {"cartela": 1, "tema": "só em bloco L", "celulas": [ <célula>, <célula>, <célula>, <célula> ]}
   ]
 }
 ```
+
+`fidelidade` (opcional, padrão `"arquetipo"`): `"arquetipo"` = a referência vira criatura nova (tema aberto) ·
+`"homenagem"` = homenagem reconhecível a uma figura clássica (personagens nomeados; regras/lotes-tematicos.md §Nível de
+fidelidade). Copiada para cada célula; a célula pode trazer a sua. Só vale em N/L (em V/F/X/A vira `"arquetipo"`).
 
 Célula (ordem L1C1, L1C2, L2C1, L2C2; sempre 4 por cartela):
 
@@ -51,7 +56,9 @@ Célula (ordem L1C1, L1C2, L2C1, L2C2; sempre 4 por cartela):
 |---|---|---|
 | `bloco` | todos | `N` novo · `V` variação · `F` fusão de fusões (pais já fusões, todos do mesmo tamanho, nenhum é base) · `L` prodígio (tema por cartela) · `X` fusão base+sacrifício · `A` ápice (fusão base+sacrifício de míticos) |
 | `tier`, `tipo1`, `tipo2` | todos | ids de `comum.TIPOS` |
-| `humanoide_previsto` | todos | bool (opcional, padrão false) |
+| `humanoide_previsto` | todos | bool (opcional, padrão false). As 4 da cartela `true` = cartela de humanoides (lote "de humanoides"): sem o limite de 1–2 |
+| `fidelidade` | N, L | opcional: troca a do lote só nesta célula |
+| `referencia_conteudo` | N, L homenagem | opcional: `{"descricao": "...", "arte": "artes/x.png"}` — `descricao` diz qual é a figura homenageada (interno: pode citá-la; nunca vai para ficha nem prompt); `arte` opcional (print/arte enviada pelo usuário), recortada para `pais/referencia_NN.png` e posta grande no quadrante da célula na prancha. **Com `arte`, exclusiva com `antecessor_externo`** (um quadrante por célula) |
 | `leitura` | todos | opcional: direção de conceito escrita pelo assistente (1 linha) |
 | `evolui_de` | N | opcional: `[cartela, linha, coluna]` da célula antecessora (mesma cartela ou anterior) |
 | `antecessor_externo` | N | opcional, **exclusivo com `evolui_de`**: monstro que JÁ EXISTE no jogo (fora do lote) do qual esta célula evolui — `{nome, tier, tipo1, tipo2, descricao, arte, humanoide}`, `arte` relativo ao lote (`artes/x.png`, enviada pelo usuário). Tier da célula ≥ tier dele (igual = aviso; menor = erro); humanoide liga `humanoide_previsto` |
@@ -66,11 +73,13 @@ Cada célula = a do plano + `n` (1..4×cartelas, ordem de leitura), `cartela`, `
 `arquivo` = `"{n:02d}_t{tier:02d}_{slug_do_nome}.png"` (o `{slug_do_nome}` literal até o nome existir),
 `evolucao` (N: `{"anterior": n|null, "seguinte": n|null}`; com antecessor externo, `{"anterior": null, "seguinte": …,
 "externo": {nome, tier, tipo1, tipo2, descricao, recorte, humanoide}}` — o `antecessor_externo` do plano sai da célula),
-e nos ingredientes/original/antecessor externo `recorte` = `pais/<slug>.png`.
+`fidelidade` (sempre), e nos ingredientes/original/antecessor externo `recorte` = `pais/<slug>.png`; na
+`referencia_conteudo` com arte, `recorte` = `pais/referencia_NN.png`.
 
-Prancha `referencias/cartela_NNN_pais.png`: toda cartela com V/F/X/A **ou** com célula N de antecessor externo (este
-grande e centrado no quadrante da célula; quadrantes sem origem ficam vazios). Antecessor interno nunca vai na prancha:
-mesma cartela = está na própria folha; cartela anterior = a cartela gerada vai anexada.
+Prancha `referencias/cartela_NNN_pais.png`: toda cartela com V/F/X/A **ou** com célula N de antecessor externo **ou**
+com célula N/L homenagem de `referencia_conteudo` com arte (estes grandes e centrados no quadrante da célula;
+quadrantes sem origem ficam vazios). Antecessor interno nunca vai na prancha: mesma cartela = está na própria folha;
+cartela anterior = a cartela gerada vai anexada.
 
 Na N com antecessor (interno ou externo), a `anatomia` começa com "Evolução do <nome>." / "Evolução da <nome>." e o
 `nome` novo é diferente do antecessor (erro no `valida_fichas.py`).
@@ -82,11 +91,18 @@ Campos que o AGENTE escreve (o resto o `compor_fichas.py` copia da entrada):
 - todos: `n`, `nome` (V: não escreve; escreve `epiteto`), `humanoide`, `classe` (se humanoide), `paleta` [escura, clara],
   `anatomia`, `rosto`, `marcas_poder` (lista), `brilho`, `temperamento`, `conceito`, `marca_da_habilidade`, `descricao`;
 - N/L: `arquetipo`; L: `tema` (igual nas 4 da cartela);
+- N/L com `fidelidade: "homenagem"`: `tracos_iconicos` (lista de 3–6 traços visuais concretos: forma da máscara,
+  figurino, arma/objeto, cores, silhueta, postura, detalhe-assinatura), sem o nome da figura/obra/ator;
 - V: `epiteto`, `mantem`, `muda`;
 - F/X/A: `herda` {nome exato de cada pai: o que veio dele}, `ascensao`.
 
-`compor_fichas.py` acrescenta: campos fixos da entrada, `nome` (V = original + epíteto), `ingredientes` (nomes),
-`arquivo`, `visual` (fórmula por bloco) e roda `valida_fichas.py --arquivo`.
+`compor_fichas.py` acrescenta: campos fixos da entrada, `fidelidade`, `nome` (V = original + epíteto), `ingredientes`
+(nomes), `arquivo`, `visual` (fórmula por bloco; na homenagem, logo depois da anatomia: "traços icônicos da homenagem
+(reconhecível à primeira vista por quem conhece a figura clássica): (1) … (2) …") e roda `valida_fichas.py --arquivo`
+(que exige `tracos_iconicos` na homenagem e recusa nome de personagem/filme de terror em qualquer campo de texto).
+
+No prompt (`preparar_fila.py`), a linha da célula homenagem leva `HOMAGE` (`HOMAGE WITH REFERENCE` quando a figura está
+na prancha) e a cartela ganha o bloco `HOMAGE CELLS`; a avulsa dessa célula anexa o quadrante da prancha.
 
 Faixa de `marcas_poder` por tier: T1–2 0–2, T3–4 1–2, T5–6 2–3, T7–8 3–4, T9–10 4–5; F/X/A: +1 nas duas pontas.
 

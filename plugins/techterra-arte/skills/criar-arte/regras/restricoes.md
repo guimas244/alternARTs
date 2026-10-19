@@ -28,8 +28,14 @@ Os 20 nomes:
 
 - Nada "inspirado em" personagem, filme, jogo, anime ou franquia existente. Folclore e natureza podem inspirar, mas a
   criatura é criação própria e o texto não cita obra alheia.
-- **Única exceção: a tipagem Nostálgico**, cuja definição é ser uma referência cultural reconhecível (infância, cultura
+- **Exceção 1: a tipagem Nostálgico**, cuja definição é ser uma referência cultural reconhecível (infância, cultura
   pop). Mesmo assim: sem logotipo nem cópia literal, e a ficha diz qual é a referência (ver [tipagens.md](tipagens.md)).
+- **Exceção 2: o modo `homenagem`**, só quando o criador pedir (lista de personagens nomeados + "humanoides", ou
+  "parecido", "igual", "reconhecível" — [lotes-tematicos.md](lotes-tematicos.md) §Nível de fidelidade). A criatura é
+  uma homenagem reconhecível pelos traços icônicos (máscara, figurino, arma, cores, silhueta, postura), com estes
+  limites: **sem o nome** do personagem, da obra ou do ator no prompt e na ficha; **sem rosto de ator**; **sem logo,
+  marca ou texto**; **redesenho no traço do jogo**, nunca a imagem de referência copiada. O plano avisa o criador do
+  risco de direito autoral (personagem de terceiros); a decisão de usar é do dono.
 
 ## Nenhum texto na arte
 
@@ -50,6 +56,8 @@ Os 20 nomes:
 - **Sem sangue, sem ferida aberta, sem parte decepada como machucado** (a cabeça que falta de um cavaleiro é lenda, não
   ferida).
 - **Nunca cópia de personagem de filme**: sem nome, sem figurino idêntico, sem rosto de ator, sem logo. Arquétipo, sim.
+  No modo `homenagem` pedido pelo criador, os traços icônicos (máscara, figurino) entram redesenhados — nome, rosto de
+  ator e logo continuam proibidos (Originalidade, exceção 2).
 
 ## Vocabulário
 

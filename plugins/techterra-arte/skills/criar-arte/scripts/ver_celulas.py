@@ -79,6 +79,14 @@ def main():
               f"tipos {e['tipo1']}/{e['tipo2']} | humanoide_previsto {e['humanoide_previsto']}")
         if e.get("leitura"):
             print(f"   LEITURA (direção do plano): {e['leitura']}")
+        if b in ("N", "L") and e.get("fidelidade") == "homenagem":
+            rc = e.get("referencia_conteudo") or {}
+            print("   HOMENAGEM reconhecível: escreva 'tracos_iconicos' (3–6 traços visuais: máscara, figurino, arma/objeto, "
+                  "cores, silhueta, postura, detalhe-assinatura); nunca o nome da figura, da obra ou do ator em campo nenhum")
+            if rc.get("descricao"):
+                print(f"   FIGURA (interno, não copie o nome): {corta(rc['descricao'], 320)}")
+            if rc.get("recorte"):
+                print(f"   referência no quadrante da prancha: {rc['recorte']} (olhe antes de escrever)")
         if b == "N":
             ev = e.get("evolucao") or {}
             ant, seg, ext = por_n.get(ev.get("anterior")), por_n.get(ev.get("seguinte")), ev.get("externo")

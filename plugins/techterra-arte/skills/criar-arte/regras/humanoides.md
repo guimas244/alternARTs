@@ -7,8 +7,12 @@ NPC (gente do mundo, foto realista) é outro modo.
 
 ## Quantos
 
-- **Toda cartela 2x2 de monstros inéditos (lote novo) tem 1 ou 2 humanoides.** Nunca 0, nunca 3 ou 4.
+- **Toda cartela 2x2 de monstros inéditos (lote misto) tem 1 ou 2 humanoides.** Nunca 0, nunca 3 ou 4.
   *Por quê: um lote que limitou humanoides por pacote saiu com só 2 em 192; o dono sentiu falta.*
+- **Lote "de humanoides"** (o pedido diz "humanoides", ex.: *"Quero lotes criando humanoides: 1. … 2. …"*): **todas** as
+  células são humanoides — no plano, as 4 de cada cartela com `humanoide_previsto: true` (os scripts aceitam a cartela
+  4/4 só assim). Com evolução, os 3 estágios também são humanoides (jovem → adulto → ultimate), nunca objeto/bichinho.
+  A regra de 1–2 por cartela vale para o lote misto.
 - **Fusão e variação:** a quantidade sai das bases/originais — base humanoide → fusão humanoide; original humanoide →
   variação humanoide. Pode dar 0 numa cartela. *Inferência (confirmar com o dono):* se passar de 2 numa cartela,
   redistribua entre cartelas.

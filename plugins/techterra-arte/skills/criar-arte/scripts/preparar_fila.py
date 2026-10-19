@@ -10,7 +10,8 @@ Para cada parte validada em fichas_claude/parte_<L>.json (com parte_<L>_validaca
 1. integra as fichas em monstros.json (substitui a mesma célula, se já existir), no formato do cadastrador;
 2. escreve prompts/cartela_NNN.txt — o texto FINAL (cabeçalho de templates/ + blocos da cartela), pronto para colar;
 3. escreve prompts/avulsa_NNN_LxCy.txt (+ referencias/avulsas/cartela_NNN_LxCy_pais.png, o quadrante da prancha:
-   pais, original ou antecessor externo);
+   pais, original, antecessor externo ou figura de referência da homenagem);
+   células N/L com fidelidade "homenagem" ganham o bloco HOMAGE CELLS e a marca HOMAGE na linha (nunca o nome da figura);
 4. atualiza fila.json (cartela só entra quando as 4 fichas dela existem) e escreve PROMPT_<LOTE>.md.
 
 Cartela que já tem cartelas/cartela_NNN_original.png não é reescrita (só as avulsas dela, com --conserto).
@@ -90,6 +91,15 @@ EVOLUCAO_AVULSA_EXTERNO = ("EVOLUTION: this creature is the evolved form of {nom
                            "the attached quadrant image. It must be instantly recognizable as the same lineage: same two "
                            "colors, same eye shape and eye color, and the same signature feature, but with a completely NEW "
                            "body: older, sturdier and more complex, with a different silhouette and pose.")
+# homenagem reconhecível (fidelidade "homenagem", células N/L): nunca o nome da figura em nenhum texto
+HOMENAGEM = ("HOMAGE CELLS: creatures marked HOMAGE are ORIGINAL game creatures that pay homage to a classic horror figure; "
+             "anyone who knows that figure must recognize it at first glance by the ICONIC TRAITS listed in its line (mask "
+             "shape, outfit, weapon, colors, silhouette, posture). Redraw everything in the style of this sheet; never an "
+             "actor's face or likeness, never a logo, never text or a name.")
+HOMENAGEM_REF = (" The reference figure of each creature marked HOMAGE WITH REFERENCE is shown in the matching quadrant of "
+                 "the attached board (same 2x2 grid as this sheet): keep its signature traits; do not copy it as a picture.")
+HOMENAGEM_REF_AVULSA = (" The reference figure of this creature is shown in the attached quadrant image: keep its signature "
+                        "traits; do not copy it as a picture.")
 
 # blocos: (cabeça quando a cartela é toda desse bloco, cabeça quando a cartela mistura blocos, corpo)
 BLOCO = {
@@ -160,6 +170,9 @@ PESO_PRANCHA = {
     "MISTA": ("Image {k} is the board of origins, in the same 2x2 grid as this sheet: each quadrant shows what its cell's line "
               "refers to (in BASE + SACRIFICE fusions, the LARGE creature on the left is the BASE and the SMALLER one on the "
               "right is the SACRIFICE); take from it only what each line says"),
+    "HOMENAGEM": ("Image {k} is the board of reference figures, in the same 2x2 grid as this sheet: the quadrant of each "
+                  "creature marked HOMAGE WITH REFERENCE shows the classic figure it pays homage to (empty quadrants show "
+                  "nothing); keep its signature traits and redraw it in the style of this sheet"),
 }
 PESO_QUADRANTE = {
     "X": ("Image {k} is this creature's quadrant of the parents board: the LARGE creature on the left is the BASE (keep it "
@@ -171,6 +184,8 @@ PESO_QUADRANTE = {
 }
 PESO_QUADRANTE["A"] = PESO_QUADRANTE["X"]
 PESO_QUADRANTE["L"] = PESO_QUADRANTE["N"]
+PESO_QUADRANTE["HOMENAGEM"] = ("Image {k} shows the classic figure this HOMAGE creature pays homage to: keep its signature "
+                               "traits (the ICONIC TRAITS in its line) and redraw it in the style of this sheet")
 
 # ---------------------------------------------------------------- textos do PROMPT_<LOTE>.md (pt-BR, para conferir)
 DESCRICAO_PT = {
@@ -206,6 +221,12 @@ CONFERE_PT = {
     "A": ("  ÁPICE: os sinais míticos da base ficaram e o domínio do sacrifício está por cima; ápices com os mesmos pais "
           "trocados são bem diferentes entre si."),
 }
+DESCRICAO_HOMENAGEM_PT = ("HOMENAGEM: as criaturas marcadas HOMAGE são criaturas novas do jogo que homenageiam uma figura "
+                          "clássica do terror: quem conhece a figura reconhece de cara pelos traços icônicos da linha "
+                          "(máscara, figurino, arma, cores, silhueta, postura); a marcada HOMAGE WITH REFERENCE tem a figura "
+                          "no quadrante dela na prancha. Redesenho no traço do jogo; sem nome, rosto de ator, logo ou texto.")
+CONFERE_HOMENAGEM_PT = ("  HOMENAGEM: quem conhece a figura clássica reconhece à primeira vista (traços icônicos da linha); não "
+                        "é cópia da referência; sem rosto de ator, logo, letra ou nome.")
 
 
 def ler_cabecalho():
@@ -248,6 +269,16 @@ def ingr(e, papel):
     return next(i for i in e.get("ingredientes", []) if i.get("papel") == papel)
 
 
+def homenagem(e):
+    """Célula N/L em modo homenagem reconhecível."""
+    return e["bloco"] in ("N", "L") and e.get("fidelidade") == "homenagem"
+
+
+def ref_arte(e):
+    """Recorte da figura de referência da homenagem (no quadrante da prancha), ou None."""
+    return (e.get("referencia_conteudo") or {}).get("recorte") if homenagem(e) else None
+
+
 def linha(f, e, nomes, avulsa=False):
     pos = "" if avulsa else f"Row {e['linha']}, column {e['coluna']}, "
     hum = ", HUMANOID" if f.get("humanoide") else ""
@@ -256,8 +287,9 @@ def linha(f, e, nomes, avulsa=False):
     if b in ("N", "L"):
         ant = (e.get("evolucao") or {}).get("anterior")
         ext = externo(e)
+        hom = (", HOMAGE WITH REFERENCE" if ref_arte(e) else ", HOMAGE") if homenagem(e) else ""
         de = f", EVOLVES FROM {ext['nome']}" if ext else (f", EVOLVES FROM {nomes[ant]}" if ant else "")
-        return f"{pos}tier {e['tier']}{hum}{de}{fim}"
+        return f"{pos}tier {e['tier']}{hum}{hom}{de}{fim}"
     if b == "V":
         o = e["original"]
         return (f"{pos}tier {e['tier']}{hum}, REGIONAL VARIANT of {o['nome']} ({tipos_txt(o['tipo1'], o['tipo2'])}) now "
@@ -282,8 +314,10 @@ def texto_bloco(b, mista, tema=None, espelho=False):
     return t
 
 
-def peso(anexos, blocos, avulsa_bloco=None, onde=None):
-    """Explica cada anexo pela posição real na lista. anexos = [(tipo, caminho)]."""
+def peso(anexos, blocos, avulsa_bloco=None, onde=None, prancha_hom=None):
+    """Explica cada anexo pela posição real na lista. anexos = [(tipo, caminho)].
+    prancha_hom: None (prancha sem figura de homenagem), "so" (só figuras de homenagem) ou "mista" (com antecessor externo);
+    na avulsa, avulsa_bloco = "HOMENAGEM" quando o quadrante é a figura de referência."""
     p = []
     for k, (tipo, cam) in enumerate(anexos, 1):
         if tipo == "estilo":
@@ -294,7 +328,7 @@ def peso(anexos, blocos, avulsa_bloco=None, onde=None):
             if set(blocos) <= set("XA"):
                 chave = "XA"
             elif set(blocos) <= set("NL"):
-                chave = "N"
+                chave = {"so": "HOMENAGEM", "mista": "MISTA"}.get(prancha_hom, "N")
             elif len(set(blocos)) == 1:
                 chave = blocos[0]
             else:
@@ -450,7 +484,10 @@ def main(argv):
             continue
         prancha_rel = f"referencias/cartela_{c:03d}_pais.png"
         tem_prancha = os.path.exists(os.path.join(lote, prancha_rel))
-        if (PRECISA_PRANCHA & set(blocos) or tem_ext) and not tem_prancha:
+        tem_hom = any(homenagem(e) for e in es)
+        tem_ref = any(ref_arte(e) for e in es)
+        prancha_hom = ("mista" if tem_ext else "so") if tem_ref else None
+        if (PRECISA_PRANCHA & set(blocos) or tem_ext or tem_ref) and not tem_prancha:
             print(f"cartela {c:03d}: falta {prancha_rel} (rode montar_entrada.py)")
             continue
         hum = any(f["humanoide"] for f in fs)
@@ -477,12 +514,13 @@ def main(argv):
             evol = []
         extras = ([clima] if clima else []) + \
                  [t for t in (texto_bloco(b, mista, tema, espelho) for b in blocos) if t] + \
+                 ([HOMENAGEM + (HOMENAGEM_REF if tem_ref else "")] if tem_hom else []) + \
                  ([HUMANOID] if hum else []) + evol
         tipo1s = {e["tipo1"] for e in es}
         tipo = TIPOS[tipo1s.pop()] if blocos == ["N"] and len(tipo1s) == 1 else None
         rotulo = tipo or " + ".join(ROTULO[b] for b in blocos)
         txt = montar(cab, GRADE, LAYOUT, tipo, rotulo, progressao([e["tier"] for e in es]), extras,
-                     [linha(f, e, nomes) for f, e in zip(fs, es)], c, total, peso(anexos, blocos))
+                     [linha(f, e, nomes) for f, e in zip(fs, es)], c, total, peso(anexos, blocos, prancha_hom=prancha_hom))
         estado = "pendente de conserto" if (c in consertos and tem_imagem) else fila.get(c, {}).get("estado", "pronta")
         salvar = f"cartelas/cartela_{c:03d}_original.png"
         item = dict(cartela=c, leva="+".join(LEVA[b] for b in blocos), estado=estado, prompt=f"prompts/cartela_{c:03d}.txt",
@@ -493,8 +531,9 @@ def main(argv):
             l, k, b = e["linha"], e["coluna"], e["bloco"]
             ant_c = anteriores.get(e["n"])
             ext = externo(e)
+            ref_e = ref_arte(e)
             quad = None
-            if tem_prancha and (b in PRECISA_PRANCHA or ext):
+            if tem_prancha and (b in PRECISA_PRANCHA or ext or ref_e):
                 quad = f"referencias/avulsas/cartela_{c:03d}_L{l}C{k}_pais.png"
                 crops.append((prancha_rel, quad, l, k))
             an = [ref("estilo"), ref("variedade")] + ([("quadrante", quad)] if quad else []) + \
@@ -502,11 +541,13 @@ def main(argv):
                  [("propria", salvar)] + ([ref("humanoides")] if f["humanoide"] else [])
             assert len(an) <= MAX_ANEXOS, (c, an)
             ex = ([clima] if clima else []) + [t for t in [texto_bloco(b, False, tema, False)] if t] + \
+                 ([HOMENAGEM + (HOMENAGEM_REF_AVULSA if ref_e else "")] if homenagem(e) else []) + \
                  ([HUMANOID] if f["humanoide"] else []) + \
                  ([EVOLUCAO_AVULSA_EXTERNO.format(nome=ext["nome"])] if ext else
                   [EVOLUCAO_AVULSA] if (e.get("evolucao") or {}).get("anterior") else [])
             ta = montar(cab, GRADE_AVULSA, LAYOUT_AVULSA, tipo, rotulo, progressao([e["tier"]]), ex,
-                        [linha(f, e, nomes, avulsa=True)], c, total, peso(an, [b], b, ONDE[(l, k)]))
+                        [linha(f, e, nomes, avulsa=True)], c, total,
+                        peso(an, [b], "HOMENAGEM" if ref_e else b, ONDE[(l, k)]))
             item["avulsas"].append(dict(linha=l, coluna=k, nome=f["nome"], prompt=f"prompts/avulsa_{c:03d}_L{l}C{k}.txt",
                                         anexos=[a for _, a in an], salvar=f"cartelas/avulsa_{c:03d}_L{l}C{k}_v1.png"))
             textos[f"prompts/avulsa_{c:03d}_L{l}C{k}.txt"] = ta
@@ -566,6 +607,9 @@ def prompt_lote(lote, plano, nome_lote, entrada, total, arq_md, clima):
     fx = [f"{a:03d}–{b:03d}" for a, b in faixas(total)]
     descricao = "\n".join(DESCRICAO_PT[b] for b in blocos)
     confere = [CONFERE_PT[b] for b in blocos]
+    if any(homenagem(e) for e in entrada.values()):
+        descricao += "\n" + DESCRICAO_HOMENAGEM_PT
+        confere.append(CONFERE_HOMENAGEM_PT)
     if clima:
         descricao += ("\nCLIMA DO LOTE (vai no começo de todo prompt; o que ele proíbe é erro de criatura): " + clima)
         confere.append("  CLIMA: a imagem respeita o bloco de clima do lote (nada do que ele proíbe aparece).")

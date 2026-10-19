@@ -23,13 +23,13 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
 
 - `python "{SKILL}/scripts/ver_celulas.py" . <cartelas>` mostra as suas células (aceita `3,4` ou `3-6`). **Não leia o
   `entrada.json` inteiro.** Cada célula traz `n`, `cartela`, `linha`, `coluna`, `bloco`, `tier`, `tipo1`, `tipo2`,
-  `humanoide_previsto` e, conforme o bloco, `leitura`, `evolucao`, `original` + `tipo_sai`/`tipo_entra` ou
-  `ingredientes` (com `linhagem`).
+  `humanoide_previsto`, `fidelidade` e, conforme o bloco, `leitura`, `referencia_conteudo` (homenagem), `evolucao`,
+  `original` + `tipo_sai`/`tipo_entra` ou `ingredientes` (com `linhagem`).
 - **`leitura`** = direção de conceito escrita no plano. Siga a ideia central; o detalhe é seu.
 - `plano.json`: o campo `clima` (se houver) é o tom do lote e vai em todo prompt — a ficha não pode contrariá-lo.
 - `referencias/cartela_NNN_pais.png`: prancha 2x2 das cartelas com arte de origem (V: o original; F: os pais, mesmo
   tamanho; X/A: BASE grande à esquerda, SACRIFÍCIO pequeno à direita; N: o antecessor externo — monstro que já existe no
-  jogo —, quando houver).
+  jogo —, quando houver; N/L homenagem: a figura de referência enviada pelo usuário, quando houver).
   **Olhe a imagem antes de escrever**; para detalhe, `pais/<slug>.png`.
 - Nomes que já existem no jogo: `{SKILL}/dados/nomes_existentes.json`. Se veio uma lista dos monstros que a
   tipagem/pacote já tem, ela vale como anti-repetição de arquétipo, silhueta e ideia central.
@@ -46,7 +46,7 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
 |---|---|
 | `n` | o da célula |
 | `nome` | nome próprio inventado, sonoro, de preferência uma palavra; único (fora de `nomes_existentes.json` e do lote), sem número, até 60 caracteres. **V não escreve `nome`** (escreve `epiteto`) |
-| `humanoide` | true/false; `humanoide_previsto: true` obriga true. Cartela de inéditos: 1 ou 2 humanoides; fusão/variação: sai da base/original |
+| `humanoide` | true/false; `humanoide_previsto: true` obriga true. Cartela de inéditos: 1 ou 2 humanoides (cartela com as 4 previstas humanoides = lote de humanoides: as 4); fusão/variação: sai da base/original |
 | `classe` | só se humanoide: livre e variada, sem repetir entre células sem motivo |
 | `paleta` | `[cor escura do corpo, cor clara de acento]`, nascidas da mistura dos dois tipos. Ciano só com Elétrico |
 | `anatomia` | uma frase do corpo, com a postura, na escala do tier. O tamanho vem da lore, não do tier |
@@ -67,6 +67,19 @@ Todos os caminhos abaixo são relativos à pasta do lote (rode os comandos de de
   um traço marcante; a `anatomia` começa com "Evolução do <nome>." / "Evolução da <nome>.". Nome sem prefixo obrigatório
   em comum com o antecessor.
 - O tipo 1 dá conceito e anatomia; o tipo 2 dá material, cor e comportamento.
+
+### N/L — homenagem reconhecível (célula com `fidelidade: "homenagem"`)
+
+- `tracos_iconicos`: lista de **3 a 6** traços visuais concretos que fazem a figura clássica ser reconhecida à primeira
+  vista — forma da máscara ou do rosto, figurino, arma/objeto, cores, silhueta, postura, detalhe-assinatura. Ex.:
+  "máscara branca alongada de boca aberta num grito", "manto preto de capuz com barra esfarrapada", "faca de caça erguida
+  junto ao peito". O `compor_fichas.py` põe esses traços no `visual`, logo depois da `anatomia`.
+- `ver_celulas.py` mostra a figura (descrição interna do plano) e, se houver, a referência no quadrante da prancha —
+  **olhe a imagem**. Tire dela os traços; não descreva a imagem como cópia.
+- **Nunca** o nome do personagem, da obra ou do ator em campo nenhum (nome, arquétipo, traços, anatomia, conceito,
+  descrição…): o validador recusa. Rosto de ator, logo, marca e texto também não. A criatura é redesenhada no traço do
+  jogo, com nome próprio inventado e descrição de jogo própria; o tipo 1 continua mandando no conceito e o tipo 2 no
+  material e na cor, sem apagar os traços icônicos.
 
 ### V — variação
 
