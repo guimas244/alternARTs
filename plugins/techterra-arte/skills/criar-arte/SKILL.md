@@ -21,8 +21,13 @@ fila saem desta skill; a sessão de imagem só anexa, cola, gera, confere, salva
 | capa de evento/expedição/raid, wallpaper de passe, moldura de invasão | [modos/capas.md](modos/capas.md) |
 | ícone de mapa, ícone de tipo; selo (sem regra própria ainda: perguntar ao usuário) | [modos/icones.md](modos/icones.md) |
 
-Sempre leia também [regras/formatos.md](regras/formatos.md) (tamanho de cada tipo) e
-[referencias/REFERENCIAS.md](referencias/REFERENCIAS.md) (o que anexar, em que ordem).
+Se o criador deu uma **tipagem** ("um lote de Gelo"), um **tema/referência** ("filmes de terror", "Halloween") ou uma
+**imagem de referência**, leia antes [regras/lotes-tematicos.md](regras/lotes-tematicos.md): o plano do lote sai de lá.
+
+Sempre leia também [regras/formatos.md](regras/formatos.md) (tamanho de cada tipo),
+[referencias/REFERENCIAS.md](referencias/REFERENCIAS.md) (o que anexar, em que ordem) e
+[regras/entrega.md](regras/entrega.md) (todo lote termina com **recortes + fichas com descrição de jogo**, no formato que
+o cadastrador do jogo lê).
 
 ## 2. Regras que valem para todo modo
 
