@@ -19,7 +19,7 @@ registra — nada de reescrever ficha ou prompt.
 ## 0. Ajuda / comandos
 
 Se o usuário pedir **"ajuda"**, **"comandos"**, **"menu"**, **"o que você faz"** ou algo parecido, responda só com a
-tabela abaixo (em português, curta) e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
+tabela abaixo (em português, curta), começando por "Skill criar-arte, versão 1.2.2", e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
 basta — os exemplos são pontos de partida.
 
 | Quero… | Exemplo de pedido | Modo |

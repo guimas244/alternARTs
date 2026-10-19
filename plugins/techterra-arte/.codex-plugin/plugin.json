@@ -1,6 +1,6 @@
 {
   "name": "techterra-arte",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Criação de arte do jogo Techterra: monstros, fusões, personagens/NPCs, itens, cenários, mapas, capas e ícones — fichas, prompts, geração das cartelas, conferência e recorte.",
   "skills": "./skills/",
   "interface": {
