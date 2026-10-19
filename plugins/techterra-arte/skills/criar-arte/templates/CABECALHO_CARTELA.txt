@@ -1,0 +1,72 @@
+Use case: game creature art sheet for Techterra.
+The attached scorpion image is a RENDERING REFERENCE ONLY. Copy ONLY its technique: clean variable-width
+outline in a very dark shade of each creature's own color (never pure black); cel-shading with flat color,
+one soft shadow band and sharp specular highlights on hard surfaces; key light from top-front plus a thin
+rim light on the upper edges; TWO dominant colors per creature (a dark body color and a light accent);
+fine speckle texture ONLY on the light accent, all other surfaces smooth.
+Do NOT copy anything else from the scorpion: not its anatomy, not its face, not its eyes, not its angry
+brow, not its brown-and-sand palette, not its crouching pose.
+The second attached image (a board of 12 approved creatures from this game) is a VARIETY REFERENCE ONLY:
+it shows how different each creature's anatomy, head, eyes and silhouette must be from the others
+(serpent, living armor, living frame, pipe organ, cauldron, robot, goat, tree giant…). Aim for that level
+of difference between the new creatures. Do NOT copy any of those 12 designs.
+
+FACES AND EYES MUST BE DIFFERENT FOR EVERY CREATURE. Each creature's head, face and eyes are designed from
+its OWN concept and follow its own description: eye shape (round, slit, compound, button, crescent, star
+pupil, hollow sockets…), number (none, one, two, three, many), size, placement (on the head, on petals,
+inside a flower, on stalks, on the chest) and color. Some creatures may have no face at all and glow from
+inside instead. Never reuse the same head or face template on different bodies; never give everyone the
+same pair of narrow glowing angry eyes with a V-shaped brow. Every creature has some self-lit element
+(eyes or another part named in its description), with a short halo, and nothing else glows.
+Expression and pose follow each creature's personality in its description, within the POWER LADDER
+below: low tiers can be curious, sleepy, shy or cheerful; high tiers are imposing, menacing, ancient or
+majestic. Three-quarter front view, a lively pose, never a static catalog pose. Camera height follows
+the POWER LADDER.
+
+{GRADE}
+FILL THE CELL: each creature must be drawn LARGE, its longest dimension spanning about 90% of the cell
+(width or height, whichever is bigger), leaving only a thin empty transparent margin of about 5% on each
+side. This is an approximate artistic guideline, not an exact measurement. Do not draw small creatures
+floating in empty space. Keep each creature's NATURAL body shape: only its LONGEST side reaches about 90%
+of the cell. A standing humanoid or tall plant is tall and narrow (fills the height, not the width); a
+serpent or long beast is wide and low (fills the width, not the height); only round or crouching bodies
+fill both. NEVER squash, crouch, curl or fold a creature just to make it fill the square, and do not make
+every creature a round compact blob. Only fold a tail, wing, vine or limb inward when it would otherwise
+leave the cell. The whole
+creature stays inside its cell; never touch, cross or overlap neighboring cells.
+All creatures share the same line weight, finish and scale of detail, as one consistent set.
+No floor, no ground, no cast shadow, no scenery, no background texture, no grid lines, no loose particles
+or glow outside the creature's body.
+ABSOLUTELY NO TEXT: no letters, numbers, labels, runes, pseudo-writing, logos, signatures or watermarks.
+One creature per cell, no second creature, no rider, no frame, no interface element.
+
+DUAL TYPING RULE: every creature has TWO types and is a true fusion of both. The primary type ({TIPO})
+defines the concept and anatomy. The secondary type changes the MATERIAL, COLOR and behavior of that
+creature. A creature does NOT need the stereotypical color of its primary type: follow the colors given
+in each description, which come from the combination of both types. The creatures must look clearly
+different from each other in color, material and silhouette, never recolors of one design.
+Cyan is reserved for Electric energy: only creatures with the Electric type may use it, and only on their
+electric parts.
+
+POWER LADDER — the tier must be readable at first glance, WITHOUT any text:
+- Tier 1–2: a small, harmless critter or hatchling; soft rounded forms, big head, short limbs; camera
+  slightly ABOVE looking down; cute, curious or shy.
+- Tier 3–4: a young, agile creature; first defensive features (small thorns, a shell, claws); camera at
+  eye level; alert and a bit cocky.
+- Tier 5–6: an adult and clearly dangerous creature; real weapons (hooked thorns, jaws, spikes, horns),
+  solid muscular or armored mass; camera at eye level; aggressive or cunning.
+- Tier 7–8: an apex predator or ancient guardian; heavy massive body, armor plates, multiple weapons,
+  a battle-worn detail (scar, broken spike); camera slightly BELOW looking up; imposing, threatening,
+  commanding pose (rearing, arms spread, jaws open, looming).
+- Tier 9–10: a titan, living legend, calamity or deity; colossal presence that dominates the cell,
+  crown-like or halo-like structures, overwhelming weaponry, energy running through the whole body;
+  camera LOW looking up (heroic worm's-eye perspective); majestic, terrifying or god-like. It must look
+  like a final boss, never like a cute critter or a decorative plant.
+Higher tiers also get denser detail, harder contrast and stronger self-light. Drawing size in the cell
+stays similar; POWER comes from anatomy, weaponry, posture, expression and camera, not from scale.
+Tiers in this sheet:
+{PROGRESSAO}
+{EVOLUCAO}The descriptions below are in Brazilian Portuguese. Interpret them literally as the requested creatures.
+
+TYPE PACK: {TIPO}. PAGE {N}/8.
+{LINHAS}
