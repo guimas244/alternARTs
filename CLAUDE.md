@@ -12,7 +12,11 @@ Este repo é o plugin `techterra-arte` (skill `criar-arte`), a fábrica de arte 
 - **Sem banco e sem produção.** A skill termina nas cartelas recortadas e nas fichas. Nada de credencial, DSN, alias ssh,
   URL de prod, UID ou caminho pessoal (`D:\…`, `C:\Users\…`) em arquivo deste repo.
 - **Tamanhos por tipo** conforme `regras/formatos.md` (manter os já usados, sem unificar).
-- **Sem `version`** no `plugin.json`: cada commit é uma versão.
+- **Claude Code:** sem `version` no `.claude-plugin/plugin.json` (cada commit é uma versão).
+- **ChatGPT/Codex (alvo principal):** a cada mudança na skill, **subir o `version`** de
+  `plugins/techterra-arte/.codex-plugin/plugin.json` (1.2.0 → 1.2.1 correção, 1.3.0 novidade) no mesmo commit, e dar
+  push. Quem instalou pelo marketplace do GitHub atualiza com o ↻ da tela Plugins (ou reabrindo o app). O zip
+  (`python empacotar_chatgpt.py`) é só para quem instalou por arquivo.
 
 ## Ao editar
 
