@@ -2,7 +2,7 @@
 
 Fluxo completo de um lote de monstros, do pedido ao pacote de entrega. Fusões usam o mesmo fluxo com o
 [modo fusões](fusoes.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a pasta de trabalho do
-lote (fora da skill; no ChatGPT, `/mnt/data/<lote>`). Ambiente (ChatGPT, Codex, Claude Code):
+lote (fora da skill; no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local). Ambiente (ChatGPT, Codex, Claude Code):
 [../regras/ambiente.md](../regras/ambiente.md).
 
 ## 0. Plano do lote
@@ -89,14 +89,16 @@ Gera `monstros.json` (fichas integradas), `prompts/`, `fila.json` e `PROMPT_<LOT
 - **No ChatGPT/Codex:** a própria conversa segue o `PROMPT_<LOTE>.md` (modo TODOS, faixas em sequência) e gera as
   cartelas. Daqui em diante as fichas e os prompts estão fechados: só gerar, medir o enquadramento, consertar por
   avulsa e registrar.
-- **No Claude Code:** entregue ao usuário a frase para colar no ChatGPT/Codex (com o lote disponível lá: no ChatGPT,
-  o `.zip` do lote enviado na conversa; no Codex, sessão aberta **dentro de `<lote>`**):
+- **No Claude Code:** entregue ao usuário só a frase abaixo, com o caminho absoluto do `PROMPT_<LOTE>.md`, para colar
+  numa conversa nova do **ChatGPT desktop** ou do Codex (os dois enxergam o disco: sem `.zip`, sem instruções extras —
+  o roteiro já diz a pasta, os anexos, a conferência e onde salvar):
 
 ```
-Leia e execute <lote>/PROMPT_<LOTE>.md — TODOS
+criar-arte: leia e execute <lote>/PROMPT_<LOTE>.md — TODOS
 ```
 
-(ou `— FAIXA 001–004`, uma sessão por faixa). Detalhe por ambiente: [../regras/ambiente.md](../regras/ambiente.md).
+(ou `— FAIXA 001–004`, uma sessão por faixa). Só no **ChatGPT web** (sem acesso ao disco) o lote vai como `.zip`
+anexado à conversa, extraído em `/mnt/data/<lote>`. Detalhe por ambiente: [../regras/ambiente.md](../regras/ambiente.md).
 
 ## 4. Depois da geração
 
@@ -113,7 +115,7 @@ Leia e execute <lote>/PROMPT_<LOTE>.md — TODOS
    python "{SKILL}/scripts/montar_entrega.py" <lote>
    ```
    Valida (descrição em toda ficha, recorte de toda célula) e escreve `cadastro.json` (corpo sugerido) e `ENTREGA.md`.
-   Pacote: [../regras/entrega.md](../regras/entrega.md). No ChatGPT, entregue o lote como `.zip`
+   Pacote: [../regras/entrega.md](../regras/entrega.md). No ChatGPT web, entregue o lote como `.zip` (no desktop, a própria pasta)
    (`shutil.make_archive`).
 
 ## Regras deste modo

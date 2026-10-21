@@ -3,7 +3,7 @@
 Fluxo completo de um lote de itens em cartela 5x5, do pedido ao pacote de entrega. A regra da arte (estilo, o que é
 equipamento de monstro, faixas, grade, texto fixo do prompt, casos especiais) está em
 [../regras/itens.md](../regras/itens.md) — este arquivo só diz **como executar**. `{SKILL}` = a pasta desta skill
-(onde está o SKILL.md); `<lote>` = a pasta de trabalho do lote (fora da skill; no ChatGPT, `/mnt/data/<lote>`).
+(onde está o SKILL.md); `<lote>` = a pasta de trabalho do lote (fora da skill; no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local).
 Ambiente (ChatGPT, Codex, Claude Code): [../regras/ambiente.md](../regras/ambiente.md). Joia e item de passe: sem regra
 própria ainda, pergunte ao usuário.
 
@@ -116,6 +116,6 @@ Layout em [../regras/entrega.md](../regras/entrega.md) (Itens): `itens.json` (j�
 `<tipagem>/faixa_NN_*.png` e um `ENTREGA.md` escrito por você — quantas páginas e itens, quais células ficaram como
 avulsa ou pendentes, os avisos que sobraram e o que precisa de olho humano. Acrescente a linha em `ENTREGAS.md` da
 pasta de trabalho. Por tipagem, a descrição mínima de cada item e o índice ficam no `itens.json`; nome e classificação
-nunca na arte. No ChatGPT, entregue o lote como `.zip`.
+nunca na arte. No ChatGPT web, entregue o lote como `.zip` (no desktop, a própria pasta).
 
 Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).

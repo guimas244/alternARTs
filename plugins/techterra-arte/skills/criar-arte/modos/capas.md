@@ -4,7 +4,7 @@ Regras: [../regras/cenarios-mapas-capas.md](../regras/cenarios-mapas-capas.md) �
 [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).
 Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude
 Code): [../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md);
-`<lote>` = a pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
+`<lote>` = a pasta do lote (no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local).
 
 - **Entra:** a lista de cenas (uma por tipagem, tipo de evento ou raid) e **2 ou 3 artes do próprio jogo** como
   referência de estilo — **o usuário fornece** (no ChatGPT, por upload; ainda não há referência fixa de capa na skill). Sem elas, peça antes de
@@ -77,4 +77,4 @@ do arquivo (expedição e raid da mesma tipagem não colidem).
    nas bordas, nenhum texto, rosto ou criatura em destaque, as 4 cenas da mesma coleção.
 7. **Entrega:** `entregas.json` já traz cada capa (cartela, posição, miolo); acrescente o `nome` de exibição se quiser.
    `ENTREGA.md` com pendências (cartela que esgotou as 3 imagens, aviso de miolo) e a linha no `ENTREGAS.md`. No
-   ChatGPT, entregue o lote como `.zip`.
+   ChatGPT web, entregue o lote como `.zip` (no desktop, a própria pasta).

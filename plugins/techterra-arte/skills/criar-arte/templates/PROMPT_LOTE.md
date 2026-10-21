@@ -7,10 +7,11 @@
 |---|---|---:|
 {TABELA}
 
-Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). No ChatGPT, o normal é a
-própria conversa que preparou o lote seguir o modo TODOS, com as faixas em sequência:
+Siga este roteiro nesta conversa ou numa nova (ChatGPT ou Codex, com ferramenta de imagem). Basta colar a frase abaixo,
+sem mais instruções: o roteiro já diz a pasta do lote, os anexos, a conferência do enquadramento e onde salvar. No
+ChatGPT desktop e no Codex (que enxergam o disco), não precisa `.zip`: a sessão trabalha direto na pasta do lote.
 
-> Leia e execute `{ARQUIVO_PROMPT}` — TODOS
+> criar-arte: leia e execute `{ARQUIVO_PROMPT}` — TODOS
 
 (Se o ambiente tiver subagentes, o modo TODOS abre um trabalhador por faixa.) Ou uma sessão por faixa de 4 cartelas,
 todas ao mesmo tempo:
@@ -19,21 +20,23 @@ todas ao mesmo tempo:
 
 Para refazer só células trocadas depois da geração (lista em `trocas.json`, escrita no preparo):
 
-> Leia e execute `{ARQUIVO_PROMPT}` — TROCAS
+> criar-arte: leia e execute `{ARQUIVO_PROMPT}` — TROCAS
 
 Se a sessão cair, mande a mesma frase de novo: ela pula as cartelas que já têm imagem. As fichas, os nomes e o texto de
 cada prompt foram escritos no preparo e estão prontos em `fila.json`.
 
-Lote levado para outro ambiente (ex.: `.zip` enviado a uma conversa nova do ChatGPT, extraído em `/mnt/data/<lote>`):
-os caminhos absolutos abaixo valem para onde o lote foi preparado. Use a pasta onde o lote foi extraído no lugar da
-pasta do lote, e a pasta desta skill no seu ambiente no lugar da pasta da skill — a fila usa caminhos relativos.
+Só se o lote foi levado para outro ambiente (ChatGPT web, que não enxerga o disco: `.zip` enviado à conversa e
+extraído em `/mnt/data/<lote>`): os caminhos absolutos abaixo valem para onde o lote foi preparado. Use a pasta onde o
+lote foi extraído no lugar da pasta do lote, e a pasta desta skill no seu ambiente no lugar da pasta da skill — a fila
+usa caminhos relativos.
 
 ---
 
 ```text
 Você GERA AS IMAGENS do lote {TITULO} ({LOTE}) do Techterra: {MONSTROS} monstros em {TOTAL} cartelas 2x2.
 Trabalhe dentro de {PASTA_LOTE}
-Todos os caminhos citados aqui e na fila são relativos a essa pasta. Outros agentes podem trabalhar ao lado (outras
+(se esse caminho não existir no seu ambiente, a pasta do lote é a pasta onde está este arquivo). Não precisa .zip
+nem cópia: leia e grave direto nela. Todos os caminhos citados aqui e na fila são relativos a essa pasta. Outros agentes podem trabalhar ao lado (outras
 faixas deste lote): só crie arquivos em cartelas/ e validacao/.
 
 ═══ SEU PAPEL ═══

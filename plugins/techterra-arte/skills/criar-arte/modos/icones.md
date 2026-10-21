@@ -4,7 +4,7 @@ Regras: [../regras/cenarios-mapas-capas.md](../regras/cenarios-mapas-capas.md) �
 [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).
 Sessões e ONDE SALVAR: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude
 Code): [../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md);
-`<lote>` = a pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
+`<lote>` = a pasta do lote (no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local).
 
 - **Entra:** a lista de ícones de mapa (id + cenário em 1 frase, com o marco), em grupos de 16.
 - **Sai:** `recortes/<id>.png` **300×300 RGBA** (medalhão redondo, borda branca, fora do círculo transparente; no jogo
@@ -56,7 +56,7 @@ Code): [../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta
    texto; reconhecível reduzido a 80×80. Célula reprovada: gere a cartela de novo do zero (máximo 3 imagens) ou anote
    como pendente.
 6. **Entrega:** `entregas.json` com um registro por ícone (`id`, `arquivo: recortes/<id>.png`, `medida: [300, 300]`,
-   `cartela`, `linha`, `coluna`, `prompt`), `ENTREGA.md` com pendências e a linha no `ENTREGAS.md`. No ChatGPT,
-   entregue o lote como `.zip`.
+   `cartela`, `linha`, `coluna`, `prompt`), `ENTREGA.md` com pendências e a linha no `ENTREGAS.md`. No ChatGPT web,
+   entregue o lote como `.zip` (no desktop, a própria pasta).
 
 Atribuir o ícone a cada Local no jogo é do processo de cadastro, fora da skill.

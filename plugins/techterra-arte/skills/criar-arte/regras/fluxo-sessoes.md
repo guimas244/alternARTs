@@ -64,7 +64,7 @@ ChatGPT/Codex com o `PROMPT_<LOTE>.md`. Detalhe por ambiente: [ambiente.md](ambi
 
 Todo prompt de sessão de imagem tem uma seção **"ONDE SALVAR (obrigatório)"** com:
 
-- a **pasta absoluta** de saída, **dentro da pasta de trabalho do usuário** (no ChatGPT, `/mnt/data/<lote>`; fora
+- a **pasta absoluta** de saída, **dentro da pasta de trabalho do usuário** (no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local; fora
   dele, o diretório da sessão ou o que o usuário indicar) — nunca dentro da pasta da skill, que é trocada a cada
   atualização;
 - as subpastas (ex.: `cartelas/`, `validacao/`, `recortes/`);

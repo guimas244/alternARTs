@@ -5,7 +5,7 @@ Regras de composição (o porquê de cada exigência): [../regras/cenarios-mapas
 [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md). Sessões e ONDE SALVAR:
 [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude Code):
 [../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a
-pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
+pasta do lote (no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local).
 
 - **Entra:** o mapa (nome, identidade em 1 frase, paleta por nome, luz/atmosfera) e a lista de Locais (nome, descrição
   em 2 frases, marco, vizinhos). Quem fornece é o usuário (a skill não tem banco).
@@ -65,7 +65,7 @@ pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
    letra ou glifo; nenhum bicho ou pessoa em primeiro ou meio plano.
 7. **Entrega:** complete em `entregas.json` o `nome` de cada Local e, nos fundos compartilhados, `locais` (quem usa
    aquele fundo) — o script preserva esses campos. Escreva `ENTREGA.md` (próprios × reaproveitados, luminância mínima,
-   pendências e o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho. No ChatGPT,
-   entregue o lote como `.zip`.
+   pendências e o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho. No ChatGPT web,
+   entregue o lote como `.zip` (no desktop, a própria pasta).
 
 Ligar o fundo aos Locais no jogo (subir imagem, preencher o Local) é do processo de cadastro, fora da skill.

@@ -8,16 +8,35 @@ rodar os scripts, quem gera as imagens e como o pacote chega ao usuário. **Leia
 O fluxo é o mesmo em todo lugar: **plano → fichas → fila e prompts → geração das imagens → conferência e recorte →
 entrega**. O que muda é quem gera as imagens e onde os arquivos ficam.
 
-| | ChatGPT (principal) | Codex | Claude Code |
-|---|---|---|---|
-| Gera imagem? | **sim**, na própria conversa | sim (`image_gen`) | **não** |
-| Pasta do lote | espaço de arquivos da conversa (ex.: `/mnt/data/<lote>/`) | pasta local | pasta local |
-| Scripts | ambiente de código da conversa (Pillow já vem) | locais | locais |
-| Artes de origem | o usuário envia por upload | arquivo local | arquivo local |
-| Entrega | `.zip` para baixar | a pasta | a pasta |
-| Subagentes | não | conforme o ambiente | conforme o ambiente |
+| | ChatGPT desktop (principal) | ChatGPT web | Codex | Claude Code |
+|---|---|---|---|---|
+| Gera imagem? | **sim**, na própria conversa | **sim**, na própria conversa | sim (`image_gen`) | **não** |
+| Pasta do lote | **pasta local** (o app enxerga o disco) | espaço de arquivos da conversa (ex.: `/mnt/data/<lote>/`) | pasta local | pasta local |
+| Scripts | locais | ambiente de código da conversa (Pillow já vem) | locais | locais |
+| Artes de origem | arquivo local | o usuário envia por upload | arquivo local | arquivo local |
+| Entrega | a pasta | `.zip` para baixar | a pasta | a pasta |
+| Subagentes | conforme o ambiente | não | conforme o ambiente | conforme o ambiente |
 
-## ChatGPT — o alvo principal
+**Como saber qual ChatGPT é:** se o ambiente de código enxerga o disco do usuário (ex.: `D:\...`, `C:\Users\...`, a
+pasta do projeto) e **não** existe `/mnt/data`, é o **ChatGPT desktop**: trabalhe direto na pasta local, como no Codex.
+Se existe `/mnt/data` e o disco do usuário não aparece, é o **ChatGPT web**.
+
+## ChatGPT desktop — o caso normal do dono
+
+O app do ChatGPT no computador roda os scripts e lê/grava **direto no disco**. Funciona como o Codex:
+
+- **Pasta do lote:** a pasta local que o usuário indicar (ou o caminho do `PROMPT_<LOTE>.md`). Nada de `/mnt/data`,
+  nada de `.zip`, nada de upload: leia e grave direto nela.
+- **Geração preparada em outro lugar (ex.: Claude Code):** o usuário cola só
+  `criar-arte: leia e execute <caminho absoluto>\PROMPT_<LOTE>.md — TODOS`. O roteiro já diz a pasta do lote, os
+  anexos (caminhos relativos a ela), a conferência do enquadramento e onde salvar — não peça mais nada.
+- **Scripts:** `python -B "{SKILL}/scripts/<script>.py" <lote>`; `{SKILL}` = a pasta onde o app instalou a skill
+  (procure o próprio SKILL.md se não souber).
+- **Imagem gerada:** salve no caminho da fila (`cartelas/cartela_NNN_v1.png` e a aprovada como `_original.png`) e rode
+  o verificador logo depois.
+- **Entrega:** a própria pasta do lote (sem `.zip`).
+
+## ChatGPT web — sem acesso ao disco
 
 **Uma conversa só faz tudo:** plano → fichas → prompts → **gera as cartelas com a ferramenta de imagem da própria
 conversa** → confere e recorta com Python → entrega o `.zip`.
@@ -64,7 +83,8 @@ conversa** → confere e recorta com Python → entrega o `.zip`.
 
 - Prepara tudo: plano, fichas, fila, prompts, recorte e entrega, com pasta e scripts locais.
 - **Não gera imagem.** A geração vai para o ChatGPT ou o Codex com o `PROMPT_<LOTE>.md`: entregue ao usuário a frase do
-  modo (ex.: `Leia e execute <lote>/PROMPT_<LOTE>.md — TODOS`) e, no ChatGPT, o `.zip` do lote para ele enviar. Os
+  modo (ex.: `criar-arte: leia e execute <lote>/PROMPT_<LOTE>.md — TODOS`), sem instruções extras. No ChatGPT desktop
+  e no Codex não há `.zip`: a sessão trabalha direto na pasta do lote. Só para o ChatGPT web vai o `.zip` do lote. Os
   caminhos absolutos do `PROMPT_<LOTE>.md` são os da máquina local; lá, o lote extraído em `/mnt/data/<lote>` faz o
   papel da pasta do lote (a fila usa caminhos relativos, e o próprio roteiro avisa disso). Depois que as cartelas
   voltarem para `<lote>/cartelas/`, siga com a conferência, o recorte e a entrega.

@@ -676,7 +676,7 @@ def prompt_lote(lote, plano, nome_lote, entrada, total, arq_md, clima):
         "{TITULO}": plano.get("titulo") or nome_lote, "{LOTE}": nome_lote, "{TOTAL}": str(total),
         "{MONSTROS}": str(len(entrada)), "{ULTIMA}": f"{total:03d}", "{PASTA_LOTE}": lote,
         "{PASTA_CARTELAS}": os.path.join(lote, "cartelas"), "{ARQUIVO_PROMPT}": arq_abs, "{SKILL}": comum.SKILL_DIR.replace(os.sep, "/"),
-        "{TABELA}": tabela, "{FAIXAS}": "\n\n".join(f"> Leia e execute `{arq_abs}` — FAIXA {x}" for x in fx),
+        "{TABELA}": tabela, "{FAIXAS}": "\n\n".join(f"> criar-arte: leia e execute `{arq_abs}` — FAIXA {x}" for x in fx),
         "{LISTA_FAIXAS}": ", ".join(fx), "{NUM_FAIXAS}": str(len(fx)), "{PRIMEIRA_FAIXA}": fx[0] if fx else "",
         "{LEVAS}": " | ".join(LEVA[b] for b in blocos), "{DESCRICAO_LEVA}": descricao,
         "{CONFERENCIA_BLOCOS}": "\n".join(confere),

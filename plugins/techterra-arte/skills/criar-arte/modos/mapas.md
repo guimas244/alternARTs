@@ -5,7 +5,7 @@ mapa-modelo). Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos:
 [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md). Sessões e ONDE SALVAR:
 [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md). Ambiente (ChatGPT, Codex, Claude Code):
 [../regras/ambiente.md](../regras/ambiente.md). `{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a
-pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
+pasta do lote (no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local).
 
 - **Entra:** sub-mapa — a Região (bioma, conceito, tipo: comum, reino, bastião ou porto), a lista de lugares (com marco
   e posição no quadro), as ligações entre eles e o ponto da Região no mundi; mundi — as terras, cada uma com posição,
@@ -63,7 +63,7 @@ pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
    sempre (§2).
 8. **Entrega:** em `entregas.json`, acrescente ao registro do mapa a lista `lugares` (nome + onde está no quadro, como
    foi pedido) para o cadastrador achar cada um; `ENTREGA.md` com o que precisa de olho humano; linha no `ENTREGAS.md`.
-   No ChatGPT, entregue o lote como `.zip`.
+   No ChatGPT web, entregue o lote como `.zip` (no desktop, a própria pasta).
 
 ## Mapa-múndi e mapa-modelo dos lados
 

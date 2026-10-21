@@ -7,7 +7,7 @@
 - Tamanhos: [../regras/formatos.md](../regras/formatos.md). Anexos: [../referencias/REFERENCIAS.md](../referencias/REFERENCIAS.md).
   Sessões e onde salvar: [../regras/fluxo-sessoes.md](../regras/fluxo-sessoes.md).
 
-`{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a pasta do lote (no ChatGPT, `/mnt/data/<lote>`).
+`{SKILL}` = a pasta desta skill (onde está o SKILL.md); `<lote>` = a pasta do lote (no ChatGPT web, `/mnt/data/<lote>`; no ChatGPT desktop, a pasta local).
 Ambiente (ChatGPT, Codex, Claude Code): [../regras/ambiente.md](../regras/ambiente.md).
 
 Scripts (Python 3 + Pillow; fora do ChatGPT, confira `python -c "import PIL"`), sempre com a pasta do lote como argumento:
@@ -111,8 +111,8 @@ python "{SKILL}/scripts/npc_recortar.py" <lote> [--paginas 1,3]
    coluna, pés altos. Abra os recortes avisados antes de entregar.
 9. **Entrega.** `fichas.json` sai do roster com `rosto`/`corpo` preenchidos; complete as `descricao` que faltarem e
    rode o recortador de novo (ele preserva o que já está na ficha). Escreva `ENTREGA.md` (quantas, quais, pendências,
-   o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho. No ChatGPT, entregue o
-   lote como `.zip`.
+   o que precisa de olho humano) e acrescente a linha no `ENTREGAS.md` da pasta de trabalho. No ChatGPT web, entregue o
+   lote como `.zip` (no desktop, a própria pasta).
 
 ## Atualizar personagem que já existe
 

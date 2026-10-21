@@ -6,7 +6,8 @@ description: Cria arte do jogo Techterra no padrão do jogo. Monta lotes de mons
 # criar-arte — fábrica de arte do Techterra
 
 > **Alvo principal: ChatGPT** — uma conversa só planeja, escreve as fichas e os prompts, **gera as imagens** com a
-> ferramenta de imagem da própria conversa, confere, recorta e entrega o `.zip`. A skill também roda no Codex (gera
+> ferramenta de imagem da própria conversa, confere, recorta e entrega. No **ChatGPT desktop** (enxerga o disco) tudo
+> fica direto na pasta local do lote, sem `.zip`; só no ChatGPT web o lote vive em `/mnt/data` e sai em `.zip`. A skill também roda no Codex (gera
 > com `image_gen`) e no Claude Code (prepara tudo, mas a geração vai para o ChatGPT/Codex).
 > **Leia primeiro [regras/ambiente.md](regras/ambiente.md)** — pasta do lote, scripts e geração em cada ambiente.
 
@@ -19,7 +20,7 @@ registra — nada de reescrever ficha ou prompt.
 ## 0. Ajuda / comandos
 
 Se o usuário pedir **"ajuda"**, **"comandos"**, **"menu"**, **"o que você faz"** ou algo parecido, responda só com a
-tabela abaixo (em português, curta), começando por "Skill criar-arte, versão 1.6.0", e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
+tabela abaixo (em português, curta), começando por "Skill criar-arte, versão 1.7.0", e pergunte o que ele quer fazer. Não há comando fixo: o pedido em linguagem natural
 basta — os exemplos são pontos de partida.
 
 | Quero… | Exemplo de pedido | Modo |
@@ -70,9 +71,10 @@ o cadastrador do jogo lê).
 ## 2. Regras que valem para todo modo
 
 - **Pasta de trabalho:** tudo o que você gera (fichas, prompts, fila, cartelas, recortes) vai para a pasta do lote:
-  - **ChatGPT:** `/mnt/data/<lote>/` (espaço de arquivos da conversa); no fim, entregue o lote como `.zip`
-    (`shutil.make_archive`);
-  - **Codex / Claude Code:** o diretório da sessão ou o caminho que o usuário indicar.
+  - **ChatGPT desktop / Codex / Claude Code:** a pasta local que o usuário indicar (ou o diretório da sessão); a
+    entrega é a própria pasta, sem `.zip`;
+  - **ChatGPT web** (sem acesso ao disco): `/mnt/data/<lote>/`; no fim, entregue o lote como `.zip`
+    (`shutil.make_archive`).
 
   **Nunca grave dentro desta skill**: a pasta da skill é trocada a cada atualização (e no ChatGPT pode ser só leitura).
 - **Referências:** estão em `{SKILL}/referencias/`. Anexe pelo caminho absoluto dessa pasta; se a ferramenta de imagem
@@ -91,11 +93,12 @@ o cadastrador do jogo lê).
 Scripts em `{SKILL}/scripts/` (Python 3 + Pillow). Os scripts recebem a pasta do lote por argumento; rode com
 `python -B` (não grava `__pycache__` na skill).
 
-- **ChatGPT:** rode pelo ambiente de código da conversa (Pillow já vem; ex.: `subprocess.run(["python", "-B",
+- **ChatGPT desktop:** scripts locais, com a pasta local do lote; geração com a ferramenta de imagem da conversa.
+- **ChatGPT web:** rode pelo ambiente de código da conversa (Pillow já vem; ex.: `subprocess.run(["python", "-B",
   f"{SKILL}/scripts/<script>.py", "/mnt/data/<lote>"])`). A geração usa a ferramenta de imagem da conversa.
 - **Codex:** scripts locais; geração com `image_gen`.
 - **Claude Code:** scripts locais; **não gera imagem** — a geração vai para o ChatGPT/Codex com o `PROMPT_<LOTE>.md`.
-- Fora do ChatGPT, confira antes `python -c "import PIL"`; se faltar, oriente `pip install pillow`.
+- Fora do ChatGPT web, confira antes `python -c "import PIL"`; se faltar, oriente `pip install pillow`.
 
 Lista dos scripts, por modo, com o comando de cada um: [scripts/LEIA-ME.md](scripts/LEIA-ME.md).
 
