@@ -8,6 +8,22 @@ rodar os scripts, quem gera as imagens e como o pacote chega ao usuário. **Leia
 O fluxo é o mesmo em todo lugar: **plano → fichas → fila e prompts → geração das imagens → conferência e recorte →
 entrega**. O que muda é quem gera as imagens e onde os arquivos ficam.
 
+## Pasta do lote: sempre ignorada pelo git
+
+Um lote gera centenas de arquivos de trabalho (prompts por célula, validações, fichas parciais, fila, cartelas,
+recortes) que **não sobem para nenhum repositório**. Por isso, em ambiente com disco local (ChatGPT desktop, Codex,
+Claude Code), a pasta do lote tem de estar **fora de qualquer repositório git** ou **dentro de uma pasta que o git
+ignora**:
+
+1. Se o projeto define onde ficam os lotes (o `CLAUDE.md`/`AGENTS.md` do projeto), use esse lugar.
+2. Antes de criar a pasta, confira: `git -C <pasta-mãe> rev-parse --show-toplevel` (erro = fora de repo, ok); se
+   estiver num repo, `git -C <pasta-mãe> check-ignore -q <lote>` tem de responder com sucesso (código 0).
+3. Se a pasta indicada estiver num repo e **não** for ignorada, **não crie o lote nela**: avise o usuário e peça um
+   lugar ignorado (ou que ele inclua a pasta no `.gitignore`).
+
+Só o resultado da entrega vai para o repositório do jogo, e quem copia é a etapa de cadastro do projeto, não a skill.
+No ChatGPT web, `/mnt/data/<lote>` já fica fora de qualquer repo.
+
 | | ChatGPT desktop (principal) | ChatGPT web | Codex | Claude Code |
 |---|---|---|---|---|
 | Gera imagem? | **sim**, na própria conversa | **sim**, na própria conversa | sim (`image_gen`) | **não** |
@@ -74,7 +90,8 @@ conversa** → confere e recorta com Python → entrega o `.zip`.
 
 ## Codex
 
-- Pasta do lote local (o diretório da sessão ou o que o usuário indicar); scripts locais (`python -B "{SKILL}/scripts/…"`).
+- Pasta do lote local, ignorada pelo git ([acima](#pasta-do-lote-sempre-ignorada-pelo-git)); scripts locais
+  (`python -B "{SKILL}/scripts/…"`).
 - `image_gen` disponível: o `PROMPT_<LOTE>.md` pode ser seguido **na mesma sessão** (depois da fila cheia) ou em outra
   sessão aberta dentro de `<lote>`.
 - Entrega: a própria pasta do lote.
@@ -82,6 +99,9 @@ conversa** → confere e recorta com Python → entrega o `.zip`.
 ## Claude Code
 
 - Prepara tudo: plano, fichas, fila, prompts, recorte e entrega, com pasta e scripts locais.
+- **A sessão costuma estar aberta dentro de um repositório.** O diretório da sessão **não** serve de pasta do lote:
+  use o lugar que o projeto define, ignorado pelo git ([acima](#pasta-do-lote-sempre-ignorada-pelo-git)). As fichas
+  parciais dos subagentes e as validações ficam dentro do lote, nunca na pasta de estudo do repositório.
 - **Não gera imagem.** A geração vai para o ChatGPT ou o Codex com o `PROMPT_<LOTE>.md`: entregue ao usuário a frase do
   modo (ex.: `criar-arte: leia e execute <lote>/PROMPT_<LOTE>.md — TODOS`), sem instruções extras. No ChatGPT desktop
   e no Codex não há `.zip`: a sessão trabalha direto na pasta do lote. Só para o ChatGPT web vai o `.zip` do lote. Os

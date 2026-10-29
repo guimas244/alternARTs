@@ -71,8 +71,10 @@ o cadastrador do jogo lê).
 ## 2. Regras que valem para todo modo
 
 - **Pasta de trabalho:** tudo o que você gera (fichas, prompts, fila, cartelas, recortes) vai para a pasta do lote:
-  - **ChatGPT desktop / Codex / Claude Code:** a pasta local que o usuário indicar (ou o diretório da sessão); a
-    entrega é a própria pasta, sem `.zip`;
+  - **ChatGPT desktop / Codex / Claude Code:** a pasta local que o projeto ou o usuário indicar, **sempre fora de
+    repositório git ou ignorada por ele** (confira com `git check-ignore`, ver
+    [regras/ambiente.md](regras/ambiente.md#pasta-do-lote-sempre-ignorada-pelo-git)); a entrega é a própria pasta,
+    sem `.zip`;
   - **ChatGPT web** (sem acesso ao disco): `/mnt/data/<lote>/`; no fim, entregue o lote como `.zip`
     (`shutil.make_archive`).
 
